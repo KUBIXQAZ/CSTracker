@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -36,12 +37,28 @@ namespace SteamItemsStatsViewer.ViewModels
                     while ((line = reader.ReadLine()) != null)
                     {
                         int quantity = int.Parse(line.Split("Number of active listings: ")[1].Split(" ")[0]);
-                        double price = double.Parse(line.Split("Median price (24H): $")[1].Split(" ")[0].Replace('.', ','));
+                        string priceString = line.Split("Median price (24H): ")[1].Split(" ")[0].Replace('.', ',');
+
+                        int numberIndex = -1;
+                        int index = 0;
+                        foreach(char c in priceString)
+                        {
+                            if(int.TryParse(c.ToString(), out int cParse))
+                            {
+                                numberIndex = index;
+                                break;
+                            }
+                            index++;
+                        }
+
+                        double price = double.Parse(priceString.Substring(numberIndex,priceString.Length - 1));
+                        string currency = priceString.Replace(price.ToString(), "");
 
                         ItemDataModel itemData = new ItemDataModel
                         {
                             Quantity = quantity,
                             Price = price,
+                            Currency = currency,
                         };
 
                         LiewViewItemModel liewViewItem = new LiewViewItemModel(itemData, lastItemData);

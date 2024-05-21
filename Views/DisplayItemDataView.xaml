@@ -11,9 +11,21 @@
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Quantity" DisplayMemberBinding="{Binding ItemData.Quantity}"/>
-                    <GridViewColumn Header="Price" DisplayMemberBinding="{Binding ItemData.Price}"/>
-                    <GridViewColumn Header="Quantity Changed By" DisplayMemberBinding="{Binding QuantityChangedBy}"/>
-                    <GridViewColumn Header="Price Changed By" DisplayMemberBinding="{Binding PriceChangedBy}"/>
+                    <GridViewColumn Header="Price" DisplayMemberBinding="{Binding PriceString}"/>
+                    <GridViewColumn Header="Quantity Changed By">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Foreground="{Binding QuantityColor}" Text="{Binding QuantityChangedByString}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Price Changed By">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Foreground="{Binding PriceColor}" Text="{Binding PriceChangedByString}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>
