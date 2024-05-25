@@ -7,7 +7,7 @@ using System.Windows.Media;
 
 namespace SteamItemsStatsViewer.Models
 {
-    public class LiewViewItemModel
+    public class DataGridItemModel
     {
         public ItemDataModel ItemData { get; set; }
         public string PriceString { get; set; }
@@ -18,7 +18,7 @@ namespace SteamItemsStatsViewer.Models
         public Brush PriceColor { get; set; } = new SolidColorBrush(Colors.Black);
         public Brush QuantityColor { get; set; } = new SolidColorBrush(Colors.Black);
 
-        public LiewViewItemModel(ItemDataModel itemData, ItemDataModel lastItemData)
+        public DataGridItemModel(ItemDataModel itemData, ItemDataModel lastItemData)
         {
             ItemData = itemData;
 
@@ -27,15 +27,15 @@ namespace SteamItemsStatsViewer.Models
                 QuantityChangedBy = ItemData.Quantity - lastItemData.Quantity;
                 PriceChangedBy = ItemData.Price - lastItemData.Price;
 
-                if (PriceChangedBy > 0) PriceColor = new SolidColorBrush(Color.FromRgb(0, 255, 0));
+                if (PriceChangedBy > 0) PriceColor = new SolidColorBrush(Color.FromRgb(0, 153, 0));
                 if (PriceChangedBy < 0) PriceColor = new SolidColorBrush(Color.FromRgb(255, 0, 0));
 
                 if (QuantityChangedBy > 0) QuantityColor = new SolidColorBrush(Color.FromRgb(255,0,0));
-                if (QuantityChangedBy < 0) QuantityColor = new SolidColorBrush(Color.FromRgb(0,255,0));
+                if (QuantityChangedBy < 0) QuantityColor = new SolidColorBrush(Color.FromRgb(0, 153, 0));
             }
 
             PriceString = $"{ItemData.Price}{ItemData.Currency}";
-            PriceChangedByString = $"{PriceChangedBy}{ItemData.Currency}";
+            PriceChangedByString = $"{Math.Round(PriceChangedBy,2)}{ItemData.Currency}";
             if (QuantityChangedBy.ToString()[0] != '-' && QuantityChangedBy != 0) QuantityChangedByString = $"+{QuantityChangedBy}";
             else QuantityChangedByString = QuantityChangedBy.ToString();
         }
