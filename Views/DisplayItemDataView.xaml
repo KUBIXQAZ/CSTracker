@@ -62,7 +62,14 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
-        <DataGrid ItemsSource="{Binding ItemsData}" AutoGenerateColumns="False" CanUserSortColumns="False" IsReadOnly="True" CanUserReorderColumns="False" CanUserResizeRows="False" CanUserResizeColumns="False">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Button Command="{Binding RefreshDataCommand}" Content="Refresh"></Button>
+        </Grid>
+        <DataGrid Grid.Row="1" ItemsSource="{Binding ItemsData}" AutoGenerateColumns="False" CanUserSortColumns="False" IsReadOnly="True" CanUserReorderColumns="False" CanUserResizeRows="False" CanUserResizeColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Quantity" Width="*" Binding="{Binding ItemData.Quantity}"/>
                 <DataGridTextColumn Header="Price" Width="*" Binding="{Binding PriceString}"/>
