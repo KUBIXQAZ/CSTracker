@@ -66,8 +66,8 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0">
-            <Button Command="{Binding RefreshDataCommand}" Content="Refresh"></Button>
+        <Grid Grid.Row="0" Margin="3">
+            <Button Command="{Binding RefreshDataCommand}" HorizontalAlignment="Right" Content="Refresh" Width="70"/>
         </Grid>
         <DataGrid Grid.Row="1" ItemsSource="{Binding ItemsData}" AutoGenerateColumns="False" CanUserSortColumns="False" IsReadOnly="True" CanUserReorderColumns="False" CanUserResizeRows="False" CanUserResizeColumns="False">
             <DataGrid.Columns>

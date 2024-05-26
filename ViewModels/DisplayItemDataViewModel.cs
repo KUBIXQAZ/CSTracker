@@ -30,7 +30,6 @@ namespace SteamItemsStatsViewer.ViewModels
 
         private void LoadData()
         {
-            Debug.WriteLine("asdadadasasd");
             _itemsData.Clear();
 
             string dataFilePath = "D:\\PROGRAMMING-PROJECTS\\csharp-apps\\SteamMarketDataCollector\\bin\\Debug\\net8.0\\output\\Paris_2023_Legends_Sticker_Capsule.json";
