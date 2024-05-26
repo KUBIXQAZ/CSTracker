@@ -80,6 +80,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
+                <DataGridTextColumn Header="DateTime" Width="*" Binding="{Binding ItemData.DataSaveDateTime}"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>
