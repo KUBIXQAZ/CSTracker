@@ -21,25 +21,26 @@ namespace SteamItemsStatsViewer.ViewModels
 
         public ICommand RefreshDataCommand { get; set; }
 
-        private string filePath { get; set; }
+        private string _filePath { get; set; }
 
         public DisplayItemDataViewModel(string parameter)
         {
-            filePath = parameter;
+            _filePath = parameter;
 
-            LoadData();
+            LoadData(_filePath);
 
-            RefreshDataCommand = new RefreshDataCommand(LoadData);
+            RefreshDataCommand = new RefreshDataCommand(LoadData, _filePath);
         }
 
-        private void LoadData()
+        private void LoadData(string filePath)
         {
             _itemsData.Clear();
 
             if (File.Exists(filePath))
             {
                 var json = File.ReadAllText(filePath);
-                List<ItemDataModel> itemsData = JsonConvert.DeserializeObject<List<ItemDataModel>>(json);
+                var itemsData = JsonConvert.DeserializeObject<List<ItemDataModel>>(json);
+                itemsData.OrderBy(x => { return x.DataSaveDateTime; });
 
                 ItemDataModel lastItem = null;
                 foreach(ItemDataModel item in itemsData)
