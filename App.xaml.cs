@@ -16,7 +16,7 @@ namespace SteamItemsStatsViewer
         {
             base.OnStartup(e);
 
-            ViewModel = new DisplayItemDataViewModel();
+            ViewModel = new HomeViewModel();
 
             MainWindow mainWindow = new MainWindow();
             mainWindow.DataContext = new MainViewModel(ViewModel);

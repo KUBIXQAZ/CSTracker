@@ -12,8 +12,24 @@
         <DataTemplate DataType="{x:Type vms:DisplayItemDataViewModel}">
             <views:DisplayItemDataView />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vms:HomeViewModel}">
+            <views:HomeView/>
+        </DataTemplate>
     </Window.Resources>
     <Grid>
-        <ContentControl Content="{Binding ViewModel}" />
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="5*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <ListView ItemsSource="{Binding NavigationItems}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Button Command="{Binding Command}" Content="{Binding Title}"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+        <ContentControl Grid.Column="1" Content="{Binding ViewModel}" />
     </Grid>
 </Window>

@@ -17,12 +17,16 @@ namespace SteamItemsStatsViewer.ViewModels
     {
         private ObservableCollection<DataGridItemModel> _itemsData = new ObservableCollection<DataGridItemModel>();
 
-        public IEnumerable<DataGridItemModel> ItemsData => _itemsData;
+        public IEnumerable<DataGridItemModel> ItemsData => _itemsData.Reverse();
 
         public ICommand RefreshDataCommand { get; set; }
 
-        public DisplayItemDataViewModel()
+        private string filePath { get; set; }
+
+        public DisplayItemDataViewModel(string parameter)
         {
+            filePath = parameter;
+
             LoadData();
 
             RefreshDataCommand = new RefreshDataCommand(LoadData);
@@ -32,11 +36,9 @@ namespace SteamItemsStatsViewer.ViewModels
         {
             _itemsData.Clear();
 
-            string dataFilePath = "D:\\PROGRAMMING-PROJECTS\\csharp-apps\\SteamMarketDataCollector\\bin\\Debug\\net8.0\\output\\Paris_2023_Legends_Sticker_Capsule.json";
-
-            if (File.Exists(dataFilePath))
+            if (File.Exists(filePath))
             {
-                var json = File.ReadAllText(dataFilePath);
+                var json = File.ReadAllText(filePath);
                 List<ItemDataModel> itemsData = JsonConvert.DeserializeObject<List<ItemDataModel>>(json);
 
                 ItemDataModel lastItem = null;
