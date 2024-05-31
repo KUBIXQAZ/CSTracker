@@ -15,8 +15,8 @@ namespace SteamItemsStatsViewer.Models
         public string QuantityChangedByString { get; set; }
         public int QuantityChangedBy { get; set; }
         public double PriceChangedBy { get; set; }
-        public Brush PriceColor { get; set; } = new SolidColorBrush(Colors.Black);
-        public Brush QuantityColor { get; set; } = new SolidColorBrush(Colors.Black);
+        public Brush PriceColor { get; set; } = new SolidColorBrush(Colors.White);
+        public Brush QuantityColor { get; set; } = new SolidColorBrush(Colors.White);
 
         public DataGridItemModel(ItemDataModel itemData, ItemDataModel lastItemData)
         {

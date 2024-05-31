@@ -7,7 +7,8 @@
         xmlns:vms="clr-namespace:SteamItemsStatsViewer.ViewModels"
         xmlns:views="clr-namespace:SteamItemsStatsViewer.Views"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800"
+        Background="#1a1a1a">
     <Window.Resources>
         <DataTemplate DataType="{x:Type vms:DisplayItemDataViewModel}">
             <views:DisplayItemDataView />
@@ -22,14 +23,17 @@
             <ColumnDefinition Width="5*"/>
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0">
-            <ListView ItemsSource="{Binding NavigationItems}">
+            <ListView ItemsSource="{Binding NavigationItems}"
+                      HorizontalContentAlignment="Stretch">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <Button Command="{Binding Command}" Content="{Binding Title}"/>
+                        <Button HorizontalAlignment="Stretch" Command="{Binding Command}" Content="{Binding Title}"/>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
         </Grid>
-        <ContentControl Grid.Column="1" Content="{Binding ViewModel}" />
+        <Grid Grid.Column="1">
+            <ContentControl Margin="10" Content="{Binding ViewModel}" />
+        </Grid>
     </Grid>
 </Window>
