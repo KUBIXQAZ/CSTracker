@@ -17,7 +17,7 @@ namespace SteamItemsStatsViewer.ViewModels
     {
         private ObservableCollection<DataGridItemModel> _itemsData = new ObservableCollection<DataGridItemModel>();
 
-        public IEnumerable<DataGridItemModel> ItemsData => _itemsData.Reverse();
+        public IEnumerable<DataGridItemModel> ItemsData => _itemsData;
 
         public ICommand RefreshDataCommand { get; set; }
 
@@ -41,6 +41,7 @@ namespace SteamItemsStatsViewer.ViewModels
                 var json = File.ReadAllText(filePath);
                 var itemsData = JsonConvert.DeserializeObject<List<ItemDataModel>>(json);
                 itemsData.OrderBy(x => { return x.DataSaveDateTime; });
+                itemsData.Reverse();
 
                 ItemDataModel lastItem = null;
                 foreach(ItemDataModel item in itemsData)
