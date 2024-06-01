@@ -90,20 +90,10 @@ namespace SteamItemsStatsViewer.ViewModels
             }
 
             //refresh price chart//
-            double[] prices = new double[_itemsData.Count];
-            for (int i = 0; i < _itemsData.Count; i++)
-            {
-                prices[i] = _itemsData[i].ItemData.Price;
-            }
-            Series[0].Values = prices.Reverse();
+            Series[0].Values = _itemsData.Select(x => x.ItemData.Price).Reverse();
             OnPropertyChanged(nameof(Series));
 
-            string[] dates = new string[_itemsData.Count];
-            for (int i = 0; i < _itemsData.Count; i++)
-            {
-                dates[i] = _itemsData[i].ItemData.DataSaveDateTime.ToString();
-            }
-            XAxes[0].Labels = dates.Reverse().ToList();
+            XAxes[0].Labels = _itemsData.Select(x => x.ItemData.DataSaveDateTime.ToString()).Reverse().ToList();
             OnPropertyChanged(nameof(XAxes));
         }
     }
