@@ -4,28 +4,31 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SteamItemsStatsViewer.Views"
+             xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
              mc:Ignorable="d" Background="#1a1a1a"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Margin="0 0 0 5">
             <Button Command="{Binding RefreshDataCommand}" HorizontalAlignment="Right" Content="Refresh" Width="70"/>
         </Grid>
-        <DataGrid Grid.Row="1" ItemsSource="{Binding ItemsData}">
+        <lvc:CartesianChart Grid.Row="1" Series="{Binding Series}" YAxes="{Binding YAxes}" XAxes="{Binding XAxes}"/>
+        <DataGrid Grid.Row="2" ItemsSource="{Binding ItemsData}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Quantity" Width="*" Binding="{Binding ItemData.Quantity}"/>
                 <DataGridTextColumn Header="Price" Width="*" Binding="{Binding PriceString}"/>
-                <DataGridTemplateColumn Header="Quantity Changed By" Width="*">
+                <DataGridTemplateColumn Header="Quantity Changed By" Width="*" SortMemberPath="QuantityChangedByString">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock Foreground="{Binding QuantityColor}" Text="{Binding QuantityChangedByString}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn  Header="Price Changed By" Width="*">
+                <DataGridTemplateColumn  Header="Price Changed By" Width="*" SortMemberPath="PriceChangedByString">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock Foreground="{Binding PriceColor}" Text="{Binding PriceChangedByString}"/>

@@ -10,6 +10,10 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.Windows.Input;
 using SteamItemsStatsViewer.Commands;
+using LiveChartsCore.SkiaSharpView;
+using LiveChartsCore;
+using SkiaSharp;
+using LiveChartsCore.SkiaSharpView.Painting;
 
 namespace SteamItemsStatsViewer.ViewModels
 {
@@ -23,17 +27,49 @@ namespace SteamItemsStatsViewer.ViewModels
 
         private string _filePath { get; set; }
 
+        public ISeries[] Series { get; set; } = new ISeries[]
+        {
+            new LineSeries<double>
+            {
+                Values = new double[] { 2, 1, 3, 5, 3, 4, 6 },
+                Fill = new SolidColorPaint(new SKColor(63, 77, 99)),
+                Stroke = new SolidColorPaint(new SKColor(120, 152, 203)),
+                LineSmoothness = 0,
+                GeometrySize = 1,
+                DataPadding = new LiveChartsCore.Drawing.LvcPoint(0,0),
+            }
+        };
+
+        public Axis[] YAxes { get; set; } = new[]
+        {
+            new Axis
+            {
+                LabelsPaint = new SolidColorPaint(new SKColor(255,255,255)),
+            }
+        };
+
+        public Axis[] XAxes { get; set; } = new[]
+        {
+            new Axis
+            {
+               LabelsRotation = 30,
+               LabelsPaint = new SolidColorPaint(new SKColor(255,255,255)),
+               IsVisible = false,
+            }
+        };
+
         public DisplayItemDataViewModel(string parameter)
         {
             _filePath = parameter;
 
-            LoadData(_filePath);
-
             RefreshDataCommand = new RefreshDataCommand(LoadData, _filePath);
+
+            LoadData(_filePath);
         }
 
         private void LoadData(string filePath)
         {
+            //refresh table data//
             _itemsData.Clear();
 
             if (File.Exists(filePath))
@@ -52,6 +88,23 @@ namespace SteamItemsStatsViewer.ViewModels
                     lastItem = item;
                 }
             }
+
+            //refresh price chart//
+            double[] prices = new double[_itemsData.Count];
+            for (int i = 0; i < _itemsData.Count; i++)
+            {
+                prices[i] = _itemsData[i].ItemData.Price;
+            }
+            Series[0].Values = prices.Reverse();
+            OnPropertyChanged(nameof(Series));
+
+            string[] dates = new string[_itemsData.Count];
+            for (int i = 0; i < _itemsData.Count; i++)
+            {
+                dates[i] = _itemsData[i].ItemData.DataSaveDateTime.ToString();
+            }
+            XAxes[0].Labels = dates.Reverse().ToList();
+            OnPropertyChanged(nameof(XAxes));
         }
     }
 }

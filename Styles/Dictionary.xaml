@@ -5,10 +5,32 @@
     </Style>
     <Style TargetType="{x:Type Button}">
         <Setter Property="BorderBrush" Value="Transparent"/>
-        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Padding" Value="3"/>
         <Setter Property="Background" Value="#2196F3"/>
-        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Foreground" Value="#1a1a1a"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="BorderBrush" Value="#2196F3"/>
+                <Setter Property="Foreground" Value="#2196F3"/>
+                <Setter Property="Cursor" Value="Hand"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <Style TargetType="ListView" x:Key="Navigation">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="White"/>
+        <Setter Property="BorderThickness" Value="0 0 1 0"/>
     </Style>
     <Style TargetType="DataGrid">
         <Setter Property="Background" Value="#2196F3" />
@@ -18,7 +40,7 @@
         <Setter Property="RowHeight" Value="30" />
         <Setter Property="GridLinesVisibility" Value="None" />
         <Setter Property="AutoGenerateColumns" Value="False" />
-        <Setter Property="CanUserSortColumns" Value="False"/>
+        <Setter Property="CanUserSortColumns" Value="True"/>
         <Setter Property="IsReadOnly" Value="True"/>
         <Setter Property="CanUserReorderColumns" Value="False"/>
         <Setter Property="CanUserResizeRows" Value="False"/>
@@ -35,6 +57,12 @@
                     <Setter Property="FontWeight" Value="Bold" />
                     <Setter Property="HorizontalContentAlignment" Value="Center" />
                     <Setter Property="Padding" Value="10,0,10,0" />
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Cursor" Value="Hand"/>
+                            <Setter Property="Foreground" Value="#1a1a1a"/>
+                        </Trigger>
+                    </Style.Triggers>
                 </Style>
             </Setter.Value>
         </Setter>
@@ -49,6 +77,12 @@
                         <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#2b2b2b" />
                         <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="White" />
                     </Style.Resources>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Cursor" Value="Hand"/>
+                            <Setter Property="Background" Value="#2b2b2b"/>
+                        </Trigger>
+                    </Style.Triggers>
                 </Style>
             </Setter.Value>
         </Setter>

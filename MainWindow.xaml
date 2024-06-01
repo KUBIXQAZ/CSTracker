@@ -23,8 +23,7 @@
             <ColumnDefinition Width="5*"/>
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0">
-            <ListView ItemsSource="{Binding NavigationItems}"
-                      HorizontalContentAlignment="Stretch">
+            <ListView ItemsSource="{Binding NavigationItems}" Style="{StaticResource Navigation}" HorizontalContentAlignment="Stretch">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <Button HorizontalAlignment="Stretch" Command="{Binding Command}" Content="{Binding Title}"/>
