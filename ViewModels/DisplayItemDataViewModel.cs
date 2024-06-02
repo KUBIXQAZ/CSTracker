@@ -1,12 +1,6 @@
 ﻿using SteamItemsStatsViewer.Models;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.Windows.Input;
 using SteamItemsStatsViewer.Commands;
@@ -19,14 +13,16 @@ namespace SteamItemsStatsViewer.ViewModels
 {
     public class DisplayItemDataViewModel : ViewModelBase
     {
-        private ObservableCollection<DataGridItemModel> _itemsData = new ObservableCollection<DataGridItemModel>();
-
-        public IEnumerable<DataGridItemModel> ItemsData => _itemsData;
-
-        public ICommand RefreshDataCommand { get; set; }
-
         private string _filePath { get; set; }
 
+        //item data//
+        private ObservableCollection<DataGridItemModel> _itemsData = new ObservableCollection<DataGridItemModel>();
+        public IEnumerable<DataGridItemModel> ItemsData => _itemsData;
+
+        //commands//
+        public ICommand RefreshDataCommand { get; set; }
+
+        //price chart//
         public ISeries[] Series { get; set; } = new ISeries[]
         {
             new LineSeries<double>
@@ -39,7 +35,6 @@ namespace SteamItemsStatsViewer.ViewModels
                 DataPadding = new LiveChartsCore.Drawing.LvcPoint(0,0),
             }
         };
-
         public Axis[] YAxes { get; set; } = new[]
         {
             new Axis
@@ -48,7 +43,6 @@ namespace SteamItemsStatsViewer.ViewModels
                 TextSize = 15,
             }
         };
-
         public Axis[] XAxes { get; set; } = new[]
         {
             new Axis
@@ -88,8 +82,9 @@ namespace SteamItemsStatsViewer.ViewModels
 
                     lastItem = item;
                 }
+                _itemsData = new ObservableCollection<DataGridItemModel>(_itemsData.Reverse());
+                OnPropertyChanged(nameof(ItemsData));
             }
-            _itemsData = new ObservableCollection<DataGridItemModel>(_itemsData.Reverse());
 
             //refresh price chart//
             Series[0].Values = _itemsData.Select(x => x.ItemData.Price).Reverse();
