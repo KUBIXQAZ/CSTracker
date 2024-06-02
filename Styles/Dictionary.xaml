@@ -3,6 +3,10 @@
     <Style TargetType="{x:Type UserControl}">
         <Setter Property="Background" Value="Black"/>
     </Style>
+    <Style TargetType="Label">
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="FontSize" Value="24"/>
+    </Style>
     <Style TargetType="{x:Type Button}">
         <Setter Property="BorderBrush" Value="Transparent"/>
         <Setter Property="BorderThickness" Value="1"/>

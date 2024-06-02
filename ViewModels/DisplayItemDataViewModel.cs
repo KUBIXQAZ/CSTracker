@@ -69,7 +69,7 @@ namespace SteamItemsStatsViewer.ViewModels
 
         private void LoadData(string filePath)
         {
-            //refresh table data//
+            //load data && auto refresh data table//
             _itemsData.Clear();
 
             if (File.Exists(filePath))
