@@ -45,6 +45,7 @@ namespace SteamItemsStatsViewer.ViewModels
             new Axis
             {
                 LabelsPaint = new SolidColorPaint(new SKColor(255,255,255)),
+                TextSize = 15,
             }
         };
 
@@ -52,9 +53,10 @@ namespace SteamItemsStatsViewer.ViewModels
         {
             new Axis
             {
-               LabelsRotation = 30,
+               LabelsRotation = 0,
                LabelsPaint = new SolidColorPaint(new SKColor(255,255,255)),
-               IsVisible = false,
+               IsVisible = true,
+               TextSize = 10,
             }
         };
 
