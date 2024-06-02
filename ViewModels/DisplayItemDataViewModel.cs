@@ -79,7 +79,6 @@ namespace SteamItemsStatsViewer.ViewModels
                 var json = File.ReadAllText(filePath);
                 var itemsData = JsonConvert.DeserializeObject<List<ItemDataModel>>(json);
                 itemsData.OrderBy(x => { return x.DataSaveDateTime; });
-                itemsData.Reverse();
 
                 ItemDataModel lastItem = null;
                 foreach(ItemDataModel item in itemsData)
@@ -90,6 +89,7 @@ namespace SteamItemsStatsViewer.ViewModels
                     lastItem = item;
                 }
             }
+            _itemsData = new ObservableCollection<DataGridItemModel>(_itemsData.Reverse());
 
             //refresh price chart//
             Series[0].Values = _itemsData.Select(x => x.ItemData.Price).Reverse();
