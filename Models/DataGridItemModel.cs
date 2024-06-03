@@ -35,7 +35,10 @@ namespace SteamItemsStatsViewer.Models
             }
 
             PriceString = $"{ItemData.Price}{ItemData.Currency}";
-            PriceChangedByString = $"{Math.Round(PriceChangedBy,2)}{ItemData.Currency}";
+            
+            if (PriceChangedBy.ToString()[0] != '-' && PriceChangedBy != 0) PriceChangedByString = $"+{Math.Round(PriceChangedBy, 2)}{ItemData.Currency}";
+            else PriceChangedByString = $"{Math.Round(PriceChangedBy, 2)}{ItemData.Currency}";
+
             if (QuantityChangedBy.ToString()[0] != '-' && QuantityChangedBy != 0) QuantityChangedByString = $"+{QuantityChangedBy}";
             else QuantityChangedByString = QuantityChangedBy.ToString();
         }
