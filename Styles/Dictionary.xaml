@@ -7,6 +7,30 @@
         <Setter Property="Foreground" Value="White"/>
         <Setter Property="FontSize" Value="24"/>
     </Style>
+    <Style x:Key="NavigationButton" TargetType="Button">
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Padding" Value="3 10"/>
+        <Setter Property="Background" Value="#2196F3"/>
+        <Setter Property="Foreground" Value="#1a1a1a"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}">
+                        <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="BorderBrush" Value="#2196F3"/>
+                <Setter Property="Foreground" Value="#2196F3"/>
+                <Setter Property="Cursor" Value="Hand"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
     <Style TargetType="{x:Type Button}">
         <Setter Property="BorderBrush" Value="Transparent"/>
         <Setter Property="BorderThickness" Value="1"/>
@@ -41,7 +65,6 @@
         <Setter Property="BorderBrush" Value="#2196F3" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="RowHeaderWidth" Value="0" />
-        <Setter Property="RowHeight" Value="30" />
         <Setter Property="GridLinesVisibility" Value="None" />
         <Setter Property="AutoGenerateColumns" Value="False" />
         <Setter Property="CanUserSortColumns" Value="True"/>
@@ -75,8 +98,8 @@
                 <Style TargetType="DataGridRow">
                     <Setter Property="Background" Value="#1a1a1a" />
                     <Setter Property="Foreground" Value="White" />
+                    <Setter Property="Height" Value="30"/>
                     <Setter Property="BorderThickness" Value="0" />
-                    <Setter Property="Height" Value="30" />
                     <Style.Resources>
                         <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#2b2b2b" />
                         <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="White" />

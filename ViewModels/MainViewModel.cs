@@ -43,6 +43,8 @@ namespace SteamItemsStatsViewer.ViewModels
 
             foreach (string file in files)
             {
+                if (Path.GetFileName(file).Contains("Price_History")) continue;
+
                 string name = Path.GetFileName(file).Replace("_"," ").Replace(".json","");
 
                 SteamItemNavigationItemModel steamItemNavigationItem = new SteamItemNavigationItemModel(name,new NavigateToCommand(this, () => { return new DisplayItemDataViewModel(file); }));

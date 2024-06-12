@@ -20,75 +20,78 @@
         <Grid Grid.Row="1">
             <Label Content="Price" HorizontalAlignment="Center"/>
         </Grid>
-        <lvc:CartesianChart Grid.Row="2" Series="{Binding Series}" YAxes="{Binding YAxes}" XAxes="{Binding XAxes}"/>
-        <DataGrid Grid.Row="3" ItemsSource="{Binding ItemsData}">
-            <DataGrid.Columns>
-                
-                <DataGridTextColumn Width="*" Binding="{Binding ItemData.Quantity}">
-                    <DataGridTextColumn.HeaderTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Quantity" Margin="0 0 5 0"/>
-                                <Image Source="../Resources/Images/sort.png" Width="16" Height="16"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </DataGridTextColumn.HeaderTemplate>
-                </DataGridTextColumn>
-                
-                <DataGridTextColumn Width="*" Binding="{Binding PriceString}">
-                    <DataGridTextColumn.HeaderTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Price" Margin="0 0 5 0"/>
-                                <Image Source="../Resources/Images/sort.png" Width="16" Height="16"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </DataGridTextColumn.HeaderTemplate>
-                </DataGridTextColumn>
-                
-                <DataGridTemplateColumn Width="*" MinWidth="160" SortMemberPath="QuantityChangedByString">
-                    <DataGridTemplateColumn.HeaderTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Quantity Changed By" Margin="0 0 5 0"/>
-                                <Image Source="../Resources/Images/sort.png" Width="16" Height="16"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.HeaderTemplate>
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBlock Foreground="{Binding QuantityColor}" Text="{Binding QuantityChangedByString}"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                
-                <DataGridTemplateColumn SortMemberPath="PriceChangedByString">
-                    <DataGridTemplateColumn.HeaderTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Price Changed By" Margin="0 0 5 0"/>
-                                <Image Source="../Resources/Images/sort.png" Width="16" Height="16"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.HeaderTemplate>
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBlock Foreground="{Binding PriceColor}" Text="{Binding PriceChangedByString}"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
+        <lvc:CartesianChart Grid.Row="2" Series="{Binding Series}" YAxes="{Binding YAxes}" XAxes="{Binding XAxes}" ZoomMode="X"/>
+        <Grid Grid.Row="3">
+            <DataGrid  VerticalAlignment="Center" ItemsSource="{Binding ItemsData}">
+                <DataGrid.Columns>
 
-                <DataGridTextColumn Width="*" MinWidth="140" Binding="{Binding ItemData.DataSaveDateTime}">
-                    <DataGridTextColumn.HeaderTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="DateTime" Margin="0 0 5 0"/>
-                                <Image Source="../Resources/Images/sort.png" Width="16" Height="16"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </DataGridTextColumn.HeaderTemplate>
-                </DataGridTextColumn>
-            </DataGrid.Columns>
-        </DataGrid>
+                    <DataGridTextColumn Width="*" Binding="{Binding ItemData.Quantity}">
+                        <DataGridTextColumn.HeaderTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Quantity" Margin="0 0 5 0"/>
+                                    <Image Source="../Resources/Images/sort.png" Width="16" Height="16"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTextColumn.HeaderTemplate>
+                    </DataGridTextColumn>
+
+                    <DataGridTextColumn Width="*" Binding="{Binding PriceString}">
+                        <DataGridTextColumn.HeaderTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Price" Margin="0 0 5 0"/>
+                                    <Image Source="../Resources/Images/sort.png" Width="16" Height="16"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTextColumn.HeaderTemplate>
+                    </DataGridTextColumn>
+
+                    <DataGridTemplateColumn Width="*" MinWidth="160" SortMemberPath="QuantityChangedByString">
+                        <DataGridTemplateColumn.HeaderTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Quantity Changed By" Margin="0 0 5 0"/>
+                                    <Image Source="../Resources/Images/sort.png" Width="16" Height="16"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.HeaderTemplate>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Foreground="{Binding QuantityColor}" Text="{Binding QuantityChangedByString}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTemplateColumn SortMemberPath="PriceChangedByString">
+                        <DataGridTemplateColumn.HeaderTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Price Changed By" Margin="0 0 5 0"/>
+                                    <Image Source="../Resources/Images/sort.png" Width="16" Height="16"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.HeaderTemplate>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Foreground="{Binding PriceColor}" Text="{Binding PriceChangedByString}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTextColumn Width="*" MinWidth="140" Binding="{Binding ItemData.DataSaveDateTime}">
+                        <DataGridTextColumn.HeaderTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="DateTime" Margin="0 0 5 0"/>
+                                    <Image Source="../Resources/Images/sort.png" Width="16" Height="16"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTextColumn.HeaderTemplate>
+                    </DataGridTextColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+        
     </Grid>
 </UserControl>

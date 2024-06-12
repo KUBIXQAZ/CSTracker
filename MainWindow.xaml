@@ -26,7 +26,7 @@
             <ListView ItemsSource="{Binding NavigationItems}" Style="{StaticResource Navigation}" HorizontalContentAlignment="Stretch">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <Button HorizontalAlignment="Stretch" Command="{Binding Command}" Content="{Binding Title}"/>
+                        <Button HorizontalAlignment="Stretch" Style="{StaticResource NavigationButton}" Command="{Binding Command}" Content="{Binding Title}"/>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>

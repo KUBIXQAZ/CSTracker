@@ -8,6 +8,7 @@ using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore;
 using SkiaSharp;
 using LiveChartsCore.SkiaSharpView.Painting;
+using System.Net.Http;
 
 namespace SteamItemsStatsViewer.ViewModels
 {
@@ -31,7 +32,7 @@ namespace SteamItemsStatsViewer.ViewModels
                 Fill = new SolidColorPaint(new SKColor(63, 77, 99)),
                 Stroke = new SolidColorPaint(new SKColor(120, 152, 203)),
                 LineSmoothness = 0,
-                GeometrySize = 1,
+                GeometrySize = 0,
                 DataPadding = new LiveChartsCore.Drawing.LvcPoint(0,0),
             }
         };
@@ -65,6 +66,17 @@ namespace SteamItemsStatsViewer.ViewModels
 
         private void LoadData(string filePath)
         {
+            string priceHistoryPath = _filePath.Replace(".json", "") + "_Price_History.json";
+
+            if(File.Exists(priceHistoryPath))
+            {
+                string file = File.ReadAllText(priceHistoryPath);
+                PriceHistoryModel priceHistory = JsonConvert.DeserializeObject<PriceHistoryModel>(file);
+
+                Series[0].Values = priceHistory.Prices.Select(x => Double.Parse(x[1].Replace(".",","))).ToList();
+                XAxes[0].Labels = priceHistory.Prices.Select(x => x[0].Replace(": +0","")).ToList();
+            }
+
             //load data && auto refresh data table//
             _itemsData.Clear();
 
@@ -85,13 +97,6 @@ namespace SteamItemsStatsViewer.ViewModels
                 _itemsData = new ObservableCollection<DataGridItemModel>(_itemsData.Reverse());
                 OnPropertyChanged(nameof(ItemsData));
             }
-
-            //refresh price chart//
-            Series[0].Values = _itemsData.Select(x => x.ItemData.Price).Reverse();
-            OnPropertyChanged(nameof(Series));
-
-            XAxes[0].Labels = _itemsData.Select(x => x.ItemData.DataSaveDateTime.ToString()).Reverse().ToList();
-            OnPropertyChanged(nameof(XAxes));
         }
     }
 }
