@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Xml.Linq;
 using SteamItemsStatsViewer.Commands;
 using SteamItemsStatsViewer.Models;
 using SteamItemsStatsViewer.ViewModels;
@@ -26,7 +27,15 @@ namespace SteamItemsStatsViewer.ViewModels
         }
 
         private ObservableCollection<SteamItemNavigationItemModel> _navigationItems = new ObservableCollection<SteamItemNavigationItemModel>();
-        public IEnumerable<SteamItemNavigationItemModel> NavigationItems => _navigationItems;   
+        public ObservableCollection<SteamItemNavigationItemModel> NavigationItems
+        {
+            get => _navigationItems;
+            set
+            {
+                _navigationItems = value;
+                OnPropertyChanged(nameof(NavigationItems));
+            }
+        };   
         
         public MainViewModel(ViewModelBase viewModel)
         {
@@ -39,15 +48,14 @@ namespace SteamItemsStatsViewer.ViewModels
         {
             string path = "D:\\PROGRAMMING-PROJECTS\\csharp-apps\\SteamMarketDataCollector\\bin\\Debug\\net8.0\\output";
 
-            string[] files = Directory.GetFiles(path);
+            string[] directories = Directory.GetDirectories(path);
 
-            foreach (string file in files)
+            foreach (string directory in directories)
             {
-                if (Path.GetFileName(file).Contains("Price_History")) continue;
+                string directoryName = Path.GetFileName(directory);
+                string name = directoryName.Replace("_"," ");
 
-                string name = Path.GetFileName(file).Replace("_"," ").Replace(".json","");
-
-                SteamItemNavigationItemModel steamItemNavigationItem = new SteamItemNavigationItemModel(name,new NavigateToCommand(this, () => { return new DisplayItemDataViewModel(file); }));
+                SteamItemNavigationItemModel steamItemNavigationItem = new SteamItemNavigationItemModel(name, new NavigateToCommand(this, () => { return new DisplayItemDataViewModel(directory); }));
                 _navigationItems.Add(steamItemNavigationItem);
             }
         }

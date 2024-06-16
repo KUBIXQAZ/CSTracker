@@ -8,22 +8,29 @@ using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore;
 using SkiaSharp;
 using LiveChartsCore.SkiaSharpView.Painting;
-using System.Net.Http;
 
 namespace SteamItemsStatsViewer.ViewModels
 {
     public class DisplayItemDataViewModel : ViewModelBase
     {
-        private string _filePath { get; set; }
+        private string _folderPath { get; set; }
 
-        //item data//
+        //ITEM DATA//
         private ObservableCollection<DataGridItemModel> _itemsData = new ObservableCollection<DataGridItemModel>();
-        public IEnumerable<DataGridItemModel> ItemsData => _itemsData;
+        public ObservableCollection<DataGridItemModel> ItemsData
+        {
+            get => _itemsData;
+            set
+            {
+                _itemsData = value;
+                OnPropertyChanged(nameof(ItemsData));
+            }
+        }
 
-        //commands//
+        //COMMANDS//
         public ICommand RefreshDataCommand { get; set; }
 
-        //price chart//
+        //PRICE CHART//
         public ISeries[] Series { get; set; } = new ISeries[]
         {
             new LineSeries<double>
@@ -57,46 +64,10 @@ namespace SteamItemsStatsViewer.ViewModels
 
         public DisplayItemDataViewModel(string parameter)
         {
-            _filePath = parameter;
-
-            RefreshDataCommand = new RefreshDataCommand(LoadData, _filePath);
-
-            LoadData(_filePath);
-        }
-
-        private void LoadData(string filePath)
-        {
-            string priceHistoryPath = _filePath.Replace(".json", "") + "_Price_History.json";
-
-            if(File.Exists(priceHistoryPath))
-            {
-                string file = File.ReadAllText(priceHistoryPath);
-                PriceHistoryModel priceHistory = JsonConvert.DeserializeObject<PriceHistoryModel>(file);
-
-                Series[0].Values = priceHistory.Prices.Select(x => Double.Parse(x[1].Replace(".",","))).ToList();
-                XAxes[0].Labels = priceHistory.Prices.Select(x => x[0].Replace(": +0","")).ToList();
-            }
-
-            //load data && auto refresh data table//
-            _itemsData.Clear();
-
-            if (File.Exists(filePath))
-            {
-                var json = File.ReadAllText(filePath);
-                var itemsData = JsonConvert.DeserializeObject<List<ItemDataModel>>(json);
-                itemsData.OrderBy(x => { return x.DataSaveDateTime; });
-
-                ItemDataModel lastItem = null;
-                foreach(ItemDataModel item in itemsData)
-                {
-                    DataGridItemModel dataGridItem = new DataGridItemModel(item, lastItem);
-                    _itemsData.Add(dataGridItem);
-
-                    lastItem = item;
-                }
-                _itemsData = new ObservableCollection<DataGridItemModel>(_itemsData.Reverse());
-                OnPropertyChanged(nameof(ItemsData));
-            }
+            _folderPath = parameter;
+            
+            RefreshDataCommand = new RefreshDataCommand(_folderPath,Series,XAxes,_itemsData);
+            RefreshDataCommand.Execute(this);
         }
     }
 }
