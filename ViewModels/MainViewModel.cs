@@ -35,7 +35,7 @@ namespace SteamItemsStatsViewer.ViewModels
                 _navigationItems = value;
                 OnPropertyChanged(nameof(NavigationItems));
             }
-        };   
+        }
         
         public MainViewModel(ViewModelBase viewModel)
         {

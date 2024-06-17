@@ -6,6 +6,8 @@ using System.Collections.ObjectModel;
 using System.IO;
 using LiveChartsCore;
 using LiveChartsCore.SkiaSharpView;
+using System.Globalization;
+using SteamItemsStatsViewer.ViewModels;
 
 namespace SteamItemsStatsViewer.Commands
 {
@@ -15,13 +17,15 @@ namespace SteamItemsStatsViewer.Commands
         private ISeries[] _iSeries;
         private Axis[] _xAxes;
         private ObservableCollection<DataGridItemModel> _itemsData;
+        private DisplayItemDataViewModel _viewModel;
 
-        public RefreshDataCommand(string folderPath, ISeries[] iSeries, Axis[] xAxies, ObservableCollection<DataGridItemModel> itemsData)
+        public RefreshDataCommand(string folderPath, ISeries[] iSeries, Axis[] xAxies, ObservableCollection<DataGridItemModel> itemsData, DisplayItemDataViewModel viewModel)
         {
             _folderPath = folderPath;
             _iSeries = iSeries;
             _xAxes = xAxies;
             _itemsData = itemsData;
+            _viewModel = viewModel;
         }
 
         public override void Execute(object? parameter)
@@ -63,6 +67,67 @@ namespace SteamItemsStatsViewer.Commands
                     _itemsData.Add(item);
                 }
             }
+
+            double price30Days = Math.Round(GetPriceFromLastDays(30), 2);
+            _viewModel.Price30Days = price30Days > 0 ? $"+{price30Days}" : price30Days.ToString();
+            int quantity30Days = GetQuantityFromLastDays(30);
+            _viewModel.Quantity30Days = quantity30Days > 0 ? $"+{quantity30Days}" : quantity30Days.ToString();
+        }
+
+        public double GetPriceFromLastDays(int days)
+        {
+            string priceHistoryPath = $"{_folderPath}\\{Path.GetFileName(_folderPath)}_Price_History.json";
+
+            if (File.Exists(priceHistoryPath))
+            {
+                string file = File.ReadAllText(priceHistoryPath);
+                PriceHistoryModel priceHistory = JsonConvert.DeserializeObject<PriceHistoryModel>(file);
+
+                DateTime[] dates = priceHistory.Prices.Select(x => DateTime.ParseExact(x[0].Replace(": +0", ""), "MMM dd yyyy HH", CultureInfo.InvariantCulture)).ToArray();
+                double[] prices = priceHistory.Prices.Select(x => Double.Parse(x[1].Replace(".", ","))).ToArray();
+
+                Dictionary<DateTime, double> data = new Dictionary<DateTime, double>();
+
+                int i = 0;
+                foreach (DateTime date in dates)
+                {
+                    data.Add(date, prices[i]);
+                    i++;
+                }
+
+                KeyValuePair<DateTime, double> firstKeyPair = data.First(x => x.Key.Date == DateTime.Now.AddDays(-days).Date);
+                KeyValuePair<DateTime, double> secondKeyPair = data.First(x => x.Key.Date == DateTime.Now.Date);
+
+                return secondKeyPair.Value - firstKeyPair.Value;
+            }
+            else return 0;
+        }
+
+        public int GetQuantityFromLastDays(int days)
+        {
+            DateTime[] dates = _itemsData.Select(x => x.ItemData.DataSaveDateTime).ToArray();
+            int[] quantities = _itemsData.Select(x => x.ItemData.Quantity).ToArray();
+
+            Dictionary<DateTime,int> data = new Dictionary<DateTime,int>();
+
+            int i = 0;
+            foreach(DateTime date in dates)
+            {
+                data.Add(date, quantities[i]);
+                i++;
+            }
+
+            KeyValuePair<DateTime, int> firstKeyPair;
+            try
+            {
+                firstKeyPair = data.First(x => x.Key.Date == DateTime.Now.AddDays(-days).Date);
+            } catch (Exception)
+            {
+                firstKeyPair = data.Last();
+            }
+            KeyValuePair<DateTime,int> secondKeyPair = data.First(x => x.Key.Date == DateTime.Now.Date);    
+
+            return secondKeyPair.Value - firstKeyPair.Value;
         }
     }
 }

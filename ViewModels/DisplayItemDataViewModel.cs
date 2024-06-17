@@ -35,10 +35,9 @@ namespace SteamItemsStatsViewer.ViewModels
         {
             new LineSeries<double>
             {
-                Values = new double[] { 2, 1, 3, 5, 3, 4, 6 },
-                Fill = new SolidColorPaint(new SKColor(63, 77, 99)),
-                Stroke = new SolidColorPaint(new SKColor(120, 152, 203)),
-                LineSmoothness = 0,
+                Fill = new LinearGradientPaint(new [] { new SKColor(9, 76, 130,50), new SKColor(33, 150, 243,100) },new SKPoint(0, 0),new SKPoint(0, 1)),
+                Stroke = new SolidColorPaint(new SKColor(33, 150, 243,50)),
+                LineSmoothness = 1,
                 GeometrySize = 0,
                 DataPadding = new LiveChartsCore.Drawing.LvcPoint(0,0),
             }
@@ -62,11 +61,33 @@ namespace SteamItemsStatsViewer.ViewModels
             }
         };
 
+        //STATS//
+        private string _price30Days;
+        public string Price30Days
+        {
+            get => _price30Days; 
+            set 
+            { 
+                _price30Days = value;
+                OnPropertyChanged(nameof(Price30Days));
+            }
+        }
+        private string _quantity30Days;
+        public string Quantity30Days
+        {
+            get => _quantity30Days;
+            set
+            {
+                _quantity30Days = value;
+                OnPropertyChanged(nameof(Quantity30Days));
+            }
+        }
+
         public DisplayItemDataViewModel(string parameter)
         {
             _folderPath = parameter;
-            
-            RefreshDataCommand = new RefreshDataCommand(_folderPath,Series,XAxes,_itemsData);
+
+            RefreshDataCommand = new RefreshDataCommand(_folderPath, Series, XAxes, _itemsData, this);
             RefreshDataCommand.Execute(this);
         }
     }
