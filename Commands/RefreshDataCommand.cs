@@ -68,8 +68,8 @@ namespace SteamItemsStatsViewer.Commands
                 }
             }
 
-            _viewModel.SeriesQuantity[0].Values = _viewModel.ItemsData.Select(x => x.ItemData.Quantity);
-            _viewModel.XAxesQuantity[0].Labels = _viewModel.ItemsData.Select(x => x.ItemData.DataSaveDateTime.ToString()).ToList();
+            _viewModel.SeriesQuantity[0].Values = _viewModel.ItemsData.Select(x => x.ItemData.Quantity).Reverse();
+            _viewModel.XAxesQuantity[0].Labels = _viewModel.ItemsData.Select(x => x.ItemData.DataSaveDateTime.ToString()).Reverse().ToList();
 
             double price7Days = Math.Round(GetPriceFromLastDays(7), 2);
             _viewModel.Price7Days = price7Days > 0 ? $"+{price7Days}" : price7Days.ToString();
@@ -112,7 +112,14 @@ namespace SteamItemsStatsViewer.Commands
                 }
 
                 KeyValuePair<DateTime, double> firstKeyPair = data.First(x => x.Key.Date == DateTime.Now.AddDays(-days).Date);
-                KeyValuePair<DateTime, double> secondKeyPair = data.First(x => x.Key.Date == DateTime.Now.Date);
+                KeyValuePair<DateTime, double> secondKeyPair;
+                try
+                {
+                    secondKeyPair = data.First(x => x.Key.Date == DateTime.Now.Date);
+                } catch (Exception)
+                {
+                    secondKeyPair = data.First(x => x.Key.Date == DateTime.Now.Date.AddDays(-1));
+                }
 
                 return secondKeyPair.Value - firstKeyPair.Value;
             }
@@ -141,7 +148,14 @@ namespace SteamItemsStatsViewer.Commands
             {
                 firstKeyPair = data.Last();
             }
-            KeyValuePair<DateTime,int> secondKeyPair = data.First(x => x.Key.Date == DateTime.Now.Date);    
+            KeyValuePair<DateTime, int> secondKeyPair;
+            try
+            {
+                secondKeyPair = data.First(x => x.Key.Date == DateTime.Now.Date);
+            } catch (Exception)
+            {
+                secondKeyPair = data.First(x => x.Key.Date == DateTime.Now.Date.AddDays(-1));
+            }
 
             return secondKeyPair.Value - firstKeyPair.Value;
         }
