@@ -40,7 +40,7 @@ namespace SteamItemsStatsViewer.Commands
                 _iSeries[0].Values = priceHistory.Prices.Select(x => Double.Parse(x[1].Replace(".", ","))).ToList();
                 _xAxes[0].Labels = priceHistory.Prices.Select(x => x[0].Replace(": +0", "")).ToList();
             }
-            
+
             string itemDataPath = $"{_folderPath}\\{Path.GetFileName(_folderPath)}.json";
 
             if (File.Exists(itemDataPath))
@@ -68,8 +68,24 @@ namespace SteamItemsStatsViewer.Commands
                 }
             }
 
+            _viewModel.SeriesQuantity[0].Values = _viewModel.ItemsData.Select(x => x.ItemData.Quantity);
+            _viewModel.XAxesQuantity[0].Labels = _viewModel.ItemsData.Select(x => x.ItemData.DataSaveDateTime.ToString()).ToList();
+
+            double price7Days = Math.Round(GetPriceFromLastDays(7), 2);
+            _viewModel.Price7Days = price7Days > 0 ? $"+{price7Days}" : price7Days.ToString();
+
+            double price14Days = Math.Round(GetPriceFromLastDays(14), 2);
+            _viewModel.Price14Days = price14Days > 0 ? $"+{price14Days}" : price14Days.ToString();
+
             double price30Days = Math.Round(GetPriceFromLastDays(30), 2);
             _viewModel.Price30Days = price30Days > 0 ? $"+{price30Days}" : price30Days.ToString();
+
+            int quantity7Days = GetQuantityFromLastDays(7);
+            _viewModel.Quantity7Days = quantity7Days > 0 ? $"+{quantity7Days}" : quantity7Days.ToString();
+
+            int quantity14Days = GetQuantityFromLastDays(14);
+            _viewModel.Quantity14Days = quantity14Days > 0 ? $"+{quantity14Days}" : quantity14Days.ToString();
+
             int quantity30Days = GetQuantityFromLastDays(30);
             _viewModel.Quantity30Days = quantity30Days > 0 ? $"+{quantity30Days}" : quantity30Days.ToString();
         }
