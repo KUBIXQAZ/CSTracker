@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:SteamItemsStatsViewer"
         xmlns:vms="clr-namespace:SteamItemsStatsViewer.ViewModels"
         xmlns:views="clr-namespace:SteamItemsStatsViewer.Views"
+        xmlns:controls="clr-namespace:SteamItemsStatsViewer.Resources.Controls"
         mc:Ignorable="d"
         Title="SISV" Height="450" Width="800"
         Background="#1a1a1a">
@@ -31,8 +32,8 @@
                 </ListView.ItemTemplate>
             </ListView>
         </Grid>
-        <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto">
+        <controls:MainScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto">
             <ContentControl Margin="10" Content="{Binding ViewModel}" />
-        </ScrollViewer>
+        </controls:MainScrollViewer>
     </Grid>
 </Window>

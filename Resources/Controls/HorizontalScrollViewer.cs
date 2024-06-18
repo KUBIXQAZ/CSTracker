@@ -9,7 +9,7 @@ using System.Windows.Input;
 
 namespace SteamItemsStatsViewer.Resources.Controls
 {
-    public class ScrollViewer : System.Windows.Controls.ScrollViewer
+    public class HorizontalScrollViewer : ScrollViewer
     {
         private Point _scrollMousePoint;
         private double _hOff = 1;
