@@ -72,22 +72,22 @@ namespace SteamItemsStatsViewer.Commands
             _viewModel.XAxesQuantity[0].Labels = _viewModel.ItemsData.Select(x => x.ItemData.DataSaveDateTime.ToString()).Reverse().ToList();
 
             double price7Days = Math.Round(GetPriceFromLastDays(7), 2);
-            _viewModel.Price7Days = price7Days > 0 ? $"+{price7Days}" : price7Days.ToString();
+            _viewModel.Price7Days = price7Days > 0 ? $"+{price7Days.ToString("N")}" : price7Days.ToString("N");
 
             double price14Days = Math.Round(GetPriceFromLastDays(14), 2);
-            _viewModel.Price14Days = price14Days > 0 ? $"+{price14Days}" : price14Days.ToString();
+            _viewModel.Price14Days = price14Days > 0 ? $"+{price14Days.ToString("N")}" : price14Days.ToString("N");
 
             double price30Days = Math.Round(GetPriceFromLastDays(30), 2);
-            _viewModel.Price30Days = price30Days > 0 ? $"+{price30Days}" : price30Days.ToString();
+            _viewModel.Price30Days = price30Days > 0 ? $"+{price30Days.ToString("N")}" : price30Days.ToString("N");
 
             int quantity7Days = GetQuantityFromLastDays(7);
-            _viewModel.Quantity7Days = quantity7Days > 0 ? $"+{quantity7Days}" : quantity7Days.ToString();
+            _viewModel.Quantity7Days = quantity7Days > 0 ? $"+{quantity7Days.ToString("N0")}" : quantity7Days.ToString("N0");
 
             int quantity14Days = GetQuantityFromLastDays(14);
-            _viewModel.Quantity14Days = quantity14Days > 0 ? $"+{quantity14Days}" : quantity14Days.ToString();
+            _viewModel.Quantity14Days = quantity14Days > 0 ? $"+{quantity14Days.ToString("N0")}" : quantity14Days.ToString("N0");
 
             int quantity30Days = GetQuantityFromLastDays(30);
-            _viewModel.Quantity30Days = quantity30Days > 0 ? $"+{quantity30Days}" : quantity30Days.ToString();
+            _viewModel.Quantity30Days = quantity30Days > 0 ? $"+{quantity30Days.ToString("N0")}" : quantity30Days.ToString("N0");
         }
 
         public double GetPriceFromLastDays(int days)
