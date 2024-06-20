@@ -2,10 +2,7 @@
 {
     public class ItemDataModel
     {
-        public int Quantity { get; set; }
-        public double Price { get; set; }
-        public string Currency {  get; set; }
-
-        public DateTime DataSaveDateTime { get; set; }
+        public PriceHistoryModel PriceHistory { get; set; }
+        public QuantityHistoryModel QuantityHistory { get; set; }
     }
 }

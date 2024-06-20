@@ -16,14 +16,14 @@ namespace SteamItemsStatsViewer.ViewModels
         private string _folderPath { get; set; }
 
         //ITEM DATA//
-        private ObservableCollection<DataGridItemModel> _itemsData = new ObservableCollection<DataGridItemModel>();
-        public ObservableCollection<DataGridItemModel> ItemsData
+        private ItemDataModel _itemData = new ItemDataModel();
+        public ItemDataModel ItemData
         {
-            get => _itemsData;
+            get => _itemData;
             set
             {
-                _itemsData = value;
-                OnPropertyChanged(nameof(ItemsData));
+                _itemData = value;
+                OnPropertyChanged(nameof(ItemData));
             }
         }
 
@@ -37,7 +37,7 @@ namespace SteamItemsStatsViewer.ViewModels
             {
                 Fill = new LinearGradientPaint(new [] { new SKColor(33, 150, 243, 100), new SKColor(43, 43, 43, 0) },new SKPoint(0, 0),new SKPoint(0, 1)),
                 Stroke = new SolidColorPaint(new SKColor(85, 177, 250,100)),
-                LineSmoothness = 1,
+                LineSmoothness = 0,
                 GeometrySize = 0,
                 DataPadding = new LiveChartsCore.Drawing.LvcPoint(0,0),
             }
@@ -67,7 +67,7 @@ namespace SteamItemsStatsViewer.ViewModels
             {
                 Fill = new LinearGradientPaint(new [] { new SKColor(33, 150, 243, 100), new SKColor(43, 43, 43, 0) },new SKPoint(0, 0),new SKPoint(0, 1)),
                 Stroke = new SolidColorPaint(new SKColor(85, 177, 250,100)),
-                LineSmoothness = 1,
+                LineSmoothness = 0,
                 GeometrySize = 0,
                 DataPadding = new LiveChartsCore.Drawing.LvcPoint(0,0),
             }
@@ -157,7 +157,7 @@ namespace SteamItemsStatsViewer.ViewModels
         {
             _folderPath = parameter;
 
-            RefreshDataCommand = new RefreshDataCommand(_folderPath, SeriesPrice, XAxesPrice, _itemsData, this);
+            RefreshDataCommand = new RefreshDataCommand(_folderPath, SeriesPrice, XAxesPrice, ItemData, this);
             RefreshDataCommand.Execute(this);
         }
     }
