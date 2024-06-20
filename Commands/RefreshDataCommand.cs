@@ -108,18 +108,6 @@ namespace SteamItemsStatsViewer.Commands
 
         public int GetQuantityFromLastDays(int days)
         {
-            //DateTime[] dates = _itemData.QuantityHistory.QuantityHistory.Select(x => x.Key).ToArray();
-            //int[] quantities = _itemData.QuantityHistory.QuantityHistory.Select(x => x.Value).ToArray();
-
-            //Dictionary<DateTime,int> data = new Dictionary<DateTime,int>();
-
-            //int i = 0;
-            //foreach(DateTime date in dates)
-            //{
-            //    data.Add(date, quantities[i]);
-            //    i++;
-            //}
-
             KeyValuePair<DateTime, int> firstKeyPair;
             try
             {
