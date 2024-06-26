@@ -12,6 +12,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
@@ -19,6 +20,22 @@
             <Button Command="{Binding RefreshDataCommand}" HorizontalAlignment="Right" Content="Refresh" Width="70"/>
         </Grid>
         <controls:HorizontalScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalAlignment="Center" HorizontalScrollBarVisibility="Hidden" Grid.Row="1">
+            <StackPanel Orientation="Horizontal">
+                <Border Style="{StaticResource InfoBuble}" MinWidth="130">
+                    <StackPanel>
+                        <TextBlock Text="Quantity" Style="{StaticResource TitleTextBlock}"/>
+                        <TextBlock Text="{Binding CurrentQuantity}" Style="{StaticResource ContentTextBlock}"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource InfoBuble}" MinWidth="130">
+                    <StackPanel>
+                        <TextBlock Text="Price" Style="{StaticResource TitleTextBlock}"/>
+                        <TextBlock Text="{Binding CurrentPrice}" Style="{StaticResource ContentTextBlock}"/>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </controls:HorizontalScrollViewer>
+        <controls:HorizontalScrollViewer Margin="0 10 0 0" VerticalScrollBarVisibility="Disabled" HorizontalAlignment="Center" HorizontalScrollBarVisibility="Hidden" Grid.Row="2">
             <StackPanel Orientation="Horizontal">
                 <Border Style="{StaticResource InfoBuble}">
                     <StackPanel>
@@ -58,7 +75,7 @@
                 </Border>
             </StackPanel>
         </controls:HorizontalScrollViewer>
-        <Border MinHeight="450" Grid.Row="2" Margin="0 10 0 0" Background="#141414" BorderBrush="Transparent" BorderThickness="1" CornerRadius="10">
+        <Border Grid.Row="3" Margin="0 10 0 0" Background="#141414" BorderBrush="Transparent" BorderThickness="1" CornerRadius="10">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
@@ -68,7 +85,7 @@
                 <lvc:CartesianChart Grid.Row="1" Series="{Binding SeriesPrice}" YAxes="{Binding YAxesPrice}" XAxes="{Binding XAxesPrice}" ZoomMode="X"/>
             </Grid>
         </Border>
-        <Border MinHeight="450" Grid.Row="3" Margin="0 10 0 0" Background="#141414" BorderBrush="Transparent" BorderThickness="1" CornerRadius="10">
+        <Border Grid.Row="4" Margin="0 10 0 0" Background="#141414" BorderBrush="Transparent" BorderThickness="1" CornerRadius="10">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>

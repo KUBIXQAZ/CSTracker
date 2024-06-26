@@ -152,6 +152,26 @@ namespace SteamItemsStatsViewer.ViewModels
                 OnPropertyChanged(nameof(Quantity30Days));
             }
         }
+        private string _currentQuantity;
+        public string CurrentQuantity
+        {
+            get => _currentQuantity;
+            set
+            {
+                _currentQuantity = value;
+                OnPropertyChanged(nameof(CurrentQuantity));
+            }
+        }
+        private string _currentPrice;
+        public string CurrentPrice
+        {
+            get => _currentPrice;
+            set
+            {
+                _currentPrice = value;
+                OnPropertyChanged(nameof(CurrentPrice));
+            }
+        }
 
         public DisplayItemDataViewModel(string parameter)
         {
