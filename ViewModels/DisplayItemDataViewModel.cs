@@ -8,6 +8,9 @@ using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore;
 using SkiaSharp;
 using LiveChartsCore.SkiaSharpView.Painting;
+using LiveChartsCore.Kernel.Sketches;
+using System.Windows.Documents;
+using LiveChartsCore.SkiaSharpView.WPF;
 
 namespace SteamItemsStatsViewer.ViewModels
 {
@@ -29,6 +32,18 @@ namespace SteamItemsStatsViewer.ViewModels
 
         //COMMANDS//
         public ICommand RefreshDataCommand { get; set; }
+
+        public ICommand DayTimeStampPriceChartCommand { get; set; }
+        public ICommand WeekTimeStampPriceChartCommand { get; set; }
+        public ICommand MonthTimeStampPriceChartCommand { get; set; }
+        public ICommand YearTimeStampPriceChartCommand { get; set; }
+        public ICommand AllTimeStampPriceChartCommand { get; set; }
+
+        public ICommand DayTimeStampQuantityChartCommand { get; set; }
+        public ICommand WeekTimeStampQuantityChartCommand { get; set; }
+        public ICommand MonthTimeStampQuantityChartCommand { get; set; }
+        public ICommand YearTimeStampQuantityChartCommand { get; set; }
+        public ICommand AllTimeStampQuantityChartCommand { get; set; }
 
         //PRICE CHART//
         public ISeries[] SeriesPrice { get; set; } = new ISeries[]
@@ -173,12 +188,79 @@ namespace SteamItemsStatsViewer.ViewModels
             }
         }
 
+        public enum ChartTimeStamp
+        {
+            Day = 0,
+            Week = 7,
+            Month = 30,
+            Year = 365,
+            All = 100000
+        }
+
+        private ChartTimeStamp _priceChartTimeStamp;
+        public ChartTimeStamp PriceChartTimeStamp
+        {
+            get => _priceChartTimeStamp;
+            set
+            {
+                _priceChartTimeStamp = value;
+                OnPropertyChanged(nameof(PriceChartTimeStamp));
+                UpdatePriceChartTimeStamp((LineSeries<double>)SeriesPrice[0], XAxesPrice[0], PriceChartTimeStamp, _itemData.PriceHistory);
+            }
+        }
+
+        private ChartTimeStamp _quantityChartTimeStamp;
+        public ChartTimeStamp QuantityChartTimeStamp
+        {
+            get => _quantityChartTimeStamp;
+            set
+            {
+                _quantityChartTimeStamp = value;
+                OnPropertyChanged(nameof(QuantityChartTimeStamp));
+                UpdateQuantityChartTimeStamp((LineSeries<int>)SeriesQuantity[0], XAxesQuantity[0], QuantityChartTimeStamp, _itemData.QuantityHistory);
+            }
+        }
+
+
+        private void UpdatePriceChartTimeStamp(LineSeries<double> lineSeries, Axis xAxis, ChartTimeStamp chartTimeStamp, PriceHistoryModel priceHistory)
+        {
+            lineSeries.Values = priceHistory.PriceHistory.Where(x => DateTime.Now.Date.AddDays(-(int)chartTimeStamp) <= x.Key.Date).Select(x => x.Value);
+            xAxis.Labels = priceHistory.PriceHistory.Where(x => DateTime.Now.Date.AddDays(-(int)chartTimeStamp) <= x.Key.Date).Select(x => x.Key.ToString()).ToArray();
+
+            xAxis.MinLimit = 0;
+            xAxis.MaxLimit = xAxis.Labels.Count - 1;
+        }
+
+        private void UpdateQuantityChartTimeStamp(LineSeries<int> lineSeries, Axis xAxis, ChartTimeStamp chartTimeStamp, QuantityHistoryModel quantityHistory)
+        {
+            lineSeries.Values = quantityHistory.QuantityHistory.Where(x => DateTime.Now.Date.AddDays(-(int)chartTimeStamp) <= x.Key.Date).Select(x => x.Value);
+            xAxis.Labels = quantityHistory.QuantityHistory.Where(x => DateTime.Now.Date.AddDays(-(int)chartTimeStamp) <= x.Key.Date).Select(x => x.Key.ToString()).ToArray();
+
+            xAxis.MinLimit = 0;
+            xAxis.MaxLimit = xAxis.Labels.Count - 1;
+        }
+
         public DisplayItemDataViewModel(string parameter)
         {
             _folderPath = parameter;
 
             RefreshDataCommand = new RefreshDataCommand(_folderPath, SeriesPrice, XAxesPrice, ItemData, this);
             RefreshDataCommand.Execute(this);
+
+            DayTimeStampPriceChartCommand = new ChangePriceChartTimeStampCommand(this, ChartTimeStamp.Day);
+            WeekTimeStampPriceChartCommand = new ChangePriceChartTimeStampCommand(this, ChartTimeStamp.Week);
+            MonthTimeStampPriceChartCommand = new ChangePriceChartTimeStampCommand(this, ChartTimeStamp.Month);
+            YearTimeStampPriceChartCommand = new ChangePriceChartTimeStampCommand(this, ChartTimeStamp.Year);
+            AllTimeStampPriceChartCommand = new ChangePriceChartTimeStampCommand(this, ChartTimeStamp.All);
+
+            DayTimeStampQuantityChartCommand = new ChangeQuantityChartTimeStampCommand(this, ChartTimeStamp.Day);
+            WeekTimeStampQuantityChartCommand = new ChangeQuantityChartTimeStampCommand(this, ChartTimeStamp.Week);
+            MonthTimeStampQuantityChartCommand = new ChangeQuantityChartTimeStampCommand(this, ChartTimeStamp.Month);
+            YearTimeStampQuantityChartCommand = new ChangeQuantityChartTimeStampCommand(this, ChartTimeStamp.Year);
+            AllTimeStampQuantityChartCommand = new ChangeQuantityChartTimeStampCommand(this, ChartTimeStamp.All);
+
+            PriceChartTimeStamp = ChartTimeStamp.Week;
+            QuantityChartTimeStamp = ChartTimeStamp.Week;
         }
     }
 }

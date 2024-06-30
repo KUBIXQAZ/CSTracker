@@ -79,20 +79,40 @@
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Label Grid.Row="0" Height="auto" Content="Price" HorizontalAlignment="Center"/>
-                <lvc:CartesianChart Grid.Row="1" Series="{Binding SeriesPrice}" YAxes="{Binding YAxesPrice}" XAxes="{Binding XAxesPrice}" ZoomMode="X"/>
+                <controls:HorizontalScrollViewer Grid.Row="1" Margin="40 0 0 0" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Hidden">
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="Day" Margin="0 0 15 0" Command="{Binding DayTimeStampPriceChartCommand}" Style="{StaticResource TimeStampChartButton}"/>
+                        <Button Content="Week" Margin="0 0 15 0" Command="{Binding WeekTimeStampPriceChartCommand}" Style="{StaticResource TimeStampChartButton}"/>
+                        <Button Content="Month" Margin="0 0 15 0" Command="{Binding MonthTimeStampPriceChartCommand}" Style="{StaticResource TimeStampChartButton}"/>
+                        <Button Content="Year" Margin="0 0 15 0" Command="{Binding YearTimeStampPriceChartCommand}" Style="{StaticResource TimeStampChartButton}"/>
+                        <Button Content="All" Margin="0 0 15 0" Command="{Binding AllTimeStampPriceChartCommand}" Style="{StaticResource TimeStampChartButton}"/>
+                    </StackPanel>
+                </controls:HorizontalScrollViewer>
+                <lvc:CartesianChart MinHeight="200" Grid.Row="2" Series="{Binding SeriesPrice}" YAxes="{Binding YAxesPrice}" XAxes="{Binding XAxesPrice}" ZoomMode="X"/>
             </Grid>
         </Border>
-        <Border Grid.Row="4" Margin="0 10 0 0" Background="#141414" BorderBrush="Transparent" BorderThickness="1" CornerRadius="10">
+        <Border Grid.Row="4"  Margin="0 10 0 0" Background="#141414" BorderBrush="Transparent" BorderThickness="1" CornerRadius="10">
             <Grid>
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Label Grid.Row="0" Height="auto" Content="Quantity" HorizontalAlignment="Center"/>
-                <lvc:CartesianChart Grid.Row="1" Series="{Binding SeriesQuantity}" YAxes="{Binding YAxesQuantity}" XAxes="{Binding XAxesQuantity}" ZoomMode="X"/>
+                <controls:HorizontalScrollViewer Grid.Row="1" Margin="40 0 0 0" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Hidden">
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="Day" Margin="0 0 15 0" Command="{Binding DayTimeStampQuantityChartCommand}" Style="{StaticResource TimeStampChartButton}"/>
+                        <Button Content="Week" Margin="0 0 15 0" Command="{Binding WeekTimeStampQuantityChartCommand}" Style="{StaticResource TimeStampChartButton}"/>
+                        <Button Content="Month" Margin="0 0 15 0" Command="{Binding MonthTimeStampQuantityChartCommand}" Style="{StaticResource TimeStampChartButton}"/>
+                        <Button Content="Year" Margin="0 0 15 0" Command="{Binding YearTimeStampQuantityChartCommand}" Style="{StaticResource TimeStampChartButton}"/>
+                        <Button Content="All" Margin="0 0 15 0" Command="{Binding AllTimeStampQuantityChartCommand}" Style="{StaticResource TimeStampChartButton}"/>
+                    </StackPanel>
+                </controls:HorizontalScrollViewer>
+                <lvc:CartesianChart MinHeight="200" Grid.Row="2" Series="{Binding SeriesQuantity}" YAxes="{Binding YAxesQuantity}" XAxes="{Binding XAxesQuantity}" ZoomMode="X"/>
             </Grid>
         </Border>
     </Grid>
