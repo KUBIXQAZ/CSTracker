@@ -8,15 +8,14 @@ using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore;
 using SkiaSharp;
 using LiveChartsCore.SkiaSharpView.Painting;
-using LiveChartsCore.Kernel.Sketches;
-using System.Windows.Documents;
-using LiveChartsCore.SkiaSharpView.WPF;
 
 namespace SteamItemsStatsViewer.ViewModels
 {
     public class DisplayItemDataViewModel : ViewModelBase
     {
         private string _folderPath { get; set; }
+
+        private double rate;
 
         //ITEM DATA//
         private ItemDataModel _itemData = new ItemDataModel();
@@ -224,7 +223,7 @@ namespace SteamItemsStatsViewer.ViewModels
 
         private void UpdatePriceChartTimeStamp(LineSeries<double> lineSeries, Axis xAxis, ChartTimeStamp chartTimeStamp, PriceHistoryModel priceHistory)
         {
-            lineSeries.Values = priceHistory.PriceHistory.Where(x => DateTime.Now.Date.AddDays(-(int)chartTimeStamp) <= x.Key.Date).Select(x => x.Value);
+            lineSeries.Values = priceHistory.PriceHistory.Where(x => DateTime.Now.Date.AddDays(-(int)chartTimeStamp) <= x.Key.Date).Select(x => Math.Round(x.Value * rate,2));
             xAxis.Labels = priceHistory.PriceHistory.Where(x => DateTime.Now.Date.AddDays(-(int)chartTimeStamp) <= x.Key.Date).Select(x => x.Key.ToString()).ToArray();
 
             xAxis.MinLimit = 0;
@@ -243,6 +242,8 @@ namespace SteamItemsStatsViewer.ViewModels
         public DisplayItemDataViewModel(string parameter)
         {
             _folderPath = parameter;
+
+            rate = rate = App.ExchangeRates.Where(x => x.Key == App.Settings.Currency).Select(x => x.Value).ToArray()[0];
 
             RefreshDataCommand = new RefreshDataCommand(_folderPath, SeriesPrice, XAxesPrice, ItemData, this);
             RefreshDataCommand.Execute(this);

@@ -15,8 +15,14 @@ namespace SteamItemsStatsViewer.Commands
         private DisplayItemDataViewModel _viewModel;
         private ItemDataModel _itemData;
 
+        private CurrencyModel _currencies;
+        private double rate;
+
         public RefreshDataCommand(string folderPath, ISeries[] iSeries, Axis[] xAxies, ItemDataModel itemData, DisplayItemDataViewModel viewModel)
         {
+            _currencies = new CurrencyModel();
+            rate = App.ExchangeRates.Where(x => x.Key == App.Settings.Currency).Select(x => x.Value).ToArray()[0];
+
             _folderPath = folderPath;
             _iSeries = iSeries;
             _xAxes = xAxies;
@@ -36,7 +42,7 @@ namespace SteamItemsStatsViewer.Commands
 
                 _itemData.PriceHistory = priceHistory;
 
-                _iSeries[0].Values = priceHistory.PriceHistory.Select(x => x.Value);
+                _iSeries[0].Values = priceHistory.PriceHistory.Select(x => (x.Value * rate));
                 _xAxes[0].Labels = priceHistory.PriceHistory.Select(x => x.Key.ToString()).ToArray();
             }
             #endregion
@@ -58,27 +64,27 @@ namespace SteamItemsStatsViewer.Commands
 
             try
             {
-                double price7Days = Math.Round(GetPriceFromLastDays(7), 2);
+                double price7Days = Math.Round(GetPriceFromLastDays(7) * rate, 2);
 
                 _viewModel.Price7Days = price7Days > 0 ? $"+{price7Days.ToString("N")}" : price7Days.ToString("N");
-                _viewModel.Price7Days = $"{_viewModel.Price7Days}{_itemData.PriceHistory.Currency}";
+                _viewModel.Price7Days = $"{_viewModel.Price7Days}{App.Settings.Currency}";
             } catch { _viewModel.Price7Days = "NO DATA"; }
 
             try
             {
-                double price14Days = Math.Round(GetPriceFromLastDays(14), 2);
+                double price14Days = Math.Round(GetPriceFromLastDays(14) * rate, 2);
 
                 _viewModel.Price14Days = price14Days > 0 ? $"+{price14Days.ToString("N")}" : price14Days.ToString("N");
-                _viewModel.Price14Days = $"{_viewModel.Price14Days}{_itemData.PriceHistory.Currency}";
+                _viewModel.Price14Days = $"{_viewModel.Price14Days}{App.Settings.Currency}";
             }
             catch { _viewModel.Price14Days = "NO DATA"; }
                 
             try
             {
-                double price30Days = Math.Round(GetPriceFromLastDays(30), 2);
+                double price30Days = Math.Round(GetPriceFromLastDays(30) * rate, 2);
 
                 _viewModel.Price30Days = price30Days > 0 ? $"+{price30Days.ToString("N")}" : price30Days.ToString("N");
-                _viewModel.Price30Days = $"{_viewModel.Price30Days}{_itemData.PriceHistory.Currency}";
+                _viewModel.Price30Days = $"{_viewModel.Price30Days}{App.Settings.Currency}";
             } catch { _viewModel.Price30Days = "NO DATA"; }
 
             try
@@ -103,7 +109,7 @@ namespace SteamItemsStatsViewer.Commands
                 _viewModel.Quantity30Days = quantity30Days > 0 ? $"+{quantity30Days.ToString("N0")}" : quantity30Days.ToString("N0");
             } catch { _viewModel.Quantity30Days = "NO DATA"; }
 
-            _viewModel.CurrentPrice = $"{_itemData.PriceHistory.PriceHistory.Last().Value.ToString("N")}{_itemData.PriceHistory.Currency}";
+            _viewModel.CurrentPrice = $"{(_itemData.PriceHistory.PriceHistory.Last().Value * rate).ToString("N")}{App.Settings.Currency}";
 
             _viewModel.CurrentQuantity = _itemData.QuantityHistory.QuantityHistory.Last().Value.ToString("N0");
         }
