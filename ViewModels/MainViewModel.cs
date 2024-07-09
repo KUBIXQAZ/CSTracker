@@ -42,6 +42,7 @@ namespace SteamItemsStatsViewer.ViewModels
             ViewModel = viewModel;
 
             LoadSteamItemsNavigationItems();
+            _navigationItems.Add(new SteamItemNavigationItemModel("Settings", new NavigateToCommand(this, () => { return new SettingsViewModel(); })));
         }
 
         private void LoadSteamItemsNavigationItems()
