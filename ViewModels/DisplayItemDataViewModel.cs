@@ -29,6 +29,17 @@ namespace SteamItemsStatsViewer.ViewModels
             }
         }
 
+        private string _itemName;
+        public string ItemName
+        {
+            get => _itemName;
+            set
+            {
+                _itemName = value;
+                OnPropertyChanged(nameof(ItemName));
+            }
+        }
+
         //COMMANDS//
         public ICommand RefreshDataCommand { get; set; }
 
@@ -242,6 +253,8 @@ namespace SteamItemsStatsViewer.ViewModels
         public DisplayItemDataViewModel(string parameter)
         {
             _folderPath = parameter;
+
+            _itemName = Path.GetFileName(parameter).Replace("_"," ");
 
             rate = rate = App.ExchangeRates.Where(x => x.Key == App.Settings.Currency).Select(x => x.Value).ToArray()[0];
 

@@ -16,8 +16,13 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Margin="0 0 0 5">
-            <Button Command="{Binding RefreshDataCommand}" HorizontalAlignment="Right" Content="Refresh" Width="70"/>
+        <Grid Grid.Row="0" Margin="0 0 0 20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="{Binding ItemName}" Style="{StaticResource Text}"/>
+            <Button Grid.Column="1" Command="{Binding RefreshDataCommand}" HorizontalAlignment="Right" Content="Refresh" Width="70"/>
         </Grid>
         <controls:HorizontalScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalAlignment="Center" HorizontalScrollBarVisibility="Hidden" Grid.Row="1">
             <StackPanel Orientation="Horizontal">
