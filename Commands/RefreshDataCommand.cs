@@ -4,63 +4,64 @@ using System.IO;
 using LiveChartsCore;
 using LiveChartsCore.SkiaSharpView;
 using SteamItemsStatsViewer.ViewModels;
+using System.Diagnostics;
+using static SteamItemsStatsViewer.ViewModels.DisplayItemDataViewModel;
+using LiveChartsCore.Kernel.Sketches;
 
 namespace SteamItemsStatsViewer.Commands
 {
     public class RefreshDataCommand : CommandBase
     {
         private string _folderPath;
-        private ISeries[] _iSeries;
-        private Axis[] _xAxes;
+
+        private ISeries[] _iSeriesPrice;
+        private Axis[] _xAxesPrice;
+        private ChartTimeStamp _priceChartTimeStamp;
+
+        private ISeries[] _iSeriesQuantity;
+        private Axis[] _xAxesQuantity;
+        private ChartTimeStamp _quantityChartTimeStamp;
+
         private DisplayItemDataViewModel _viewModel;
         private ItemDataModel _itemData;
 
         private CurrencyModel _currencies;
         private double rate;
 
-        public RefreshDataCommand(string folderPath, ISeries[] iSeries, Axis[] xAxies, ItemDataModel itemData, DisplayItemDataViewModel viewModel)
+        public RefreshDataCommand(string folderPath, ISeries[] iSeriesPrice, Axis[] xAxesPrice, ISeries[] iSeriesQuantity, Axis[] xAxesQuantity, ChartTimeStamp priceChartTimeStamp, ChartTimeStamp quantityChartTimeStamp, ItemDataModel itemData, DisplayItemDataViewModel viewModel)
         {
             _currencies = new CurrencyModel();
             rate = App.ExchangeRates.Where(x => x.Key == App.Settings.Currency).Select(x => x.Value).ToArray()[0];
 
             _folderPath = folderPath;
-            _iSeries = iSeries;
-            _xAxes = xAxies;
+
+            _iSeriesPrice = iSeriesPrice;
+            _xAxesPrice = xAxesPrice;
+            _priceChartTimeStamp = priceChartTimeStamp;
+
+            _iSeriesQuantity = iSeriesQuantity;
+            _xAxesQuantity = xAxesQuantity;
+            _quantityChartTimeStamp = quantityChartTimeStamp;
+
             _viewModel = viewModel;
             _itemData = itemData;
         }
 
         public override void Execute(object? parameter)
         {
-            #region PRICE HISTORY
-            string priceHistoryPath = $"{_folderPath}\\{Path.GetFileName(_folderPath)}_Price_History.json";
+            _viewModel.UpdateData();
 
-            if (File.Exists(priceHistoryPath))
-            {
-                string file = File.ReadAllText(priceHistoryPath);
-                PriceHistoryModel priceHistory = JsonConvert.DeserializeObject<PriceHistoryModel>(file);
+            _iSeriesPrice[0].Values = _itemData.PriceHistory.PriceHistory.Where(x => DateTime.Now.Date.AddDays(-(int)_priceChartTimeStamp) <= x.Key.Date).Select(x => Math.Round(x.Value * rate, 2));
+            _xAxesPrice[0].Labels = _itemData.PriceHistory.PriceHistory.Where(x => DateTime.Now.Date.AddDays(-(int)_priceChartTimeStamp) <= x.Key.Date).Select(x => x.Key.ToString()).ToArray();
 
-                _itemData.PriceHistory = priceHistory;
+            _xAxesPrice[0].MinLimit = 0;
+            _xAxesPrice[0].MaxLimit = _xAxesPrice[0].Labels.Count - 1;
 
-                _iSeries[0].Values = priceHistory.PriceHistory.Select(x => (x.Value * rate));
-                _xAxes[0].Labels = priceHistory.PriceHistory.Select(x => x.Key.ToString()).ToArray();
-            }
-            #endregion
+            _iSeriesQuantity[0].Values = _itemData.QuantityHistory.QuantityHistory.Where(x => DateTime.Now.Date.AddDays(-(int)_quantityChartTimeStamp) <= x.Key.Date).Select(x => x.Value);
+            _xAxesQuantity[0].Labels = _itemData.QuantityHistory.QuantityHistory.Where(x => DateTime.Now.Date.AddDays(-(int)_quantityChartTimeStamp) <= x.Key.Date).Select(x => x.Key.ToString()).ToArray();
 
-            #region QUANTITY HISTORY
-            string quantityHistoryPath = $"{_folderPath}\\{Path.GetFileName(_folderPath)}_Quantity_History.json";
-
-            if(File.Exists(quantityHistoryPath))
-            {
-                string file = File.ReadAllText(quantityHistoryPath);
-                QuantityHistoryModel quantityHistory = JsonConvert.DeserializeObject<QuantityHistoryModel>(file);
-
-                _itemData.QuantityHistory = quantityHistory;
-
-                _viewModel.SeriesQuantity[0].Values = quantityHistory.QuantityHistory.Select(x => x.Value);
-                _viewModel.XAxesQuantity[0].Labels = quantityHistory.QuantityHistory.Select(x => x.Key.ToString()).ToArray();
-            }
-            #endregion
+            _xAxesQuantity[0].MinLimit = 0;
+            _xAxesQuantity[0].MaxLimit = _xAxesQuantity[0].Labels.Count - 1;
 
             try
             {

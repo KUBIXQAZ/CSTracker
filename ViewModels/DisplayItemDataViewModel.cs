@@ -1,5 +1,4 @@
 ﻿using SteamItemsStatsViewer.Models;
-using System.Collections.ObjectModel;
 using System.IO;
 using Newtonsoft.Json;
 using System.Windows.Input;
@@ -14,8 +13,6 @@ namespace SteamItemsStatsViewer.ViewModels
     public class DisplayItemDataViewModel : ViewModelBase
     {
         private string _folderPath { get; set; }
-
-        private double rate;
 
         //ITEM DATA//
         private ItemDataModel _itemData = new ItemDataModel();
@@ -215,7 +212,8 @@ namespace SteamItemsStatsViewer.ViewModels
             {
                 _priceChartTimeStamp = value;
                 OnPropertyChanged(nameof(PriceChartTimeStamp));
-                UpdatePriceChartTimeStamp((LineSeries<double>)SeriesPrice[0], XAxesPrice[0], PriceChartTimeStamp, _itemData.PriceHistory);
+                RefreshDataCommand = CreateRefreshDataCommand();
+                RefreshDataCommand.Execute(this);
             }
         }
 
@@ -227,27 +225,9 @@ namespace SteamItemsStatsViewer.ViewModels
             {
                 _quantityChartTimeStamp = value;
                 OnPropertyChanged(nameof(QuantityChartTimeStamp));
-                UpdateQuantityChartTimeStamp((LineSeries<int>)SeriesQuantity[0], XAxesQuantity[0], QuantityChartTimeStamp, _itemData.QuantityHistory);
+                RefreshDataCommand = CreateRefreshDataCommand();
+                RefreshDataCommand.Execute(this);
             }
-        }
-
-
-        private void UpdatePriceChartTimeStamp(LineSeries<double> lineSeries, Axis xAxis, ChartTimeStamp chartTimeStamp, PriceHistoryModel priceHistory)
-        {
-            lineSeries.Values = priceHistory.PriceHistory.Where(x => DateTime.Now.Date.AddDays(-(int)chartTimeStamp) <= x.Key.Date).Select(x => Math.Round(x.Value * rate,2));
-            xAxis.Labels = priceHistory.PriceHistory.Where(x => DateTime.Now.Date.AddDays(-(int)chartTimeStamp) <= x.Key.Date).Select(x => x.Key.ToString()).ToArray();
-
-            xAxis.MinLimit = 0;
-            xAxis.MaxLimit = xAxis.Labels.Count - 1;
-        }
-
-        private void UpdateQuantityChartTimeStamp(LineSeries<int> lineSeries, Axis xAxis, ChartTimeStamp chartTimeStamp, QuantityHistoryModel quantityHistory)
-        {
-            lineSeries.Values = quantityHistory.QuantityHistory.Where(x => DateTime.Now.Date.AddDays(-(int)chartTimeStamp) <= x.Key.Date).Select(x => x.Value);
-            xAxis.Labels = quantityHistory.QuantityHistory.Where(x => DateTime.Now.Date.AddDays(-(int)chartTimeStamp) <= x.Key.Date).Select(x => x.Key.ToString()).ToArray();
-
-            xAxis.MinLimit = 0;
-            xAxis.MaxLimit = xAxis.Labels.Count - 1;
         }
 
         public DisplayItemDataViewModel(string parameter)
@@ -256,9 +236,7 @@ namespace SteamItemsStatsViewer.ViewModels
 
             _itemName = Path.GetFileName(parameter).Replace("_"," ");
 
-            rate = rate = App.ExchangeRates.Where(x => x.Key == App.Settings.Currency).Select(x => x.Value).ToArray()[0];
-
-            RefreshDataCommand = new RefreshDataCommand(_folderPath, SeriesPrice, XAxesPrice, ItemData, this);
+            RefreshDataCommand = CreateRefreshDataCommand();
             RefreshDataCommand.Execute(this);
 
             DayTimeStampPriceChartCommand = new ChangePriceChartTimeStampCommand(this, ChartTimeStamp.Day);
@@ -275,6 +253,34 @@ namespace SteamItemsStatsViewer.ViewModels
 
             PriceChartTimeStamp = ChartTimeStamp.Week;
             QuantityChartTimeStamp = ChartTimeStamp.Week;
+        }
+
+        public void UpdateData()
+        {
+            string priceHistoryPath = $"{_folderPath}\\{Path.GetFileName(_folderPath)}_Price_History.json";
+
+            if (File.Exists(priceHistoryPath))
+            {
+                string file = File.ReadAllText(priceHistoryPath);
+                PriceHistoryModel priceHistory = JsonConvert.DeserializeObject<PriceHistoryModel>(file);
+
+                _itemData.PriceHistory = priceHistory;
+            }
+
+            string quantityHistoryPath = $"{_folderPath}\\{Path.GetFileName(_folderPath)}_Quantity_History.json";
+
+            if (File.Exists(quantityHistoryPath))
+            {
+                string file = File.ReadAllText(quantityHistoryPath);
+                QuantityHistoryModel quantityHistory = JsonConvert.DeserializeObject<QuantityHistoryModel>(file);
+
+                _itemData.QuantityHistory = quantityHistory;
+            }
+        }
+
+        private RefreshDataCommand CreateRefreshDataCommand()
+        {
+            return new RefreshDataCommand(_folderPath, SeriesPrice, XAxesPrice, SeriesQuantity, XAxesQuantity, _priceChartTimeStamp, _quantityChartTimeStamp, ItemData, this);
         }
     }
 }
