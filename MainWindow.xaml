@@ -26,15 +26,19 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="5*"/>
         </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0">
-            <ListView ItemsSource="{Binding NavigationItems}" Style="{StaticResource Navigation}" HorizontalContentAlignment="Stretch">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <Button HorizontalAlignment="Stretch" Style="{StaticResource NavigationButton}" Command="{Binding Command}" Content="{Binding Title}"/>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </Grid>
+        <Border BorderBrush="Black"
+                Padding="5"
+                BorderThickness="0 0 1 0">
+            <StackPanel Grid.Column="0"
+                    Orientation="Vertical">
+                <Button Content="Home"
+                        Command="{Binding HomeNavigationCommand}"
+                        Margin="0 0 0 5"/>
+                <Button Content="Settings"
+                        Command="{Binding SettingsNavigationCommand}"
+                        Margin="0 0 0 5"/>
+            </StackPanel>
+        </Border>
         <controls:MainScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto">
             <ContentControl Margin="10" Content="{Binding ViewModel}" />
         </controls:MainScrollViewer>

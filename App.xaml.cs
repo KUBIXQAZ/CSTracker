@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using SteamItemsStatsViewer.DTOs;
 using SteamItemsStatsViewer.Models;
+using SteamItemsStatsViewer.Stores;
 using SteamItemsStatsViewer.ViewModels;
 using System.Configuration;
 using System.Data;
@@ -17,8 +18,6 @@ namespace SteamItemsStatsViewer
     /// </summary>
     public partial class App : Application
     {
-        public ViewModelBase ViewModel { get; set; }
-
         public static string MainDataFolder;
         public static string TempDataFolder;
 
@@ -30,15 +29,15 @@ namespace SteamItemsStatsViewer
         {
             base.OnStartup(e);
 
-            ViewModel = new HomeViewModel();
-
             CreateAppDataFolders();
             GetExchangeRates();
             LoadExchangeRates();
             LoadSettings();
 
+            NavigationStore navigationStore = new NavigationStore();
+
             MainWindow mainWindow = new MainWindow();
-            mainWindow.DataContext = new MainViewModel(ViewModel);
+            mainWindow.DataContext = new MainViewModel(navigationStore);
             mainWindow.Show();
         }
 
