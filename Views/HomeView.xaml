@@ -7,40 +7,37 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" 
              d:DesignWidth="800">
-    <ScrollViewer HorizontalScrollBarVisibility="Hidden"
-                  VerticalScrollBarVisibility="Auto">
-        <ListBox ItemsSource="{Binding NavigationItems}"
-                 Background="Transparent"
-                 BorderThickness="0"
-                 BorderBrush="Transparent"
-                 HorizontalContentAlignment="Stretch">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <Grid VerticalAlignment="Center"
-                          HorizontalAlignment="Stretch"
-                          Height="100">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Image Source="{Binding Image}"
-                               Grid.Column="0"
-                               VerticalAlignment="Center"
-                               Margin="0 0 10 0"/>
-                        <TextBlock Text="{Binding Title}"
-                                   Foreground="{StaticResource TextColor}"
-                                   Grid.Column="1"
-                                   FontSize="20"
-                                   VerticalAlignment="Center"/>
-                        <Button Command="{Binding Command}" 
-                                Grid.Column="0" 
-                                Grid.ColumnSpan="2"
-                                Background="Transparent"
-                                BorderBrush="Transparent"
-                                BorderThickness="0"/>
-                    </Grid>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-    </ScrollViewer>
+    <ListBox ItemsSource="{Binding NavigationItems}"
+             Background="Transparent"
+             BorderThickness="0"
+             BorderBrush="Transparent"
+             HorizontalContentAlignment="Stretch">
+        <ListBox.ItemTemplate>
+            <DataTemplate>
+                <Grid VerticalAlignment="Center"
+                      HorizontalAlignment="Stretch"
+                      Height="100">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Source="{Binding Image}"
+                           Grid.Column="0"
+                           VerticalAlignment="Center"
+                           Margin="0 0 10 0"/>
+                    <TextBlock Text="{Binding Title}"
+                               Foreground="{StaticResource TextColor}"
+                               Grid.Column="1"
+                               FontSize="20"
+                               VerticalAlignment="Center"/>
+                    <Button Command="{Binding Command}" 
+                            Grid.Column="0" 
+                            Grid.ColumnSpan="2"
+                            Background="Transparent"
+                            BorderBrush="Transparent"
+                            BorderThickness="0"/>
+                </Grid>
+            </DataTemplate>
+        </ListBox.ItemTemplate>
+    </ListBox>
 </UserControl>

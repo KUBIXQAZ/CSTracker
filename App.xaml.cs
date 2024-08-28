@@ -1,14 +1,10 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using SteamItemsStatsViewer.DTOs;
 using SteamItemsStatsViewer.Models;
 using SteamItemsStatsViewer.Stores;
 using SteamItemsStatsViewer.ViewModels;
-using System.Configuration;
-using System.Data;
 using System.IO;
 using System.Net.Http;
-using System.Text.Json.Nodes;
 using System.Windows;
 
 namespace SteamItemsStatsViewer
