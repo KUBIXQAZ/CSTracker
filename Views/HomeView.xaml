@@ -12,16 +12,16 @@
         <ListBox ItemsSource="{Binding NavigationItems}"
                  Background="Transparent"
                  BorderThickness="0"
-                 BorderBrush="Transparent">
+                 BorderBrush="Transparent"
+                 HorizontalContentAlignment="Stretch">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid VerticalAlignment="Center"
                           HorizontalAlignment="Stretch"
-                          Height="100"
-                          Width="auto">
+                          Height="100">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Image Source="{Binding Image}"
                                Grid.Column="0"
