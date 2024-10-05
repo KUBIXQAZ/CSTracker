@@ -39,8 +39,11 @@
                         Margin="0 0 0 5"/>
             </StackPanel>
         </Border>
-        <controls:MainScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto">
-            <ContentControl Margin="10" Content="{Binding ViewModel}" />
+        <controls:MainScrollViewer Grid.Column="1" 
+                                   VerticalScrollBarVisibility="Auto"
+                                   ViewModel="{Binding ViewModel}">
+            <ContentControl Margin="10"
+                            Content="{Binding ViewModel}" />
         </controls:MainScrollViewer>
     </Grid>
 </Window>

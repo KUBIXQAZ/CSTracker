@@ -7,16 +7,25 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" 
              d:DesignWidth="800">
-    <ListBox ItemsSource="{Binding NavigationItems}"
-             Background="Transparent"
-             BorderThickness="0"
-             BorderBrush="Transparent"
-             HorizontalContentAlignment="Stretch">
-        <ListBox.ItemTemplate>
+    <ItemsControl ItemsSource="{Binding NavigationItems}"
+                  Background="Transparent"
+                  BorderThickness="0"
+                  BorderBrush="Transparent"
+                  HorizontalContentAlignment="Stretch">
+        <ItemsControl.ItemTemplate>
             <DataTemplate>
                 <Grid VerticalAlignment="Center"
                       HorizontalAlignment="Stretch"
                       Height="100">
+                    <Grid.Style>
+                        <Style TargetType="Grid">
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#FF131313"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Grid.Style>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="*"/>
@@ -38,6 +47,6 @@
                             BorderThickness="0"/>
                 </Grid>
             </DataTemplate>
-        </ListBox.ItemTemplate>
-    </ListBox>
+        </ItemsControl.ItemTemplate>
+    </ItemsControl>
 </UserControl>
