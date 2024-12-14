@@ -1,14 +1,9 @@
-﻿using SteamItemsStatsViewer.Commands;
+﻿using Newtonsoft.Json;
+using SteamItemsStatsViewer.Commands;
 using SteamItemsStatsViewer.Models;
 using SteamItemsStatsViewer.Stores;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
-using System.Printing;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SteamItemsStatsViewer.ViewModels
 {
@@ -46,9 +41,19 @@ namespace SteamItemsStatsViewer.ViewModels
                 string name = directoryName.Replace("_", " ");
 
                 string[] files = Directory.GetFiles(directory);
-                string image = $"{directory}\\{directoryName}_Image.png";
 
-                SteamItemNavigationItemModel steamItemNavigationItem = new SteamItemNavigationItemModel(name, image, new RelayCommand(execute => { _navigationStore.ViewModel = new DisplayItemDataViewModel(directory); }));
+                string image = files.First(x => Path.GetExtension(x).ToLower() == ".png");
+
+                string priceHistoryFilePath = files.First(x => Path.GetFileNameWithoutExtension(x).Contains("Price_History"));
+
+                string priceHistoryFile = File.ReadAllText(priceHistoryFilePath);
+
+                PriceHistoryModel history = JsonConvert.DeserializeObject<PriceHistoryModel>(priceHistoryFile);
+
+                KeyValuePair<DateTime, double> pair = history.PriceHistory.Last();
+                string price = Math.Round(pair.Value, 2).ToString("N") + App.Settings.Currency;
+
+                SteamItemNavigationItemModel steamItemNavigationItem = new SteamItemNavigationItemModel(name, image, price, new RelayCommand(execute => { _navigationStore.ViewModel = new DisplayItemDataViewModel(directory); }));
                 _navigationItems.Add(steamItemNavigationItem);
             }
         }
