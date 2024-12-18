@@ -1,21 +1,18 @@
 ﻿using Newtonsoft.Json;
-using SteamItemsStatsViewer.DTOs;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SteamItemsStatsViewer.Models
 {
     public class SettingsModel
     {
         public string Currency;
+        public double ExchangeRate;
 
         public SettingsModel(string currency)
         {
             Currency = currency;
+
+            ExchangeRate = App.ExchangeRates.Where(x => x.Key == Currency).ToArray()[0].Value;
         }
 
         public void SaveSettings()
