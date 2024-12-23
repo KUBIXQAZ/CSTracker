@@ -3,10 +3,9 @@ using SteamItemsStatsViewer.Commands;
 using SteamItemsStatsViewer.Models;
 using SteamItemsStatsViewer.Stores;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.IO;
+using System.Printing;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
 
 namespace SteamItemsStatsViewer.ViewModels
 {
@@ -35,27 +34,48 @@ namespace SteamItemsStatsViewer.ViewModels
         private void LoadSteamItemsNavigationItems()
         {
             string path = "D:\\PROGRAMMING-PROJECTS\\csharp-apps\\SteamMarketDataCollector\\bin\\Debug\\net8.0\\output";
-
             string[] directories = Directory.GetDirectories(path);
 
-            Dictionary<string,double> directoriesDictionary = new Dictionary<string,double>();
+            string[] directoriesDictionary = new string[directories.Length];
 
-            foreach (string directory in directories)
+            string favItemsPath = App.MainDataFolder + "/FavouriteItems.json";
+            if (Path.Exists(favItemsPath))
             {
-                string[] files = Directory.GetFiles(directory);
+                string f = File.ReadAllText(favItemsPath);
+                string[] fav = JsonConvert.DeserializeObject<string[]>(f);
 
-                string priceHistoryFilePath = files.First(x => Path.GetFileNameWithoutExtension(x).Contains("Price_History"));
+                string[]? matchedNames = directories.Where(x =>
+                {
+                    if(fav != null)
+                    {
+                        return fav.Contains(Path.GetFileName(x).Replace("_", " "));
+                    } 
+                    else
+                    {
+                        return false;
+                    }
+                    
+                }).ToArray();
+                string[] unmatchedNames = directories.Where(x =>
+                {
+                    if(fav != null)
+                    {
+                        return !fav.Contains(Path.GetFileName(x).Replace("_", " "));
+                    } 
+                    else
+                    {
+                        return true;
+                    }
+                }).ToArray();
 
-                string priceHistoryFile = File.ReadAllText(priceHistoryFilePath);
-
-                PriceHistoryModel history = JsonConvert.DeserializeObject<PriceHistoryModel>(priceHistoryFile);
-
-                double price = history.PriceHistory.Last().Value;
-
-                directoriesDictionary.Add(directory, price);
+                directoriesDictionary = matchedNames.Concat(unmatchedNames).ToArray();
+            }
+            else
+            {
+                directoriesDictionary = directories;
             }
 
-            foreach (string directory in directoriesDictionary.OrderByDescending(x => x.Value).Select(x => x.Key))
+            foreach (string directory in directoriesDictionary)
             {
                 string directoryName = Path.GetFileName(directory);
                 string name = directoryName.Replace("_", " ");
@@ -91,7 +111,29 @@ namespace SteamItemsStatsViewer.ViewModels
                     else priceThisWeekColor = new SolidColorBrush(Colors.Gray);
                 } catch (Exception) { }
 
-                SteamItemNavigationItemModel steamItemNavigationItem = new SteamItemNavigationItemModel(name, image, price, priceThisWeekP, priceThisWeekColor, new RelayCommand(execute => { _navigationStore.ViewModel = new DisplayItemDataViewModel(directory); }));
+                bool isFav = false;
+                
+                string filePath = App.MainDataFolder + "/FavouriteItems.json";
+                if(File.Exists(filePath))
+                {
+                    string file = File.ReadAllText(filePath);
+
+                    List<string> favItems = JsonConvert.DeserializeObject<List<string>>(file);
+
+                    if(favItems != null)
+                    {
+                        foreach (string item in favItems)
+                        {
+                            if (name == item) isFav = true;
+                        }
+                    }
+                } else
+                {
+                    var f = File.Create(filePath);
+                    f.Close();
+                }
+
+                SteamItemNavigationItemModel steamItemNavigationItem = new SteamItemNavigationItemModel(name, image, price, priceThisWeekP, priceThisWeekColor, new RelayCommand(execute => { _navigationStore.ViewModel = new DisplayItemDataViewModel(directory); }), isFav);
                 _navigationItems.Add(steamItemNavigationItem);
             }
         }
