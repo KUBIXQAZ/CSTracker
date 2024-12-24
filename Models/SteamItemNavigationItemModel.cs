@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using SteamItemsStatsViewer.Commands;
+using SteamItemsStatsViewer.ViewModels;
 using System.ComponentModel;
 using System.IO;
 using System.Windows.Media;
@@ -8,6 +9,8 @@ namespace SteamItemsStatsViewer.Models
 {
     public class SteamItemNavigationItemModel : INotifyPropertyChanged
     {
+        private HomeViewModel viewModel;
+
         public string Title { get; set; }
         public string Image { get; set; }
         public string Price { get; set; }
@@ -28,8 +31,10 @@ namespace SteamItemsStatsViewer.Models
         }
         public RelayCommand ToggleFavCommand { get; set; }
 
-        public SteamItemNavigationItemModel(string title, string image, string price, string priceThisWeek, SolidColorBrush priceThisWeekColor, RelayCommand command, bool favState)
+        public SteamItemNavigationItemModel(string title, string image, string price, string priceThisWeek, SolidColorBrush priceThisWeekColor, RelayCommand command, bool favState, HomeViewModel viewModel)
         {
+            this.viewModel = viewModel;
+
             Title = title;
             Image = image;
             Price = price;
@@ -92,6 +97,8 @@ namespace SteamItemsStatsViewer.Models
             File.WriteAllText(filePath, json);
 
             LoadFavImage();
+
+            viewModel.LoadSteamItemsNavigationItems();
         }
     }
 }

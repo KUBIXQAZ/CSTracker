@@ -24,15 +24,21 @@ namespace SteamItemsStatsViewer.ViewModels
             }
         }
 
+        public RelayCommand RefreshListCommand { get; set; }
+
         public HomeViewModel(NavigationStore navigationStore)
         {
             _navigationStore = navigationStore;
 
+            RefreshListCommand = new RelayCommand(execute => LoadSteamItemsNavigationItems());
+
             LoadSteamItemsNavigationItems();
         }
 
-        private void LoadSteamItemsNavigationItems()
+        public void LoadSteamItemsNavigationItems()
         {
+            NavigationItems.Clear();
+
             string path = "D:\\PROGRAMMING-PROJECTS\\csharp-apps\\SteamMarketDataCollector\\bin\\Debug\\net8.0\\output";
             string[] directories = Directory.GetDirectories(path);
 
@@ -133,7 +139,7 @@ namespace SteamItemsStatsViewer.ViewModels
                     f.Close();
                 }
 
-                SteamItemNavigationItemModel steamItemNavigationItem = new SteamItemNavigationItemModel(name, image, price, priceThisWeekP, priceThisWeekColor, new RelayCommand(execute => { _navigationStore.ViewModel = new DisplayItemDataViewModel(directory); }), isFav);
+                SteamItemNavigationItemModel steamItemNavigationItem = new SteamItemNavigationItemModel(name, image, price, priceThisWeekP, priceThisWeekColor, new RelayCommand(execute => { _navigationStore.ViewModel = new DisplayItemDataViewModel(directory); }), isFav, this);
                 _navigationItems.Add(steamItemNavigationItem);
             }
         }

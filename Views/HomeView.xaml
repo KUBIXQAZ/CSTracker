@@ -8,77 +8,90 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" 
              d:DesignWidth="800">
-    <ItemsControl ItemsSource="{Binding NavigationItems}"
-                  Background="Transparent"
-                  BorderThickness="0"
-                  BorderBrush="Transparent"
-                  HorizontalContentAlignment="Stretch">
-        <ItemsControl.ItemTemplate>
-            <DataTemplate>
-                <Grid VerticalAlignment="Center"
-                      HorizontalAlignment="Stretch"
-                      Height="100">
-                    <Grid.Style>
-                        <Style TargetType="Grid">
-                            <Style.Triggers>
-                                <Trigger Property="IsMouseOver" 
-                                         Value="True">
-                                    <Setter Property="Background" 
-                                            Value="#FF131313"/>
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Grid.Style>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="auto"/>
-                    </Grid.ColumnDefinitions>
-                    <Image Source="{Binding Image}"
-                           Grid.Column="0"
-                           VerticalAlignment="Center"
-                           Margin="0 0 10 0"/>
-                    <Grid Grid.Column="1" 
-                          VerticalAlignment="Center">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                        </Grid.RowDefinitions>
-                        <TextBlock Text="{Binding Title}"
-                                   Style="{StaticResource Text}"
-                                   Grid.Row="0"
-                                   FontSize="20"/>
-                        <Grid Grid.Row="1">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition Width="auto"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Text="{Binding Price}"
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Button HorizontalAlignment="Right" 
+                    Content="Refresh" 
+                    Command="{Binding RefreshListCommand}"
+                    Width="70"/>
+        </Grid>
+        <ItemsControl ItemsSource="{Binding NavigationItems}"
+                      Grid.Row="1"
+                      Background="Transparent"
+                      BorderThickness="0"
+                      BorderBrush="Transparent"
+                      HorizontalContentAlignment="Stretch">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Grid VerticalAlignment="Center"
+                          HorizontalAlignment="Stretch"
+                          Height="100">
+                        <Grid.Style>
+                            <Style TargetType="Grid">
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" 
+                                             Value="True">
+                                        <Setter Property="Background" 
+                                                Value="#FF131313"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Grid.Style>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Image Source="{Binding Image}"
+                               Grid.Column="0"
+                               VerticalAlignment="Center"
+                               Margin="0 0 10 0"/>
+                        <Grid Grid.Column="1" 
+                              VerticalAlignment="Center">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="{Binding Title}"
                                        Style="{StaticResource Text}"
-                                       Grid.Column="0"
-                                       FontSize="20"
-                                       Margin="0, 0, 20, 0"/>
-                            <TextBlock Text="{Binding PriceThisWeek}"
-                                       Style="{StaticResource Text}"
-                                       Foreground="{Binding PriceThisWeekColor}"
-                                       Grid.Column="1"
-                                       FontSize="20"/>                         
+                                       Grid.Row="0"
+                                       FontSize="20"/>
+                            <Grid Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="{Binding Price}"
+                                           Style="{StaticResource Text}"
+                                           Grid.Column="0"
+                                           FontSize="20"
+                                           Margin="0, 0, 20, 0"/>
+                                <TextBlock Text="{Binding PriceThisWeek}"
+                                           Style="{StaticResource Text}"
+                                           Foreground="{Binding PriceThisWeekColor}"
+                                           Grid.Column="1"
+                                           FontSize="20"/>
+                            </Grid>
                         </Grid>
+                        <controls:ImageToggle Grid.Column="2"
+                                              Width="30"
+                                              Height="30"
+                                              Margin="0,0,5,0"
+                                              Source="{Binding FavImageSource}"
+                                              Command="{Binding ToggleFavCommand}"/>
+                        <Button Command="{Binding Command}" 
+                                Grid.Column="0" 
+                                Grid.ColumnSpan="2"
+                                Background="Transparent"
+                                BorderBrush="Transparent"
+                                BorderThickness="0"/>
                     </Grid>
-                    <controls:ImageToggle Grid.Column="2"
-                                          Width="30"
-                                          Height="30"
-                                          Margin="0,0,5,0"
-                                          Source="{Binding FavImageSource}"
-                                          Command="{Binding ToggleFavCommand}"/>
-                    <Button Command="{Binding Command}" 
-                            Grid.Column="0" 
-                            Grid.ColumnSpan="2"
-                            Background="Transparent"
-                            BorderBrush="Transparent"
-                            BorderThickness="0"/>
-                </Grid>
-            </DataTemplate>
-        </ItemsControl.ItemTemplate>
-    </ItemsControl>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </Grid>
 </UserControl>
