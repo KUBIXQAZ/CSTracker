@@ -93,10 +93,11 @@ namespace SteamItemsStatsViewer
                 string file = File.ReadAllText(filePath);
                 if (file == null) throw new Exception("Settings.json file is empty");
                 Settings = JsonConvert.DeserializeObject<SettingsModel>(file);
-            } else
+            } 
+            else
             {
-                SettingsModel settings = new SettingsModel("USD");
-                settings.SaveSettings();
+                Settings = new SettingsModel("USD");
+                Settings.SaveSettings();
             }
         }
     }

@@ -7,9 +7,12 @@
              xmlns:controls="clr-namespace:SteamItemsStatsViewer.Resources.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+    <ScrollViewer VerticalScrollBarVisibility="Auto" 
+                  HorizontalScrollBarVisibility="Disabled">
         <Grid>
             <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
@@ -29,6 +32,12 @@
                           SelectedItem="{Binding SelectedCurrency, Mode=TwoWay}"
                           Width="100"/>
             </Grid>
+            <Label Grid.Row="2" 
+                   Content="Reset all user settings"/>
+            <Button Grid.Row="3"
+                    Content="Reset"
+                    HorizontalAlignment="Left"
+                    Command="{Binding ResetSettingsCommand}"/>
         </Grid>
     </ScrollViewer>
 </UserControl>

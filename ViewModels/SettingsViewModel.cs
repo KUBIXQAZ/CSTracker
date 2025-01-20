@@ -3,9 +3,12 @@ using SteamItemsStatsViewer.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace SteamItemsStatsViewer.ViewModels
@@ -35,6 +38,7 @@ namespace SteamItemsStatsViewer.ViewModels
         }
 
         public ICommand SaveSettingsCommand { get; set; }
+        public ICommand ResetSettingsCommand { get; set; }
 
         public SettingsViewModel()
         {
@@ -42,6 +46,7 @@ namespace SteamItemsStatsViewer.ViewModels
             _selectedCurrency = App.Settings.Currency;
 
             SaveSettingsCommand = new SaveSettingsCommand(this);
+            ResetSettingsCommand = new RelayCommand(execute => ResetSettings());
         }
 
         private void LoadCurrencies()
@@ -51,6 +56,14 @@ namespace SteamItemsStatsViewer.ViewModels
             {
                 _currencies.Add(item);
             }
+        }
+
+        private void ResetSettings()
+        {
+            Directory.Delete(App.MainDataFolder, true);
+
+            Process.Start(Process.GetCurrentProcess().MainModule.FileName);
+            Application.Current.Shutdown();
         }
     }
 }
