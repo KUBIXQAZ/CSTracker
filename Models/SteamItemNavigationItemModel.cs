@@ -85,11 +85,11 @@ namespace SteamItemsStatsViewer.Models
 
             if(FavState)
             {
-                items.Add(Title);
+                items.Add(Uri.EscapeDataString(Title));
             } 
             else
             {
-                items.Remove(Title);
+                items.Remove(Uri.EscapeDataString(Title));
             }
 
             string json = JsonConvert.SerializeObject(items);

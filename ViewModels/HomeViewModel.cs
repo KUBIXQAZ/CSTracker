@@ -4,8 +4,8 @@ using SteamItemsStatsViewer.Models;
 using SteamItemsStatsViewer.Stores;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Printing;
 using System.Windows.Media;
+using System.Net;
 
 namespace SteamItemsStatsViewer.ViewModels
 {
@@ -54,7 +54,7 @@ namespace SteamItemsStatsViewer.ViewModels
                 {
                     if(fav != null)
                     {
-                        return fav.Contains(Path.GetFileName(x).Replace("_", " "));
+                        return fav.Contains(Path.GetFileName(x));
                     } 
                     else
                     {
@@ -66,7 +66,7 @@ namespace SteamItemsStatsViewer.ViewModels
                 {
                     if(fav != null)
                     {
-                        return !fav.Contains(Path.GetFileName(x).Replace("_", " "));
+                        return !fav.Contains(Path.GetFileName(x));
                     } 
                     else
                     {
@@ -84,7 +84,7 @@ namespace SteamItemsStatsViewer.ViewModels
             foreach (string directory in directoriesDictionary)
             {
                 string directoryName = Path.GetFileName(directory);
-                string name = directoryName.Replace("_", " ");
+                string name = WebUtility.UrlDecode(directoryName);
 
                 string[] files = Directory.GetFiles(directory);
 
@@ -130,7 +130,7 @@ namespace SteamItemsStatsViewer.ViewModels
                     {
                         foreach (string item in favItems)
                         {
-                            if (name == item) isFav = true;
+                            if (Uri.EscapeDataString(name) == item) isFav = true;
                         }
                     }
                 } else

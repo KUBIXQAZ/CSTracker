@@ -234,7 +234,7 @@ namespace SteamItemsStatsViewer.ViewModels
         {
             _folderPath = parameter;
 
-            _itemName = Path.GetFileName(parameter).Replace("_"," ");
+            _itemName = Uri.UnescapeDataString(Path.GetFileName(parameter));
 
             RefreshDataCommand = CreateRefreshDataCommand();
             RefreshDataCommand.Execute(this);

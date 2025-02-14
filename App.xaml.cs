@@ -58,11 +58,12 @@ namespace SteamItemsStatsViewer
                 if (DateTime.Now.Date == exchangeRates.Date.Date) return;
             }
 
-            HttpClient httpClient = new HttpClient();
+            using (HttpClient httpClient = new HttpClient())
+            {
+                string data = httpClient.GetStringAsync("https://api.exchangerate-api.com/v4/latest/usd").GetAwaiter().GetResult();
 
-            string data = httpClient.GetStringAsync("https://api.exchangerate-api.com/v4/latest/usd").GetAwaiter().GetResult();
-
-            File.WriteAllText(filePath, data);
+                File.WriteAllText(filePath, data);
+            }
         }
 
         private void LoadExchangeRates()

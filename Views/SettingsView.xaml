@@ -16,17 +16,20 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
-            <Grid Grid.Row="0" HorizontalAlignment="Right">
+            <Grid Grid.Row="0" 
+                  HorizontalAlignment="Right">
                 <Button Content="Save" 
                         Padding="10,2,10,2"
                         Command="{Binding SaveSettingsCommand}"/>
             </Grid>
-            <Grid Grid.Row="1" HorizontalAlignment="Left">
+            <Grid Grid.Row="1" 
+                  HorizontalAlignment="Left">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
-                <Label Grid.Row="0" Content="Currency"/>
+                <Label Grid.Row="0" 
+                       Content="Currency"/>
                 <ComboBox Grid.Row="1"
                           ItemsSource="{Binding Currencies}"
                           SelectedItem="{Binding SelectedCurrency, Mode=TwoWay}"
