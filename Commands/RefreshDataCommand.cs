@@ -51,14 +51,14 @@ namespace SteamItemsStatsViewer.Commands
         {
             _viewModel.UpdateData();
 
-            _iSeriesPrice[0].Values = _itemData.PriceHistory.PriceHistory.Where(x => DateTime.Now.Date.AddDays(-(int)_priceChartTimeStamp) <= x.Key.Date).Select(x => Math.Round(x.Value * rate, 2));
-            _xAxesPrice[0].Labels = _itemData.PriceHistory.PriceHistory.Where(x => DateTime.Now.Date.AddDays(-(int)_priceChartTimeStamp) <= x.Key.Date).Select(x => x.Key.ToString()).ToArray();
+            //_iSeriesPrice[0].Values = _itemData.PriceHistory.PriceHistory.Where(x => DateTime.Now.Date.AddDays(-(int)_priceChartTimeStamp) <= x.Key.Date).Select(x => Math.Round(x.Value * rate, 2));
+            //_xAxesPrice[0].Labels = _itemData.PriceHistory.PriceHistory.Where(x => DateTime.Now.Date.AddDays(-(int)_priceChartTimeStamp) <= x.Key.Date).Select(x => x.Key.ToString()).ToArray();
 
             _xAxesPrice[0].MinLimit = 0;
             _xAxesPrice[0].MaxLimit = _xAxesPrice[0].Labels.Count - 1;
 
-            _iSeriesQuantity[0].Values = _itemData.QuantityHistory.QuantityHistory.Where(x => DateTime.Now.Date.AddDays(-(int)_quantityChartTimeStamp) <= x.Key.Date).Select(x => x.Value);
-            _xAxesQuantity[0].Labels = _itemData.QuantityHistory.QuantityHistory.Where(x => DateTime.Now.Date.AddDays(-(int)_quantityChartTimeStamp) <= x.Key.Date).Select(x => x.Key.ToString()).ToArray();
+            //_iSeriesQuantity[0].Values = _itemData.QuantityHistory.QuantityHistory.Where(x => DateTime.Now.Date.AddDays(-(int)_quantityChartTimeStamp) <= x.Key.Date).Select(x => x.Value);
+            //_xAxesQuantity[0].Labels = _itemData.QuantityHistory.QuantityHistory.Where(x => DateTime.Now.Date.AddDays(-(int)_quantityChartTimeStamp) <= x.Key.Date).Select(x => x.Key.ToString()).ToArray();
 
             _xAxesQuantity[0].MinLimit = 0;
             _xAxesQuantity[0].MaxLimit = _xAxesQuantity[0].Labels.Count - 1;
@@ -110,24 +110,27 @@ namespace SteamItemsStatsViewer.Commands
                 _viewModel.Quantity30Days = quantity30Days > 0 ? $"+{quantity30Days.ToString("N0")}" : quantity30Days.ToString("N0");
             } catch { _viewModel.Quantity30Days = "NO DATA"; }
 
-            _viewModel.CurrentPrice = $"{(_itemData.PriceHistory.PriceHistory.Last().Value * rate).ToString("N")}{App.Settings.Currency}";
+            //_viewModel.CurrentPrice = $"{(_itemData.PriceHistory.PriceHistory.Last().Value * rate).ToString("N")}{App.Settings.Currency}";
 
-            _viewModel.CurrentQuantity = _itemData.QuantityHistory.QuantityHistory.Last().Value.ToString("N0");
+            //_viewModel.CurrentQuantity = _itemData.QuantityHistory.QuantityHistory.Last().Value.ToString("N0");
         }
 
         public double GetPriceFromLastDays(int days)
         {
-            KeyValuePair<DateTime, double> firstKeyPair = _itemData.PriceHistory.PriceHistory.First(x => x.Key.Date == DateTime.Now.AddDays(-days).Date);
-            KeyValuePair<DateTime, double> secondKeyPair = _itemData.PriceHistory.PriceHistory.First(x => x.Key.Date == DateTime.Now.Date);
+            //KeyValuePair<DateTime, double> firstKeyPair = _itemData.PriceHistory.PriceHistory.First(x => x.Key.Date == DateTime.Now.AddDays(-days).Date);
+            //KeyValuePair<DateTime, double> secondKeyPair = _itemData.PriceHistory.PriceHistory.First(x => x.Key.Date == DateTime.Now.Date);
 
-            return secondKeyPair.Value - firstKeyPair.Value;
+            //return secondKeyPair.Value - firstKeyPair.Value;
+
+            return 0;
         }
 
         public int GetQuantityFromLastDays(int days)
         {
-            KeyValuePair<DateTime, int> firstKeyPair = _itemData.QuantityHistory.QuantityHistory.First(x => x.Key.Date == DateTime.Now.AddDays(-days).Date);
-            KeyValuePair<DateTime, int> secondKeyPair = _itemData.QuantityHistory.QuantityHistory.First(x => x.Key.Date == DateTime.Now.Date);
-            return secondKeyPair.Value - firstKeyPair.Value;
+            //KeyValuePair<DateTime, int> firstKeyPair = _itemData.QuantityHistory.QuantityHistory.First(x => x.Key.Date == DateTime.Now.AddDays(-days).Date);
+            //KeyValuePair<DateTime, int> secondKeyPair = _itemData.QuantityHistory.QuantityHistory.First(x => x.Key.Date == DateTime.Now.Date);
+            //return secondKeyPair.Value - firstKeyPair.Value;
+            return 0;
         }
     }
 }

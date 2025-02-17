@@ -16,6 +16,7 @@ namespace SteamItemsStatsViewer
     {
         public static string MainDataFolder;
         public static string TempDataFolder;
+        public static string IconFolder;
 
         public static SettingsModel Settings {  get; set; }
 
@@ -41,9 +42,11 @@ namespace SteamItemsStatsViewer
         {
             MainDataFolder = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\KUBIXQAZ\\SteamItemsStatsViewer\\";
             TempDataFolder = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\KUBIXQAZ\\SteamItemsStatsViewer\\Temp";
+            IconFolder = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\KUBIXQAZ\\SteamItemsStatsViewer\\Icons";
 
-            if(!Directory.Exists(MainDataFolder)) Directory.CreateDirectory(MainDataFolder);
-            if(!Directory.Exists(TempDataFolder)) Directory.CreateDirectory(TempDataFolder);
+            if (!Directory.Exists(MainDataFolder)) Directory.CreateDirectory(MainDataFolder);
+            if (!Directory.Exists(TempDataFolder)) Directory.CreateDirectory(TempDataFolder);
+            if (!Directory.Exists(IconFolder)) Directory.CreateDirectory(IconFolder);
         }
 
         private void GetExchangeRates()

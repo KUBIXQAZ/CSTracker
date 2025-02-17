@@ -4,8 +4,7 @@ using SteamItemsStatsViewer.Models;
 using SteamItemsStatsViewer.Stores;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Windows.Media;
-using System.Net;
+using System.Net.Http;
 
 namespace SteamItemsStatsViewer.ViewModels
 {
@@ -35,11 +34,48 @@ namespace SteamItemsStatsViewer.ViewModels
             LoadSteamItemsNavigationItems();
         }
 
-        public void LoadSteamItemsNavigationItems()
+        public async void LoadSteamItemsNavigationItems()
         {
             NavigationItems.Clear();
 
-            string path = "D:\\PROGRAMMING-PROJECTS\\csharp-apps\\SteamMarketDataCollector\\bin\\Debug\\net8.0\\output";
+            List<ItemDataModel> itemsData = new List<ItemDataModel>();
+
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://192.168.31.71:5000/api/ItemsData/");
+
+                var answer = await client.GetAsync("GetItemsData");
+
+                if(answer.IsSuccessStatusCode)
+                {
+                    string content = await answer.Content.ReadAsStringAsync();
+                    if (string.IsNullOrEmpty(content)) return;
+
+                    itemsData = JsonConvert.DeserializeObject<List<ItemDataModel>>(content)!;
+                }
+            }
+
+            try
+            {
+                foreach (ItemDataModel item in itemsData)
+                {
+                    Random rng = new Random();
+
+                    item.IconPath = $"{App.IconFolder}\\{rng.Next(int.MaxValue)}.png";
+
+                    File.WriteAllBytes(item.IconPath, item.Icon);
+                }
+            }
+            catch (Exception) { }
+
+            //foreach(string name in names)
+            //{
+            //    SteamItemNavigationItemModel steamItemNavigationItem = new SteamItemNavigationItemModel(name, image, price, priceThisWeekP, priceThisWeekColor, new RelayCommand(execute => { _navigationStore.ViewModel = new DisplayItemDataViewModel(directory); }), isFav, this);
+            //    _navigationItems.Add(steamItemNavigationItem);
+            //}
+
+            /*
+            string path = "D:\\Windows\\Desktop\\output\\";
             string[] directories = Directory.GetDirectories(path);
 
             string[] directoriesDictionary = new string[directories.Length];
@@ -142,6 +178,7 @@ namespace SteamItemsStatsViewer.ViewModels
                 SteamItemNavigationItemModel steamItemNavigationItem = new SteamItemNavigationItemModel(name, image, price, priceThisWeekP, priceThisWeekColor, new RelayCommand(execute => { _navigationStore.ViewModel = new DisplayItemDataViewModel(directory); }), isFav, this);
                 _navigationItems.Add(steamItemNavigationItem);
             }
+            */
         }
     }
 }

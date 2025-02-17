@@ -264,7 +264,7 @@ namespace SteamItemsStatsViewer.ViewModels
                 string file = File.ReadAllText(priceHistoryPath);
                 PriceHistoryModel priceHistory = JsonConvert.DeserializeObject<PriceHistoryModel>(file);
 
-                _itemData.PriceHistory = priceHistory;
+                //_itemData.PriceHistory = priceHistory;
             }
 
             string quantityHistoryPath = $"{_folderPath}\\{Path.GetFileName(_folderPath)}_Quantity_History.json";
@@ -274,7 +274,7 @@ namespace SteamItemsStatsViewer.ViewModels
                 string file = File.ReadAllText(quantityHistoryPath);
                 QuantityHistoryModel quantityHistory = JsonConvert.DeserializeObject<QuantityHistoryModel>(file);
 
-                _itemData.QuantityHistory = quantityHistory;
+                //_itemData.QuantityHistory = quantityHistory;
             }
         }
 
