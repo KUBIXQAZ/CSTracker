@@ -6,7 +6,7 @@ namespace SteamItemsStatsViewer.Models
     public class SettingsModel
     {
         public string Currency;
-        public double ExchangeRate;
+        public decimal ExchangeRate;
 
         public SettingsModel(string currency)
         {

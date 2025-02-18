@@ -26,7 +26,7 @@ namespace SteamItemsStatsViewer.Commands
         private ItemDataModel _itemData;
 
         private CurrencyModel _currencies;
-        private double rate;
+        private decimal rate;
 
         public RefreshDataCommand(string folderPath, ISeries[] iSeriesPrice, Axis[] xAxesPrice, ISeries[] iSeriesQuantity, Axis[] xAxesQuantity, ChartTimeStamp priceChartTimeStamp, ChartTimeStamp quantityChartTimeStamp, ItemDataModel itemData, DisplayItemDataViewModel viewModel)
         {
@@ -65,7 +65,7 @@ namespace SteamItemsStatsViewer.Commands
 
             try
             {
-                double price7Days = Math.Round(GetPriceFromLastDays(7) * rate, 2);
+                decimal price7Days = Math.Round(GetPriceFromLastDays(7) * rate, 2);
 
                 _viewModel.Price7Days = price7Days > 0 ? $"+{price7Days.ToString("N")}" : price7Days.ToString("N");
                 _viewModel.Price7Days = $"{_viewModel.Price7Days}{App.Settings.Currency}";
@@ -73,7 +73,7 @@ namespace SteamItemsStatsViewer.Commands
 
             try
             {
-                double price14Days = Math.Round(GetPriceFromLastDays(14) * rate, 2);
+                decimal price14Days = Math.Round(GetPriceFromLastDays(14) * rate, 2);
 
                 _viewModel.Price14Days = price14Days > 0 ? $"+{price14Days.ToString("N")}" : price14Days.ToString("N");
                 _viewModel.Price14Days = $"{_viewModel.Price14Days}{App.Settings.Currency}";
@@ -82,7 +82,7 @@ namespace SteamItemsStatsViewer.Commands
                 
             try
             {
-                double price30Days = Math.Round(GetPriceFromLastDays(30) * rate, 2);
+                decimal price30Days = Math.Round(GetPriceFromLastDays(30) * rate, 2);
 
                 _viewModel.Price30Days = price30Days > 0 ? $"+{price30Days.ToString("N")}" : price30Days.ToString("N");
                 _viewModel.Price30Days = $"{_viewModel.Price30Days}{App.Settings.Currency}";
@@ -115,7 +115,7 @@ namespace SteamItemsStatsViewer.Commands
             //_viewModel.CurrentQuantity = _itemData.QuantityHistory.QuantityHistory.Last().Value.ToString("N0");
         }
 
-        public double GetPriceFromLastDays(int days)
+        public decimal GetPriceFromLastDays(int days)
         {
             //KeyValuePair<DateTime, double> firstKeyPair = _itemData.PriceHistory.PriceHistory.First(x => x.Key.Date == DateTime.Now.AddDays(-days).Date);
             //KeyValuePair<DateTime, double> secondKeyPair = _itemData.PriceHistory.PriceHistory.First(x => x.Key.Date == DateTime.Now.Date);

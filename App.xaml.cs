@@ -20,7 +20,7 @@ namespace SteamItemsStatsViewer
 
         public static SettingsModel Settings {  get; set; }
 
-        public static Dictionary<string, double> ExchangeRates = new Dictionary<string,double>();
+        public static Dictionary<string, decimal> ExchangeRates = new Dictionary<string, decimal>();
 
         protected override void OnStartup(StartupEventArgs e)
         {

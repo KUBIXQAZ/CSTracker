@@ -31,17 +31,17 @@ namespace SteamItemsStatsViewer.Models
         }
         public RelayCommand ToggleFavCommand { get; set; }
 
-        public SteamItemNavigationItemModel(string title, string image, string price, string priceThisWeek, SolidColorBrush priceThisWeekColor, RelayCommand command, bool favState, HomeViewModel viewModel)
+        public SteamItemNavigationItemModel(string title, string image, string price, RelayCommand command, HomeViewModel viewModel)
         {
             this.viewModel = viewModel;
 
             Title = title;
             Image = image;
             Price = price;
-            PriceThisWeek = priceThisWeek;
-            PriceThisWeekColor = priceThisWeekColor;
+            //PriceThisWeek = priceThisWeek;
+            //PriceThisWeekColor = priceThisWeekColor;
             Command = command;
-            FavState = favState;
+            //FavState = favState;
 
             ToggleFavCommand = new RelayCommand(execute => ToggleFav());
 

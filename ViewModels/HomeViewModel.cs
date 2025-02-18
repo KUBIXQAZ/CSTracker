@@ -1,10 +1,14 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using SteamItemsStatsViewer.Commands;
 using SteamItemsStatsViewer.Models;
 using SteamItemsStatsViewer.Stores;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
+using System.Windows.Data;
+using System.Xml.Linq;
 
 namespace SteamItemsStatsViewer.ViewModels
 {
@@ -67,6 +71,14 @@ namespace SteamItemsStatsViewer.ViewModels
                 }
             }
             catch (Exception) { }
+
+            foreach (ItemDataModel item in itemsData)
+            {
+                string price = Math.Round(item.PriceHistory.Last().Value * App.Settings.ExchangeRate, 2).ToString("N") + App.Settings.Currency;
+
+                SteamItemNavigationItemModel steamItemNavigationItem = new SteamItemNavigationItemModel(item.Name, item.IconPath, price, new RelayCommand(execute => { _navigationStore.ViewModel = new DisplayItemDataViewModel(); }), this);
+                NavigationItems.Add(steamItemNavigationItem);
+            }
 
             //foreach(string name in names)
             //{

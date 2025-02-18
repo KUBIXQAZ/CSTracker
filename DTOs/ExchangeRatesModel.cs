@@ -23,6 +23,6 @@ namespace SteamItemsStatsViewer.DTOs
         public long TimeLastUpdated { get; set; }
 
         [JsonProperty("rates")]
-        public Dictionary<string, double> Rates { get; set; }
+        public Dictionary<string, decimal> Rates { get; set; }
     }
 }

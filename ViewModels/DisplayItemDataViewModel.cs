@@ -230,11 +230,11 @@ namespace SteamItemsStatsViewer.ViewModels
             }
         }
 
-        public DisplayItemDataViewModel(string parameter)
+        public DisplayItemDataViewModel()
         {
-            _folderPath = parameter;
+            _folderPath = "";
 
-            _itemName = Uri.UnescapeDataString(Path.GetFileName(parameter));
+            _itemName = Uri.UnescapeDataString(Path.GetFileName(""));
 
             RefreshDataCommand = CreateRefreshDataCommand();
             RefreshDataCommand.Execute(this);
