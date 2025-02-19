@@ -9,7 +9,8 @@ namespace SteamItemsStatsViewer.Models
 {
     public class SteamItemNavigationItemModel : INotifyPropertyChanged
     {
-        private HomeViewModel viewModel;
+        private HomeViewModel _viewModel {  get; set; }
+        private ItemDataModel _itemData {  get; set; }
 
         public string Title { get; set; }
         public string Image { get; set; }
@@ -31,18 +32,19 @@ namespace SteamItemsStatsViewer.Models
         }
         public RelayCommand ToggleFavCommand { get; set; }
 
-        public SteamItemNavigationItemModel(string title, string image, string price, RelayCommand command, HomeViewModel viewModel)
+        public SteamItemNavigationItemModel(ItemDataModel itemData, HomeViewModel viewModel)
         {
-            this.viewModel = viewModel;
+            _viewModel = viewModel;
+            _itemData = itemData;
 
-            Title = title;
-            Image = image;
-            Price = price;
+            Title = itemData.Name;
+            Image = itemData.IconPath;
+            Price = Math.Round(itemData.PriceHistory.Last().Value * App.Settings.ExchangeRate, 2).ToString("N") + App.Settings.Currency;
             //PriceThisWeek = priceThisWeek;
             //PriceThisWeekColor = priceThisWeekColor;
-            Command = command;
             //FavState = favState;
 
+            Command = new RelayCommand(execute => LoadItemPage());
             ToggleFavCommand = new RelayCommand(execute => ToggleFav());
 
             LoadFavImage();
@@ -53,6 +55,11 @@ namespace SteamItemsStatsViewer.Models
         public void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private void LoadItemPage()
+        {
+            _viewModel._navigationStore.ViewModel = new DisplayItemDataViewModel(_itemData);
         }
 
         private void LoadFavImage()
@@ -98,7 +105,7 @@ namespace SteamItemsStatsViewer.Models
 
             LoadFavImage();
 
-            viewModel.LoadSteamItemsNavigationItems();
+            _viewModel.LoadSteamItemsNavigationItems();
         }
     }
 }

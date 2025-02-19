@@ -14,7 +14,7 @@ namespace SteamItemsStatsViewer.ViewModels
 {
     public class HomeViewModel : ViewModelBase
     {
-        private readonly NavigationStore _navigationStore;
+        public NavigationStore _navigationStore;
 
         private ObservableCollection<SteamItemNavigationItemModel> _navigationItems = new ObservableCollection<SteamItemNavigationItemModel>();
         public ObservableCollection<SteamItemNavigationItemModel> NavigationItems
@@ -72,11 +72,9 @@ namespace SteamItemsStatsViewer.ViewModels
             }
             catch (Exception) { }
 
-            foreach (ItemDataModel item in itemsData)
+            foreach (ItemDataModel itemData in itemsData)
             {
-                string price = Math.Round(item.PriceHistory.Last().Value * App.Settings.ExchangeRate, 2).ToString("N") + App.Settings.Currency;
-
-                SteamItemNavigationItemModel steamItemNavigationItem = new SteamItemNavigationItemModel(item.Name, item.IconPath, price, new RelayCommand(execute => { _navigationStore.ViewModel = new DisplayItemDataViewModel(); }), this);
+                SteamItemNavigationItemModel steamItemNavigationItem = new SteamItemNavigationItemModel(itemData, this);
                 NavigationItems.Add(steamItemNavigationItem);
             }
 

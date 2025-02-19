@@ -230,11 +230,10 @@ namespace SteamItemsStatsViewer.ViewModels
             }
         }
 
-        public DisplayItemDataViewModel()
+        public DisplayItemDataViewModel(ItemDataModel itemData)
         {
-            _folderPath = "";
-
-            _itemName = Uri.UnescapeDataString(Path.GetFileName(""));
+            ItemData = itemData;
+            ItemName = ItemData.Name;
 
             RefreshDataCommand = CreateRefreshDataCommand();
             RefreshDataCommand.Execute(this);
@@ -251,31 +250,31 @@ namespace SteamItemsStatsViewer.ViewModels
             YearTimeStampQuantityChartCommand = new ChangeQuantityChartTimeStampCommand(this, ChartTimeStamp.Year);
             AllTimeStampQuantityChartCommand = new ChangeQuantityChartTimeStampCommand(this, ChartTimeStamp.All);
 
-            PriceChartTimeStamp = ChartTimeStamp.Week;
-            QuantityChartTimeStamp = ChartTimeStamp.Week;
+            PriceChartTimeStamp = ChartTimeStamp.Day;
+            QuantityChartTimeStamp = ChartTimeStamp.Day;
         }
 
         public void UpdateData()
         {
-            string priceHistoryPath = $"{_folderPath}\\{Path.GetFileName(_folderPath)}_Price_History.json";
+            //string priceHistoryPath = $"{_folderPath}\\{Path.GetFileName(_folderPath)}_Price_History.json";
 
-            if (File.Exists(priceHistoryPath))
-            {
-                string file = File.ReadAllText(priceHistoryPath);
-                PriceHistoryModel priceHistory = JsonConvert.DeserializeObject<PriceHistoryModel>(file);
+            //if (File.Exists(priceHistoryPath))
+            //{
+            //    string file = File.ReadAllText(priceHistoryPath);
+            //    PriceHistoryModel priceHistory = JsonConvert.DeserializeObject<PriceHistoryModel>(file);
 
-                //_itemData.PriceHistory = priceHistory;
-            }
+            //    //_itemData.PriceHistory = priceHistory;
+            //}
 
-            string quantityHistoryPath = $"{_folderPath}\\{Path.GetFileName(_folderPath)}_Quantity_History.json";
+            //string quantityHistoryPath = $"{_folderPath}\\{Path.GetFileName(_folderPath)}_Quantity_History.json";
 
-            if (File.Exists(quantityHistoryPath))
-            {
-                string file = File.ReadAllText(quantityHistoryPath);
-                QuantityHistoryModel quantityHistory = JsonConvert.DeserializeObject<QuantityHistoryModel>(file);
+            //if (File.Exists(quantityHistoryPath))
+            //{
+            //    string file = File.ReadAllText(quantityHistoryPath);
+            //    QuantityHistoryModel quantityHistory = JsonConvert.DeserializeObject<QuantityHistoryModel>(file);
 
-                //_itemData.QuantityHistory = quantityHistory;
-            }
+            //    //_itemData.QuantityHistory = quantityHistory;
+            //}
         }
 
         private RefreshDataCommand CreateRefreshDataCommand()
