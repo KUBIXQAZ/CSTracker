@@ -22,6 +22,8 @@ namespace SteamItemsStatsViewer
 
         public static Dictionary<string, decimal> ExchangeRates = new Dictionary<string, decimal>();
 
+        public static string BaseApiUrl = "http://192.168.31.71:5000/api/ItemsData/";
+
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);

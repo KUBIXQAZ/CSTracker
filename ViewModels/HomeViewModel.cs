@@ -42,7 +42,7 @@ namespace SteamItemsStatsViewer.ViewModels
 
             using (HttpClient client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://192.168.31.71:5000/api/ItemsData/");
+                client.BaseAddress = new Uri(App.BaseApiUrl);
 
                 var answer = await client.GetAsync("GetItemsData");
 

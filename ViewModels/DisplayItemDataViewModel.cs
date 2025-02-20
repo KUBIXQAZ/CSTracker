@@ -5,6 +5,8 @@ using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore;
 using SkiaSharp;
 using LiveChartsCore.SkiaSharpView.Painting;
+using System.Net.Http;
+using Newtonsoft.Json;
 
 namespace SteamItemsStatsViewer.ViewModels
 {
@@ -235,27 +237,21 @@ namespace SteamItemsStatsViewer.ViewModels
             QuantityChartTimeStamp = ChartTimeStamp.Day;
         }
 
-        private void RefreshData()
+        private async void RefreshData()
         {
-            //string priceHistoryPath = $"{_folderPath}\\{Path.GetFileName(_folderPath)}_Price_History.json";
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(App.BaseApiUrl);
 
-            //if (File.Exists(priceHistoryPath))
-            //{
-            //    string file = File.ReadAllText(priceHistoryPath);
-            //    PriceHistoryModel priceHistory = JsonConvert.DeserializeObject<PriceHistoryModel>(file);
+                var answer = await client.GetAsync($"GetItemData/{ItemData.Name}");
 
-            //    //_itemData.PriceHistory = priceHistory;
-            //}
+                if (answer.IsSuccessStatusCode)
+                {
+                    string content = await answer.Content.ReadAsStringAsync();
 
-            //string quantityHistoryPath = $"{_folderPath}\\{Path.GetFileName(_folderPath)}_Quantity_History.json";
-
-            //if (File.Exists(quantityHistoryPath))
-            //{
-            //    string file = File.ReadAllText(quantityHistoryPath);
-            //    QuantityHistoryModel quantityHistory = JsonConvert.DeserializeObject<QuantityHistoryModel>(file);
-
-            //    //_itemData.QuantityHistory = quantityHistory;
-            //}
+                    ItemData = JsonConvert.DeserializeObject<ItemDataModel>(content);
+                }
+            }
 
             decimal rate = App.ExchangeRates.First(x => x.Key == App.Settings.Currency).Value;
 
