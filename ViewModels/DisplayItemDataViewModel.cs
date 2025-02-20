@@ -1,6 +1,4 @@
 ﻿using SteamItemsStatsViewer.Models;
-using System.IO;
-using Newtonsoft.Json;
 using System.Windows.Input;
 using SteamItemsStatsViewer.Commands;
 using LiveChartsCore.SkiaSharpView;
@@ -12,8 +10,6 @@ namespace SteamItemsStatsViewer.ViewModels
 {
     public class DisplayItemDataViewModel : ViewModelBase
     {
-        private string _folderPath { get; set; }
-
         //ITEM DATA//
         private ItemDataModel _itemData = new ItemDataModel();
         public ItemDataModel ItemData
@@ -23,17 +19,6 @@ namespace SteamItemsStatsViewer.ViewModels
             {
                 _itemData = value;
                 OnPropertyChanged(nameof(ItemData));
-            }
-        }
-
-        private string _itemName;
-        public string ItemName
-        {
-            get => _itemName;
-            set
-            {
-                _itemName = value;
-                OnPropertyChanged(nameof(ItemName));
             }
         }
 
@@ -212,7 +197,6 @@ namespace SteamItemsStatsViewer.ViewModels
             {
                 _priceChartTimeStamp = value;
                 OnPropertyChanged(nameof(PriceChartTimeStamp));
-                RefreshDataCommand = CreateRefreshDataCommand();
                 RefreshDataCommand.Execute(this);
             }
         }
@@ -225,7 +209,6 @@ namespace SteamItemsStatsViewer.ViewModels
             {
                 _quantityChartTimeStamp = value;
                 OnPropertyChanged(nameof(QuantityChartTimeStamp));
-                RefreshDataCommand = CreateRefreshDataCommand();
                 RefreshDataCommand.Execute(this);
             }
         }
@@ -233,10 +216,8 @@ namespace SteamItemsStatsViewer.ViewModels
         public DisplayItemDataViewModel(ItemDataModel itemData)
         {
             ItemData = itemData;
-            ItemName = ItemData.Name;
 
-            RefreshDataCommand = CreateRefreshDataCommand();
-            RefreshDataCommand.Execute(this);
+            RefreshDataCommand = new RelayCommand(execute => RefreshData());
 
             DayTimeStampPriceChartCommand = new ChangePriceChartTimeStampCommand(this, ChartTimeStamp.Day);
             WeekTimeStampPriceChartCommand = new ChangePriceChartTimeStampCommand(this, ChartTimeStamp.Week);
@@ -254,7 +235,7 @@ namespace SteamItemsStatsViewer.ViewModels
             QuantityChartTimeStamp = ChartTimeStamp.Day;
         }
 
-        public void UpdateData()
+        private void RefreshData()
         {
             //string priceHistoryPath = $"{_folderPath}\\{Path.GetFileName(_folderPath)}_Price_History.json";
 
@@ -275,11 +256,91 @@ namespace SteamItemsStatsViewer.ViewModels
 
             //    //_itemData.QuantityHistory = quantityHistory;
             //}
+
+            decimal rate = App.ExchangeRates.First(x => x.Key == App.Settings.Currency).Value;
+
+            SeriesPrice[0].Values = _itemData.PriceHistory.Where(x => DateTime.Now.Date.AddDays(-(int)_priceChartTimeStamp) <= x.Key.Date).Select(x => (double)Math.Round(x.Value * rate, 2));
+            XAxesPrice[0].Labels = _itemData.PriceHistory.Where(x => DateTime.Now.Date.AddDays(-(int)_priceChartTimeStamp) <= x.Key.Date).Select(x => x.Key.ToString()).ToArray();
+
+            XAxesPrice[0].MinLimit = 0;
+            XAxesPrice[0].MaxLimit = XAxesPrice[0].Labels.Count - 1;
+
+            SeriesQuantity[0].Values = _itemData.QuantityHistory.Where(x => DateTime.Now.Date.AddDays(-(int)_quantityChartTimeStamp) <= x.Key.Date).Select(x => x.Value);
+            XAxesQuantity[0].Labels = _itemData.QuantityHistory.Where(x => DateTime.Now.Date.AddDays(-(int)_quantityChartTimeStamp) <= x.Key.Date).Select(x => x.Key.ToString()).ToArray();
+
+            XAxesQuantity[0].MinLimit = 0;
+            XAxesQuantity[0].MaxLimit = XAxesQuantity[0].Labels.Count - 1;
+
+            try
+            {
+                decimal price7Days = Math.Round(GetPriceFromLastDays(7) * rate, 2);
+
+                Price7Days = price7Days > 0 ? $"+{price7Days.ToString("N")}" : price7Days.ToString("N");
+                Price7Days = $"{Price7Days}{App.Settings.Currency}";
+            }
+            catch { Price7Days = "NO DATA"; }
+
+            try
+            {
+                decimal price14Days = Math.Round(GetPriceFromLastDays(14) * rate, 2);
+
+                Price14Days = price14Days > 0 ? $"+{price14Days.ToString("N")}" : price14Days.ToString("N");
+                Price14Days = $"{Price14Days}{App.Settings.Currency}";
+            }
+            catch { Price14Days = "NO DATA"; }
+
+            try
+            {
+                decimal price30Days = Math.Round(GetPriceFromLastDays(30) * rate, 2);
+
+                Price30Days = price30Days > 0 ? $"+{price30Days.ToString("N")}" : price30Days.ToString("N");
+                Price30Days = $"{Price30Days}{App.Settings.Currency}";
+            }
+            catch { Price30Days = "NO DATA"; }
+
+            try
+            {
+                int quantity7Days = GetQuantityFromLastDays(7);
+
+                Quantity7Days = quantity7Days > 0 ? $"+{quantity7Days.ToString("N0")}" : quantity7Days.ToString("N0");
+            }
+            catch { Quantity7Days = "NO DATA"; }
+
+            try
+            {
+                int quantity14Days = GetQuantityFromLastDays(14);
+
+                Quantity14Days = quantity14Days > 0 ? $"+{quantity14Days.ToString("N0")}" : quantity14Days.ToString("N0");
+            }
+            catch { Quantity14Days = "NO DATA"; }
+
+            try
+            {
+                int quantity30Days = GetQuantityFromLastDays(30);
+
+                Quantity30Days = quantity30Days > 0 ? $"+{quantity30Days.ToString("N0")}" : quantity30Days.ToString("N0");
+            }
+            catch { Quantity30Days = "NO DATA"; }
+
+            CurrentPrice = $"{(_itemData.PriceHistory.Last().Value * rate).ToString("N")}{App.Settings.Currency}";
+
+            CurrentQuantity = _itemData.QuantityHistory.Last().Value.ToString("N0");
         }
 
-        private RefreshDataCommand CreateRefreshDataCommand()
+        public decimal GetPriceFromLastDays(int days)
         {
-            return new RefreshDataCommand(_folderPath, SeriesPrice, XAxesPrice, SeriesQuantity, XAxesQuantity, _priceChartTimeStamp, _quantityChartTimeStamp, ItemData, this);
+            KeyValuePair<DateTime, decimal> firstKeyPair = _itemData.PriceHistory.First(x => x.Key.Date == DateTime.Now.AddDays(-days).Date);
+            KeyValuePair<DateTime, decimal> secondKeyPair = _itemData.PriceHistory.First(x => x.Key.Date == DateTime.Now.Date);
+
+            return secondKeyPair.Value - firstKeyPair.Value;
+        }
+
+        public int GetQuantityFromLastDays(int days)
+        {
+            KeyValuePair<DateTime, int> firstKeyPair = _itemData.QuantityHistory.First(x => x.Key.Date == DateTime.Now.AddDays(-days).Date);
+            KeyValuePair<DateTime, int> secondKeyPair = _itemData.QuantityHistory.First(x => x.Key.Date == DateTime.Now.Date);
+
+            return secondKeyPair.Value - firstKeyPair.Value;
         }
     }
 }

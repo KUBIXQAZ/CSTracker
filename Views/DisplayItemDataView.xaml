@@ -21,7 +21,7 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" Text="{Binding ItemName}" Style="{StaticResource Text}"/>
+            <TextBlock Grid.Column="0" Text="{Binding ItemData.Name}" Style="{StaticResource Text}"/>
             <Button Grid.Column="1" Command="{Binding RefreshDataCommand}" HorizontalAlignment="Right" Content="Refresh" Width="70"/>
         </Grid>
         <controls:HorizontalScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalAlignment="Center" HorizontalScrollBarVisibility="Hidden" Grid.Row="1">

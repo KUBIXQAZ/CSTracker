@@ -32,7 +32,7 @@ namespace SteamItemsStatsViewer.Models
         }
         public RelayCommand ToggleFavCommand { get; set; }
 
-        public SteamItemNavigationItemModel(ItemDataModel itemData, HomeViewModel viewModel)
+        public SteamItemNavigationItemModel(ItemDataModel itemData, bool favState, HomeViewModel viewModel)
         {
             _viewModel = viewModel;
             _itemData = itemData;
@@ -40,9 +40,9 @@ namespace SteamItemsStatsViewer.Models
             Title = itemData.Name;
             Image = itemData.IconPath;
             Price = Math.Round(itemData.PriceHistory.Last().Value * App.Settings.ExchangeRate, 2).ToString("N") + App.Settings.Currency;
-            //PriceThisWeek = priceThisWeek;
-            //PriceThisWeekColor = priceThisWeekColor;
-            //FavState = favState;
+            PriceThisWeek = GetPriceThisWeek().Key;
+            PriceThisWeekColor = GetPriceThisWeek().Value;
+            FavState = favState;
 
             Command = new RelayCommand(execute => LoadItemPage());
             ToggleFavCommand = new RelayCommand(execute => ToggleFav());
@@ -55,6 +55,35 @@ namespace SteamItemsStatsViewer.Models
         public void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private KeyValuePair<string, SolidColorBrush> GetPriceThisWeek()
+        {
+            string price = String.Empty;
+            SolidColorBrush color = new SolidColorBrush(Colors.Transparent);
+
+            KeyValuePair<string, SolidColorBrush> pair = new KeyValuePair<string, SolidColorBrush>(price, color);
+
+            try
+            {
+                KeyValuePair<DateTime, decimal> thisWeek = _itemData.PriceHistory.Last(x => x.Key.Date == DateTime.Now.Date);
+                decimal priceThisWeek = thisWeek.Value;
+
+                decimal priceLastWeek = _itemData.PriceHistory.First(x => x.Key.Date == DateTime.Now.AddDays(-7).Date && x.Key.Hour == thisWeek.Key.Hour).Value;
+
+                decimal p = (priceThisWeek / priceLastWeek) - 1;
+                price = p.ToString("P");
+
+                if (p > 0) color = new SolidColorBrush(Colors.Green);
+                else if (p < 0) color = new SolidColorBrush(Colors.Red);
+
+                pair = new KeyValuePair<string, SolidColorBrush>(price, color);
+                return pair;
+            }
+            catch (Exception)
+            {
+                return pair;
+            }
         }
 
         private void LoadItemPage()
@@ -82,7 +111,8 @@ namespace SteamItemsStatsViewer.Models
             
             if(!Path.Exists(filePath))
             {
-                File.Create(filePath);
+                var f = File.Create(filePath);
+                f.Close();
             }
 
             string file = File.ReadAllText(filePath);
@@ -92,11 +122,11 @@ namespace SteamItemsStatsViewer.Models
 
             if(FavState)
             {
-                items.Add(Uri.EscapeDataString(Title));
+                items.Add(Title);
             } 
             else
             {
-                items.Remove(Uri.EscapeDataString(Title));
+                items.Remove(Title);
             }
 
             string json = JsonConvert.SerializeObject(items);
