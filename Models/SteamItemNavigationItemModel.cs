@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using SteamItemsStatsViewer.Commands;
+using SteamItemsStatsViewer.MVVM;
 using SteamItemsStatsViewer.ViewModels;
 using System.ComponentModel;
 using System.IO;

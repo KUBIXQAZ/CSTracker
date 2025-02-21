@@ -1,10 +1,11 @@
 ﻿using Newtonsoft.Json;
-using SteamItemsStatsViewer.Commands;
 using SteamItemsStatsViewer.Models;
+using SteamItemsStatsViewer.MVVM;
 using SteamItemsStatsViewer.Stores;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Net.Http;
+using System.Windows;
 
 namespace SteamItemsStatsViewer.ViewModels
 {
@@ -29,12 +30,12 @@ namespace SteamItemsStatsViewer.ViewModels
         {
             _navigationStore = navigationStore;
 
-            RefreshListCommand = new RelayCommand(execute => LoadSteamItemsNavigationItems());
-
-            LoadSteamItemsNavigationItems();
+            RefreshListCommand = new RelayCommand(async execute => await LoadSteamItemsNavigationItems());
+            
+            RefreshListCommand.Execute(this);
         }
 
-        public async void LoadSteamItemsNavigationItems()
+        public async Task LoadSteamItemsNavigationItems()
         {
             NavigationItems.Clear();
 

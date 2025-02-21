@@ -1,4 +1,5 @@
-﻿using SteamItemsStatsViewer.ViewModels;
+﻿using SteamItemsStatsViewer.MVVM;
+using SteamItemsStatsViewer.ViewModels;
 
 namespace SteamItemsStatsViewer.Commands
 {

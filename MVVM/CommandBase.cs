@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace SteamItemsStatsViewer.Commands
+namespace SteamItemsStatsViewer.MVVM
 {
     public abstract class CommandBase : ICommand
     {

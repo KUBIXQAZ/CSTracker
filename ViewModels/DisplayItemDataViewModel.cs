@@ -1,6 +1,6 @@
 ﻿using SteamItemsStatsViewer.Models;
 using System.Windows.Input;
-using SteamItemsStatsViewer.Commands;
+using SteamItemsStatsViewer.MVVM;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore;
 using SkiaSharp;
@@ -221,20 +221,20 @@ namespace SteamItemsStatsViewer.ViewModels
 
             RefreshDataCommand = new RelayCommand(execute => RefreshData());
 
-            DayTimeStampPriceChartCommand = new ChangePriceChartTimeStampCommand(this, ChartTimeStamp.Day);
-            WeekTimeStampPriceChartCommand = new ChangePriceChartTimeStampCommand(this, ChartTimeStamp.Week);
-            MonthTimeStampPriceChartCommand = new ChangePriceChartTimeStampCommand(this, ChartTimeStamp.Month);
-            YearTimeStampPriceChartCommand = new ChangePriceChartTimeStampCommand(this, ChartTimeStamp.Year);
-            AllTimeStampPriceChartCommand = new ChangePriceChartTimeStampCommand(this, ChartTimeStamp.All);
+            DayTimeStampPriceChartCommand = new RelayCommand(execute => ChangePriceChartTimeStamp(ChartTimeStamp.Day));
+            WeekTimeStampPriceChartCommand = new RelayCommand(execute => ChangePriceChartTimeStamp(ChartTimeStamp.Week));
+            MonthTimeStampPriceChartCommand = new RelayCommand(execute => ChangePriceChartTimeStamp(ChartTimeStamp.Month));
+            YearTimeStampPriceChartCommand = new RelayCommand(execute => ChangePriceChartTimeStamp(ChartTimeStamp.Year));
+            AllTimeStampPriceChartCommand = new RelayCommand(execute => ChangePriceChartTimeStamp(ChartTimeStamp.All));
 
-            DayTimeStampQuantityChartCommand = new ChangeQuantityChartTimeStampCommand(this, ChartTimeStamp.Day);
-            WeekTimeStampQuantityChartCommand = new ChangeQuantityChartTimeStampCommand(this, ChartTimeStamp.Week);
-            MonthTimeStampQuantityChartCommand = new ChangeQuantityChartTimeStampCommand(this, ChartTimeStamp.Month);
-            YearTimeStampQuantityChartCommand = new ChangeQuantityChartTimeStampCommand(this, ChartTimeStamp.Year);
-            AllTimeStampQuantityChartCommand = new ChangeQuantityChartTimeStampCommand(this, ChartTimeStamp.All);
+            DayTimeStampQuantityChartCommand = new RelayCommand(execute => ChangeQuantityChartTimeStamp(ChartTimeStamp.Day));
+            WeekTimeStampQuantityChartCommand = new RelayCommand(execute => ChangeQuantityChartTimeStamp(ChartTimeStamp.Week));
+            MonthTimeStampQuantityChartCommand = new RelayCommand(execute => ChangeQuantityChartTimeStamp(ChartTimeStamp.Month));
+            YearTimeStampQuantityChartCommand = new RelayCommand(execute => ChangeQuantityChartTimeStamp(ChartTimeStamp.Year));
+            AllTimeStampQuantityChartCommand = new RelayCommand(execute => ChangeQuantityChartTimeStamp(ChartTimeStamp.All));
 
-            PriceChartTimeStamp = ChartTimeStamp.Day;
-            QuantityChartTimeStamp = ChartTimeStamp.Day;
+            PriceChartTimeStamp = ChartTimeStamp.Week;
+            QuantityChartTimeStamp = ChartTimeStamp.Week;
         }
 
         private async void RefreshData()
@@ -337,6 +337,16 @@ namespace SteamItemsStatsViewer.ViewModels
             KeyValuePair<DateTime, int> secondKeyPair = _itemData.QuantityHistory.First(x => x.Key.Date == DateTime.Now.Date);
 
             return secondKeyPair.Value - firstKeyPair.Value;
+        }
+
+        public void ChangeQuantityChartTimeStamp(ChartTimeStamp timeStamp)
+        {
+            QuantityChartTimeStamp = timeStamp;
+        }
+
+        public void ChangePriceChartTimeStamp(ChartTimeStamp timeStamp)
+        {
+            PriceChartTimeStamp = timeStamp;
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System.Windows.Input;
 
-namespace SteamItemsStatsViewer.Commands
+namespace SteamItemsStatsViewer.MVVM
 {
     public class RelayCommand : ICommand
     {
@@ -10,7 +10,7 @@ namespace SteamItemsStatsViewer.Commands
         public event EventHandler? CanExecuteChanged
         {
             add { CommandManager.RequerySuggested += value; }
-            remove {  CommandManager.RequerySuggested -= value; }
+            remove { CommandManager.RequerySuggested -= value; }
         }
 
         public RelayCommand(Action<object> execute, Func<object, bool> canExecute = null)
