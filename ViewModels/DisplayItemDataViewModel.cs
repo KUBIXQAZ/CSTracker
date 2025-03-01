@@ -250,6 +250,10 @@ namespace SteamItemsStatsViewer.ViewModels
                     string content = await answer.Content.ReadAsStringAsync();
 
                     ItemData = JsonConvert.DeserializeObject<ItemDataModel>(content);
+                } 
+                else
+                {
+                    return;
                 }
             }
 

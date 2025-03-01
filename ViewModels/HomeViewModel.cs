@@ -4,8 +4,8 @@ using SteamItemsStatsViewer.MVVM;
 using SteamItemsStatsViewer.Stores;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
-using System.Windows;
 
 namespace SteamItemsStatsViewer.ViewModels
 {
@@ -53,21 +53,21 @@ namespace SteamItemsStatsViewer.ViewModels
                     if (string.IsNullOrEmpty(content)) return;
 
                     itemsData = JsonConvert.DeserializeObject<List<ItemDataModel>>(content)!;
-                } 
+                }
+                else
+                {
+                    return;
+                }
             }
 
             try
             {
-                foreach (string item in Directory.GetFiles(App.IconFolder))
-                {
-                    File.Delete(item);
-                };
-
                 foreach (ItemDataModel item in itemsData)
                 {
-                    Random rng = new Random();
+                    string itemIconId = item.Icon.Select(x => (int)x).ToArray().Sum().ToString();
+                    item.IconPath = $"{App.IconFolder}\\{itemIconId}.png";
 
-                    item.IconPath = $"{App.IconFolder}\\{rng.Next(int.MaxValue)}.png";
+                    if (File.Exists(item.IconPath)) continue;
 
                     File.WriteAllBytes(item.IconPath, item.Icon);
                 }
