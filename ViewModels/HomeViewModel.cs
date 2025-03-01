@@ -53,11 +53,16 @@ namespace SteamItemsStatsViewer.ViewModels
                     if (string.IsNullOrEmpty(content)) return;
 
                     itemsData = JsonConvert.DeserializeObject<List<ItemDataModel>>(content)!;
-                }
+                } 
             }
 
             try
             {
+                foreach (string item in Directory.GetFiles(App.IconFolder))
+                {
+                    File.Delete(item);
+                };
+
                 foreach (ItemDataModel item in itemsData)
                 {
                     Random rng = new Random();
