@@ -7,6 +7,7 @@ using SkiaSharp;
 using LiveChartsCore.SkiaSharpView.Painting;
 using System.Net.Http;
 using Newtonsoft.Json;
+using System.Globalization;
 
 namespace SteamItemsStatsViewer.ViewModels
 {
@@ -48,7 +49,7 @@ namespace SteamItemsStatsViewer.ViewModels
                 Stroke = new SolidColorPaint(new SKColor(85, 177, 250,100)),
                 LineSmoothness = 0,
                 GeometrySize = 0,
-                DataPadding = new LiveChartsCore.Drawing.LvcPoint(0,0),
+                DataPadding = new LiveChartsCore.Drawing.LvcPoint(0,0)
             }
         };
         public Axis[] YAxesPrice { get; set; } = new[]
@@ -57,6 +58,7 @@ namespace SteamItemsStatsViewer.ViewModels
             {
                 LabelsPaint = new SolidColorPaint(new SKColor(255,255,255)),
                 TextSize = 15,
+                Labeler = (value) => value.ToString("N") + App.Settings.Currency
             }
         };
         public Axis[] XAxesPrice { get; set; } = new[]
@@ -66,7 +68,7 @@ namespace SteamItemsStatsViewer.ViewModels
                LabelsRotation = 0,
                LabelsPaint = new SolidColorPaint(new SKColor(255,255,255)),
                IsVisible = true,
-               TextSize = 10,
+               TextSize = 10
             }
         };
 
@@ -260,13 +262,13 @@ namespace SteamItemsStatsViewer.ViewModels
             decimal rate = App.ExchangeRates.First(x => x.Key == App.Settings.Currency).Value;
 
             SeriesPrice[0].Values = _itemData.PriceHistory.Where(x => DateTime.Now.Date.AddDays(-(int)_priceChartTimeStamp) <= x.Key.Date).Select(x => (double)Math.Round(x.Value * rate, 2));
-            XAxesPrice[0].Labels = _itemData.PriceHistory.Where(x => DateTime.Now.Date.AddDays(-(int)_priceChartTimeStamp) <= x.Key.Date).Select(x => x.Key.ToString()).ToArray();
+            XAxesPrice[0].Labels = _itemData.PriceHistory.Where(x => DateTime.Now.Date.AddDays(-(int)_priceChartTimeStamp) <= x.Key.Date).Select(x => x.Key.ToString(@"MM\/dd\/yyyy HH:mm tt", CultureInfo.InvariantCulture)).ToArray();
 
             XAxesPrice[0].MinLimit = 0;
             XAxesPrice[0].MaxLimit = XAxesPrice[0].Labels.Count - 1;
 
             SeriesQuantity[0].Values = _itemData.QuantityHistory.Where(x => DateTime.Now.Date.AddDays(-(int)_quantityChartTimeStamp) <= x.Key.Date).Select(x => x.Value);
-            XAxesQuantity[0].Labels = _itemData.QuantityHistory.Where(x => DateTime.Now.Date.AddDays(-(int)_quantityChartTimeStamp) <= x.Key.Date).Select(x => x.Key.ToString()).ToArray();
+            XAxesQuantity[0].Labels = _itemData.QuantityHistory.Where(x => DateTime.Now.Date.AddDays(-(int)_quantityChartTimeStamp) <= x.Key.Date).Select(x => x.Key.ToString(@"MM\/dd\/yyyy HH:mm tt", CultureInfo.InvariantCulture)).ToArray();
 
             XAxesQuantity[0].MinLimit = 0;
             XAxesQuantity[0].MaxLimit = XAxesQuantity[0].Labels.Count - 1;
