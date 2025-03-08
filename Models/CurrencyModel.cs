@@ -15,6 +15,11 @@ namespace SteamItemsStatsViewer.Models
         {
             LoadCurrencies();
 
+            UpdateExchangeRate();
+        }
+
+        public void UpdateExchangeRate()
+        {
             if (!Currencies.ContainsKey(App.Settings.Currency)) throw new Exception("Invalid currency");
             ExchangeRate = Currencies.First(x => x.Key == App.Settings.Currency).Value;
         }

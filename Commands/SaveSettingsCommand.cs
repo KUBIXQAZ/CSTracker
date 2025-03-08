@@ -12,11 +12,13 @@ namespace SteamItemsStatsViewer.Commands
             _viewModel = viewModel;
         }
 
-        public override void Execute(object? parameter)
+        public async override void Execute(object? parameter)
         {
             App.Settings.Currency = _viewModel.SelectedCurrency;
 
             App.Settings.SaveSettings();
+
+            App.Currency.UpdateExchangeRate();
         }
     }
 }

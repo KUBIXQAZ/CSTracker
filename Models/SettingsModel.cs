@@ -14,7 +14,7 @@ namespace SteamItemsStatsViewer.Models
             LoadSettings();
         }
 
-        private void LoadSettings()
+        public void LoadSettings()
         {
             string fileName = "Settings.json";
             string filePath = $"{App.MainDataFolder}\\{fileName}";
