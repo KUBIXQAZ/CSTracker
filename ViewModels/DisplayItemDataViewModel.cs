@@ -259,7 +259,7 @@ namespace SteamItemsStatsViewer.ViewModels
                 }
             }
 
-            decimal rate = App.ExchangeRates.First(x => x.Key == App.Settings.Currency).Value;
+            decimal rate = App.Currency.ExchangeRate;
 
             SeriesPrice[0].Values = _itemData.PriceHistory.Where(x => DateTime.Now.Date.AddDays(-(int)_priceChartTimeStamp) <= x.Key.Date).Select(x => (double)Math.Round(x.Value * rate, 2));
             XAxesPrice[0].Labels = _itemData.PriceHistory.Where(x => DateTime.Now.Date.AddDays(-(int)_priceChartTimeStamp) <= x.Key.Date).Select(x => x.Key.ToString(@"MM\/dd\/yyyy HH:mm tt", CultureInfo.InvariantCulture)).ToArray();

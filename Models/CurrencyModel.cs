@@ -1,18 +1,22 @@
 ﻿using Newtonsoft.Json;
 using SteamItemsStatsViewer.DTOs;
 using System.IO;
+using System.Net.Http;
 
 namespace SteamItemsStatsViewer.Models
 {
     public class CurrencyModel
     {
-        public List<string> Currencies { get; set; }
+        public Dictionary<string, decimal> Currencies = new Dictionary<string, decimal>();
+
+        public decimal ExchangeRate;
 
         public CurrencyModel()
         {
-            Currencies = new List<string>();
-
             LoadCurrencies();
+
+            if (!Currencies.ContainsKey(App.Settings.Currency)) throw new Exception("Invalid currency");
+            ExchangeRate = Currencies.First(x => x.Key == App.Settings.Currency).Value;
         }
 
         private void LoadCurrencies()
@@ -24,11 +28,20 @@ namespace SteamItemsStatsViewer.Models
             {
                 string file = File.ReadAllText(filePath);
                 ExchangeRatesModel exchangeRates = JsonConvert.DeserializeObject<ExchangeRatesModel>(file);
-                Currencies = exchangeRates.Rates.Keys.ToList();
+                if (DateTime.Now.Date == exchangeRates.Date.Date)
+                {
+                    Currencies = exchangeRates.Rates;
+                    return;
+                }
             }
-            else
+
+            using (HttpClient httpClient = new HttpClient())
             {
-                throw new Exception("ExchangeRatesFile.json file does not exist");
+                string data = httpClient.GetStringAsync("https://api.exchangerate-api.com/v4/latest/usd").GetAwaiter().GetResult();
+                ExchangeRatesModel exchangeRates = JsonConvert.DeserializeObject<ExchangeRatesModel>(data);
+                Currencies = exchangeRates.Rates;
+
+                File.WriteAllText(filePath, data);
             }
         }
     }

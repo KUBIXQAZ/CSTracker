@@ -5,14 +5,30 @@ namespace SteamItemsStatsViewer.Models
 {
     public class SettingsModel
     {
-        public string Currency;
-        public decimal ExchangeRate;
+        public string Currency {  get; set; }
 
-        public SettingsModel(string currency)
+        public SettingsModel(string? currency = "USD")
         {
             Currency = currency;
 
-            ExchangeRate = App.ExchangeRates.Where(x => x.Key == Currency).ToArray()[0].Value;
+            LoadSettings();
+        }
+
+        private void LoadSettings()
+        {
+            string fileName = "Settings.json";
+            string filePath = $"{App.MainDataFolder}\\{fileName}";
+
+            if (File.Exists(filePath))
+            {
+                string file = File.ReadAllText(filePath);
+                if (file == null) throw new Exception("Settings.json file is empty");
+                JsonConvert.PopulateObject(file, this);
+            }
+            else
+            {
+                SaveSettings();
+            }
         }
 
         public void SaveSettings()

@@ -39,7 +39,8 @@ namespace SteamItemsStatsViewer.Models
 
             Title = itemData.Name;
             Image = itemData.IconPath;
-            Price = Math.Round(itemData.PriceHistory.Last().Value * App.Settings.ExchangeRate, 2).ToString("N") + App.Settings.Currency;
+
+            Price = Math.Round(itemData.PriceHistory.Last().Value * App.Currency.ExchangeRate, 2).ToString("N") + App.Settings.Currency;
             PriceThisWeek = GetPriceThisWeek().Key;
             PriceThisWeekColor = GetPriceThisWeek().Value;
             FavState = favState;
@@ -74,8 +75,13 @@ namespace SteamItemsStatsViewer.Models
                 decimal p = (priceThisWeek / priceLastWeek) - 1;
                 price = p.ToString("P");
 
-                if (p > 0) color = new SolidColorBrush(Colors.Green);
-                else if (p < 0) color = new SolidColorBrush(Colors.Red);
+                if (p > 0)
+                {
+                    color = new SolidColorBrush(Color.FromRgb(0, 255, 0));
+                    price = "+" + price;
+                }
+                else if (p < 0) color = new SolidColorBrush(Color.FromRgb(255, 0, 0));
+                else if (p == 0) color = new SolidColorBrush(Colors.Gray);
 
                 pair = new KeyValuePair<string, SolidColorBrush>(price, color);
                 return pair;

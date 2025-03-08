@@ -47,8 +47,7 @@ namespace SteamItemsStatsViewer.ViewModels
 
         private void LoadCurrencies()
         {
-            CurrencyModel currencies = new CurrencyModel();
-            foreach (string item in currencies.Currencies)
+            foreach (string item in App.Currency.Currencies.Keys)
             {
                 _currencies.Add(item);
             }

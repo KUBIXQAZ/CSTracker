@@ -1,26 +1,19 @@
-﻿using Newtonsoft.Json;
-using SteamItemsStatsViewer.DTOs;
-using SteamItemsStatsViewer.Models;
+﻿using SteamItemsStatsViewer.Models;
 using SteamItemsStatsViewer.Stores;
 using SteamItemsStatsViewer.ViewModels;
 using System.IO;
-using System.Net.Http;
 using System.Windows;
 
 namespace SteamItemsStatsViewer
 {
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
     public partial class App : Application
     {
         public static string MainDataFolder;
         public static string TempDataFolder;
         public static string IconFolder;
 
-        public static SettingsModel Settings {  get; set; }
-
-        public static Dictionary<string, decimal> ExchangeRates = new Dictionary<string, decimal>();
+        public static SettingsModel Settings;
+        public static CurrencyModel Currency;
 
         public static string BaseApiUrl = "http://192.168.31.71:5000/api/ItemsData/";
 
@@ -29,9 +22,9 @@ namespace SteamItemsStatsViewer
             base.OnStartup(e);
 
             CreateAppDataFolders();
-            GetExchangeRates();
-            LoadExchangeRates();
-            LoadSettings();
+
+            Settings = new SettingsModel();
+            Currency = new CurrencyModel();
 
             NavigationStore navigationStore = new NavigationStore();
 
@@ -49,62 +42,6 @@ namespace SteamItemsStatsViewer
             if (!Directory.Exists(MainDataFolder)) Directory.CreateDirectory(MainDataFolder);
             if (!Directory.Exists(TempDataFolder)) Directory.CreateDirectory(TempDataFolder);
             if (!Directory.Exists(IconFolder)) Directory.CreateDirectory(IconFolder);
-        }
-
-        private void GetExchangeRates()
-        {
-            string fileName = "ExchangeRatesFile.json";
-            string filePath = $"{TempDataFolder}\\{fileName}";
-
-            if (File.Exists(filePath))
-            {
-                string file = File.ReadAllText(filePath);
-                ExchangeRatesModel exchangeRates = JsonConvert.DeserializeObject<ExchangeRatesModel>(file);
-                if (DateTime.Now.Date == exchangeRates.Date.Date) return;
-            }
-
-            using (HttpClient httpClient = new HttpClient())
-            {
-                string data = httpClient.GetStringAsync("https://api.exchangerate-api.com/v4/latest/usd").GetAwaiter().GetResult();
-
-                File.WriteAllText(filePath, data);
-            }
-        }
-
-        private void LoadExchangeRates()
-        {
-            string fileName = "ExchangeRatesFile.json";
-            string filePath = $"{TempDataFolder}\\{fileName}";
-
-            if (File.Exists(filePath))
-            {
-                string file = File.ReadAllText(filePath);
-                ExchangeRatesModel exchangeRates = JsonConvert.DeserializeObject<ExchangeRatesModel>(file);
-                if (exchangeRates == null) throw new Exception("exchangeRates is null");
-                ExchangeRates = exchangeRates.Rates;
-            }
-            else
-            {
-                throw new Exception("ExchangeRatesFile.json file does not exist");
-            }
-        }
-
-        private void LoadSettings()
-        {
-            string fileName = "Settings.json";
-            string filePath = $"{MainDataFolder}\\{fileName}";
-
-            if (File.Exists(filePath))
-            {
-                string file = File.ReadAllText(filePath);
-                if (file == null) throw new Exception("Settings.json file is empty");
-                Settings = JsonConvert.DeserializeObject<SettingsModel>(file);
-            } 
-            else
-            {
-                Settings = new SettingsModel("USD");
-                Settings.SaveSettings();
-            }
         }
     }
 }
