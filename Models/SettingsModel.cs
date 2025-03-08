@@ -5,7 +5,16 @@ namespace SteamItemsStatsViewer.Models
 {
     public class SettingsModel
     {
-        public string Currency {  get; set; }
+        private string _currency;
+        public string Currency
+        {
+            get => _currency;
+            set
+            {
+                _currency = value;
+                if (App.Currency != null) App.Currency.UpdateExchangeRate();
+            }
+        }
 
         public SettingsModel(string? currency = "USD")
         {

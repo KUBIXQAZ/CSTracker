@@ -18,7 +18,7 @@ namespace SteamItemsStatsViewer.Commands
 
             App.Settings.SaveSettings();
 
-            App.Currency.UpdateExchangeRate();
+            //App.Currency.UpdateExchangeRate();
         }
     }
 }
