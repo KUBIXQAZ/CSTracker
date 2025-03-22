@@ -3,95 +3,131 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:SteamItemsStatsViewer.Views"
              xmlns:controls="clr-namespace:SteamItemsStatsViewer.Resources.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="450" 
-             d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
+        
         <Grid.RowDefinitions>
+            
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
+            
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0">
+        
+        <Grid>
+            
             <Button HorizontalAlignment="Right" 
-                    Content="Refresh" 
-                    Command="{Binding RefreshListCommand}"
-                    Width="70"/>
+                    Content="Refresh"
+                    Command="{Binding RefreshListCommand}"/>
+            
         </Grid>
-        <ItemsControl ItemsSource="{Binding NavigationItems}"
-                      Grid.Row="1"
-                      Background="Transparent"
-                      BorderThickness="0"
-                      BorderBrush="Transparent"
-                      HorizontalContentAlignment="Stretch">
+        
+        <ItemsControl Grid.Row="1" 
+                      ItemsSource="{Binding NavigationItems}"
+                      Margin="0 10 0 0">
+            
             <ItemsControl.ItemTemplate>
+                
                 <DataTemplate>
-                    <Grid VerticalAlignment="Center"
-                          HorizontalAlignment="Stretch"
-                          Height="100">
-                        <Grid.Style>
-                            <Style TargetType="Grid">
+
+                    <Border>
+
+                        <Border.Style>
+
+                            <Style TargetType="{x:Type Border}">
+
+                                <Setter Property="Background" Value="{StaticResource SecondaryBackground}"/>
+                                <Setter Property="CornerRadius" Value="10"/>
+                                <Setter Property="Margin" Value="0 0 0 15"/>
+                                <Setter Property="Padding" Value="20 10"/>
+
                                 <Style.Triggers>
-                                    <Trigger Property="IsMouseOver" 
+                                    
+                                    <Trigger Property="IsMouseOver"
                                              Value="True">
-                                        <Setter Property="Background" 
-                                                Value="#FF131313"/>
+
+                                        <Setter Property="Background" Value="{StaticResource TertiaryBackground}"/>
+
                                     </Trigger>
+
                                 </Style.Triggers>
+
                             </Style>
-                        </Grid.Style>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="auto"/>
-                        </Grid.ColumnDefinitions>
-                        <Image Source="{Binding Image}"
-                               Grid.Column="0"
-                               VerticalAlignment="Center"
-                               Margin="0 0 10 0"/>
-                        <Grid Grid.Column="1" 
-                              VerticalAlignment="Center">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="auto"/>
-                                <RowDefinition Height="auto"/>
-                            </Grid.RowDefinitions>
-                            <TextBlock Text="{Binding Title}"
-                                       Style="{StaticResource Text}"
-                                       Grid.Row="0"
-                                       FontSize="20"/>
-                            <Grid Grid.Row="1">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="auto"/>
-                                    <ColumnDefinition Width="auto"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Text="{Binding Price}"
-                                           Style="{StaticResource Text}"
-                                           Grid.Column="0"
-                                           FontSize="20"
-                                           Margin="0, 0, 20, 0"/>
-                                <TextBlock Text="{Binding PriceThisWeek}"
-                                           Style="{StaticResource Text}"
-                                           Foreground="{Binding PriceThisWeekColor}"
-                                           Grid.Column="1"
+                            
+                        </Border.Style>
+
+                        <Grid>
+
+                            <Grid.ColumnDefinitions>
+                                
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
+                                
+                            </Grid.ColumnDefinitions>
+
+                            <Image Grid.Column="0"
+                                   Source="{Binding Image}"
+                                   VerticalAlignment="Center"
+                                   Margin="0 0 10 0"
+                                   MaxHeight="110"/>
+                            
+                            <Grid Grid.Column="1" 
+                                  VerticalAlignment="Center">
+                                
+                                <Grid.RowDefinitions>
+                                    
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    
+                                </Grid.RowDefinitions>
+
+                                <TextBlock Text="{Binding Title}"
+                                           Foreground="{StaticResource TextPrimary}"
                                            FontSize="20"/>
+                                
+                                <Grid Grid.Row="1">
+                                    
+                                    <Grid.ColumnDefinitions>
+                                        
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="auto"/>
+                                        
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <TextBlock Text="{Binding Price}"
+                                               Foreground="{StaticResource TextPrimary}"
+                                               FontSize="20"
+                                               Margin="0 0 20 0"/>
+
+                                    <TextBlock Grid.Column="1"
+                                               Text="{Binding PriceThisWeek}"
+                                               Foreground="{Binding PriceThisWeekColor}"
+                                               FontSize="20"/>
+                                    
+                                </Grid>
+                                
                             </Grid>
+                            
+                            <controls:ImageToggle Grid.Column="2"
+                                                  Width="30"
+                                                  Height="30"
+                                                  Source="{Binding FavImageSource}"
+                                                  Command="{Binding ToggleFavCommand}"/>
+                            
+                            <Button Command="{Binding Command}" 
+                                    Grid.ColumnSpan="2"
+                                    Background="Transparent"/>
                         </Grid>
-                        <controls:ImageToggle Grid.Column="2"
-                                              Width="30"
-                                              Height="30"
-                                              Margin="0,0,5,0"
-                                              Source="{Binding FavImageSource}"
-                                              Command="{Binding ToggleFavCommand}"/>
-                        <Button Command="{Binding Command}" 
-                                Grid.Column="0" 
-                                Grid.ColumnSpan="2"
-                                Background="Transparent"
-                                BorderBrush="Transparent"
-                                BorderThickness="0"/>
-                    </Grid>
+                        
+                    </Border>
+                    
                 </DataTemplate>
+                
             </ItemsControl.ItemTemplate>
+            
         </ItemsControl>
+        
     </Grid>
 </UserControl>

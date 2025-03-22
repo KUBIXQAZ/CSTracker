@@ -17,8 +17,6 @@ namespace SteamItemsStatsViewer.Commands
             App.Settings.Currency = _viewModel.SelectedCurrency;
 
             App.Settings.SaveSettings();
-
-            //App.Currency.UpdateExchangeRate();
         }
     }
 }

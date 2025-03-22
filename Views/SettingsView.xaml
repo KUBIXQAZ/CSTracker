@@ -3,44 +3,62 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:SteamItemsStatsViewer.Views"
-             xmlns:controls="clr-namespace:SteamItemsStatsViewer.Resources.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <ScrollViewer VerticalScrollBarVisibility="Auto" 
                   HorizontalScrollBarVisibility="Disabled">
+        
         <Grid>
+            
             <Grid.RowDefinitions>
+                
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
+                
             </Grid.RowDefinitions>
-            <Grid Grid.Row="0" 
-                  HorizontalAlignment="Right">
+            
+            <Grid HorizontalAlignment="Right">
+                
                 <Button Content="Save" 
-                        Padding="10,2,10,2"
                         Command="{Binding SaveSettingsCommand}"/>
+                
             </Grid>
+            
             <Grid Grid.Row="1" 
-                  HorizontalAlignment="Left">
+                  HorizontalAlignment="Left"
+                  Margin="0 0 0 20">
+                
                 <Grid.RowDefinitions>
+                    
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
+                    
                 </Grid.RowDefinitions>
-                <Label Grid.Row="0" 
-                       Content="Currency"/>
+                
+                <TextBlock Text="Currency"
+                           Foreground="{StaticResource TextPrimary}"
+                           FontSize="16"/>
+                
                 <ComboBox Grid.Row="1"
                           ItemsSource="{Binding Currencies}"
                           SelectedItem="{Binding SelectedCurrency, Mode=TwoWay}"
                           Width="100"/>
+                
             </Grid>
-            <Label Grid.Row="2" 
-                   Content="Reset all user settings"/>
+            
+            <TextBlock Grid.Row="2" 
+                       Text="Reset all user settings"
+                       Foreground="{StaticResource TextPrimary}"
+                       FontSize="16"/>
+            
             <Button Grid.Row="3"
                     Content="Reset"
                     HorizontalAlignment="Left"
                     Command="{Binding ResetSettingsCommand}"/>
+            
         </Grid>
+        
     </ScrollViewer>
 </UserControl>

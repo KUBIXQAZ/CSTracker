@@ -3,47 +3,72 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:SteamItemsStatsViewer"
         xmlns:vms="clr-namespace:SteamItemsStatsViewer.ViewModels"
         xmlns:views="clr-namespace:SteamItemsStatsViewer.Views"
         xmlns:controls="clr-namespace:SteamItemsStatsViewer.Resources.Controls"
         mc:Ignorable="d"
         Title="SISV" Height="450" Width="800"
-        Background="#1a1a1a">
+        Background="{StaticResource PrimaryBackground}">
+    
     <Window.Resources>
-        <DataTemplate DataType="{x:Type vms:DisplayItemDataViewModel}">
-            <views:DisplayItemDataView />
-        </DataTemplate>
+
         <DataTemplate DataType="{x:Type vms:HomeViewModel}">
+
             <views:HomeView/>
+
         </DataTemplate>
+
+        <DataTemplate DataType="{x:Type vms:DisplayItemDataViewModel}">
+
+            <views:DisplayItemDataView/>
+
+        </DataTemplate>
+
         <DataTemplate DataType="{x:Type vms:SettingsViewModel}">
+            
             <views:SettingsView/>
+            
         </DataTemplate>
+        
     </Window.Resources>
+
     <Grid>
+
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
+
+            <ColumnDefinition Width="*" 
+                              MaxWidth="200"/>
             <ColumnDefinition Width="5*"/>
+
         </Grid.ColumnDefinitions>
-        <Border BorderBrush="Black"
-                Padding="5"
-                BorderThickness="0 0 1 0">
-            <StackPanel Grid.Column="0"
-                    Orientation="Vertical">
+
+        <Border Background="{StaticResource SecondaryBackground}"
+                Padding="10 15"
+                BorderThickness="0 0 1 0"
+                BorderBrush="{StaticResource BorderColor}">
+
+            <StackPanel Grid.Column="0">
+
                 <Button Content="Home"
                         Command="{Binding HomeNavigationCommand}"
-                        Margin="0 0 0 5"/>
+                        Margin="0 0 0 10"
+                        Height="40"/>
+
                 <Button Content="Settings"
-                        Command="{Binding SettingsNavigationCommand}"
-                        Margin="0 0 0 5"/>
+                        Command="{Binding SettingsNavigationCommand}"/>
+
             </StackPanel>
+
         </Border>
+
         <controls:MainScrollViewer Grid.Column="1" 
                                    VerticalScrollBarVisibility="Auto"
                                    ViewModel="{Binding ViewModel}">
-            <ContentControl Margin="10"
-                            Content="{Binding ViewModel}" />
+
+            <ContentControl Margin="20"
+                            Content="{Binding ViewModel}"/>
+
         </controls:MainScrollViewer>
+
     </Grid>
 </Window>

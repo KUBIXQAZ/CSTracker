@@ -3,122 +3,332 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:SteamItemsStatsViewer.Views"
              xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
              xmlns:controls="clr-namespace:SteamItemsStatsViewer.Resources.Controls"
-             mc:Ignorable="d" Background="#1a1a1a"
+             mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
+
         <Grid.RowDefinitions>
+
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
+
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Margin="0 0 0 20">
+
+        <Grid Grid.Row="0" 
+              Margin="0 0 0 20">
+
             <Grid.ColumnDefinitions>
+
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="auto"/>
+
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" Text="{Binding ItemData.Name}" Style="{StaticResource Text}"/>
-            <Button Grid.Column="1" Command="{Binding RefreshDataCommand}" HorizontalAlignment="Right" Content="Refresh" Width="70"/>
+
+            <TextBlock Text="{Binding ItemData.Name}"
+                       Foreground="{StaticResource TextPrimary}"
+                       FontSize="22"/>
+
+            <Button Grid.Column="1" 
+                    Command="{Binding RefreshDataCommand}" 
+                    HorizontalAlignment="Right" 
+                    Content="Refresh"/>
+
         </Grid>
-        <controls:HorizontalScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalAlignment="Center" HorizontalScrollBarVisibility="Hidden" Grid.Row="1">
+
+        <controls:HorizontalScrollViewer Grid.Row="1"
+                                         VerticalScrollBarVisibility="Disabled" 
+                                         HorizontalAlignment="Center"
+                                         HorizontalScrollBarVisibility="Hidden">
+
             <StackPanel Orientation="Horizontal">
-                <Border Style="{StaticResource InfoBuble}" MinWidth="130">
+
+                <Border Style="{StaticResource InfoBuble}" 
+                        MinWidth="130">
+
                     <StackPanel>
-                        <TextBlock Text="Quantity" Style="{StaticResource TitleTextBlock}"/>
-                        <TextBlock Text="{Binding CurrentQuantity}" Style="{StaticResource ContentTextBlock}"/>
+
+                        <TextBlock Text="Quantity"
+                                   Foreground="{StaticResource TextPrimary}"
+                                   FontSize="20"/>
+
+                        <TextBlock Text="{Binding CurrentQuantity}" 
+                                   Foreground="{StaticResource TextSecondary}"
+                                   FontSize="18"/>
+
                     </StackPanel>
+
                 </Border>
-                <Border Style="{StaticResource InfoBuble}" MinWidth="130">
+
+                <Border Style="{StaticResource InfoBuble}" 
+                        MinWidth="130">
+
                     <StackPanel>
-                        <TextBlock Text="Price" Style="{StaticResource TitleTextBlock}"/>
-                        <TextBlock Text="{Binding CurrentPrice}" Style="{StaticResource ContentTextBlock}"/>
+
+                        <TextBlock Text="Price" 
+                                   Foreground="{StaticResource TextPrimary}"
+                                   FontSize="20"/>
+
+                        <TextBlock Text="{Binding CurrentPrice}" 
+                                   Foreground="{StaticResource TextSecondary}"
+                                   FontSize="18"/>
+
                     </StackPanel>
+
                 </Border>
+
             </StackPanel>
+
         </controls:HorizontalScrollViewer>
-        <controls:HorizontalScrollViewer Margin="0 10 0 0" VerticalScrollBarVisibility="Disabled" HorizontalAlignment="Center" HorizontalScrollBarVisibility="Hidden" Grid.Row="2">
+
+        <controls:HorizontalScrollViewer Grid.Row="2"
+                                         Margin="0 10 0 0" 
+                                         VerticalScrollBarVisibility="Disabled" 
+                                         HorizontalAlignment="Center" 
+                                         HorizontalScrollBarVisibility="Hidden">
+
             <StackPanel Orientation="Horizontal">
+
                 <Border Style="{StaticResource InfoBuble}">
+
                     <StackPanel>
-                        <TextBlock Text="Price in last 7 days" Style="{StaticResource TitleTextBlock}"/>
-                        <TextBlock Text="{Binding Price7Days}" Style="{StaticResource ContentTextBlock}"/>
+
+                        <TextBlock Text="Price in last 7 days" 
+                                   Foreground="{StaticResource TextPrimary}"
+                                   FontSize="20"/>
+
+                        <TextBlock Text="{Binding Price7Days}" 
+                                   Foreground="{StaticResource TextSecondary}"
+                                   FontSize="18"/>
+
                     </StackPanel>
+
                 </Border>
+
                 <Border Style="{StaticResource InfoBuble}">
+
                     <StackPanel>
-                        <TextBlock Text="Price in last 14 days" Style="{StaticResource TitleTextBlock}"/>
-                        <TextBlock Text="{Binding Price14Days}" Style="{StaticResource ContentTextBlock}"/>
+
+                        <TextBlock Text="Price in last 14 days" 
+                                   Foreground="{StaticResource TextPrimary}"
+                                   FontSize="20"/>
+
+                        <TextBlock Text="{Binding Price14Days}" 
+                                   Foreground="{StaticResource TextSecondary}"
+                                   FontSize="18"/>
+
                     </StackPanel>
+
                 </Border>
+
                 <Border Style="{StaticResource InfoBuble}">
+
                     <StackPanel>
-                        <TextBlock Text="Price in last 30 days" Style="{StaticResource TitleTextBlock}"/>
-                        <TextBlock Text="{Binding Price30Days}" Style="{StaticResource ContentTextBlock}"/>
+
+                        <TextBlock Text="Price in last 30 days" 
+                                   Foreground="{StaticResource TextPrimary}"
+                                   FontSize="20"/>
+
+                        <TextBlock Text="{Binding Price30Days}" 
+                                   Foreground="{StaticResource TextSecondary}"
+                                   FontSize="18"/>
+
                     </StackPanel>
+
                 </Border>
+
                 <Border Style="{StaticResource InfoBuble}">
+
                     <StackPanel>
-                        <TextBlock Text="Quantity in last 7 days" Style="{StaticResource TitleTextBlock}"/>
-                        <TextBlock Text="{Binding Quantity7Days}" Style="{StaticResource ContentTextBlock}"/>
+
+                        <TextBlock Text="Quantity in last 7 days" 
+                                   Foreground="{StaticResource TextPrimary}"
+                                   FontSize="20"/>
+
+                        <TextBlock Text="{Binding Quantity7Days}" 
+                                   Foreground="{StaticResource TextSecondary}"
+                                   FontSize="18"/>
+
                     </StackPanel>
+
                 </Border>
+
                 <Border Style="{StaticResource InfoBuble}">
+
                     <StackPanel>
-                        <TextBlock Text="Quantity in last 14 days" Style="{StaticResource TitleTextBlock}"/>
-                        <TextBlock Text="{Binding Quantity14Days}" Style="{StaticResource ContentTextBlock}"/>
+
+                        <TextBlock Text="Quantity in last 14 days" 
+                                   Foreground="{StaticResource TextPrimary}"
+                                   FontSize="20"/>
+
+                        <TextBlock Text="{Binding Quantity14Days}" 
+                                   Foreground="{StaticResource TextSecondary}"
+                                   FontSize="18"/>
+
                     </StackPanel>
+
                 </Border>
+
                 <Border Style="{StaticResource InfoBuble}">
+
                     <StackPanel>
-                        <TextBlock Text="Quantity in last 30 days" Style="{StaticResource TitleTextBlock}"/>
-                        <TextBlock Text="{Binding Quantity30Days}" Style="{StaticResource ContentTextBlock}"/>
+
+                        <TextBlock Text="Quantity in last 30 days" 
+                                   Foreground="{StaticResource TextPrimary}"
+                                   FontSize="20"/>
+
+                        <TextBlock Text="{Binding Quantity30Days}" 
+                                   Foreground="{StaticResource TextSecondary}"
+                                   FontSize="18"/>
+
                     </StackPanel>
+
                 </Border>
+
             </StackPanel>
+
         </controls:HorizontalScrollViewer>
-        <Border Grid.Row="3" Margin="0 10 0 0" Background="#141414" BorderBrush="Transparent" BorderThickness="1" CornerRadius="10">
+
+        <Border Grid.Row="3" 
+                Margin="0 10 0 0" 
+                Background="{StaticResource SecondaryBackground}" 
+                BorderBrush="Transparent" 
+                BorderThickness="0" 
+                CornerRadius="10">
+
             <Grid>
+
                 <Grid.RowDefinitions>
+
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="*"/>
+
                 </Grid.RowDefinitions>
-                <Label Grid.Row="0" Height="auto" Content="Price" HorizontalAlignment="Center"/>
-                <controls:HorizontalScrollViewer Grid.Row="1" Margin="40 0 0 0" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Hidden">
+
+                <TextBlock Text="Price" 
+                           Foreground="{StaticResource TextPrimary}"
+                           FontSize="26"
+                           HorizontalAlignment="Center"/>
+
+                <controls:HorizontalScrollViewer Grid.Row="1" 
+                                                 Margin="40 0 0 0" 
+                                                 VerticalScrollBarVisibility="Disabled" 
+                                                 HorizontalScrollBarVisibility="Hidden">
+
                     <StackPanel Orientation="Horizontal">
-                        <Button Content="Day" Margin="0 0 15 0" Command="{Binding DayTimeStampPriceChartCommand}" Style="{StaticResource TimeStampChartButton}"/>
-                        <Button Content="Week" Margin="0 0 15 0" Command="{Binding WeekTimeStampPriceChartCommand}" Style="{StaticResource TimeStampChartButton}"/>
-                        <Button Content="Month" Margin="0 0 15 0" Command="{Binding MonthTimeStampPriceChartCommand}" Style="{StaticResource TimeStampChartButton}"/>
-                        <Button Content="Year" Margin="0 0 15 0" Command="{Binding YearTimeStampPriceChartCommand}" Style="{StaticResource TimeStampChartButton}"/>
-                        <Button Content="All" Margin="0 0 15 0" Command="{Binding AllTimeStampPriceChartCommand}" Style="{StaticResource TimeStampChartButton}"/>
+
+                        <Button Content="Day" 
+                                Margin="0 0 15 0" 
+                                Command="{Binding DayTimeStampPriceChartCommand}" 
+                                Style="{StaticResource TimeStampChartButton}"/>
+
+                        <Button Content="Week" 
+                                Margin="0 0 15 0" 
+                                Command="{Binding WeekTimeStampPriceChartCommand}" 
+                                Style="{StaticResource TimeStampChartButton}"/>
+
+                        <Button Content="Month" 
+                                Margin="0 0 15 0" 
+                                Command="{Binding MonthTimeStampPriceChartCommand}" 
+                                Style="{StaticResource TimeStampChartButton}"/>
+
+                        <Button Content="Year" 
+                                Margin="0 0 15 0" 
+                                Command="{Binding YearTimeStampPriceChartCommand}" 
+                                Style="{StaticResource TimeStampChartButton}"/>
+
+                        <Button Content="All" 
+                                Margin="0 0 15 0" 
+                                Command="{Binding AllTimeStampPriceChartCommand}" 
+                                Style="{StaticResource TimeStampChartButton}"/>
+
                     </StackPanel>
+
                 </controls:HorizontalScrollViewer>
-                <lvc:CartesianChart MinHeight="200" Grid.Row="2" Series="{Binding SeriesPrice}" YAxes="{Binding YAxesPrice}" XAxes="{Binding XAxesPrice}" ZoomMode="X"/>
+
+                <lvc:CartesianChart Grid.Row="2" 
+                                    MinHeight="200" 
+                                    Series="{Binding SeriesPrice}" 
+                                    YAxes="{Binding YAxesPrice}"
+                                    XAxes="{Binding XAxesPrice}" 
+                                    ZoomMode="X"/>
+
             </Grid>
+
         </Border>
-        <Border Grid.Row="4"  Margin="0 10 0 0" Background="#141414" BorderBrush="Transparent" BorderThickness="1" CornerRadius="10">
+
+        <Border Grid.Row="4" 
+                Margin="0 10 0 0" 
+                Background="{StaticResource SecondaryBackground}" 
+                BorderBrush="Transparent" 
+                BorderThickness="0" 
+                CornerRadius="10">
+
             <Grid>
+
                 <Grid.RowDefinitions>
+
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="*"/>
+
                 </Grid.RowDefinitions>
-                <Label Grid.Row="0" Height="auto" Content="Quantity" HorizontalAlignment="Center"/>
-                <controls:HorizontalScrollViewer Grid.Row="1" Margin="40 0 0 0" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Hidden">
+
+                <TextBlock Text="Quantity" 
+                           Foreground="{StaticResource TextPrimary}"
+                           FontSize="26"
+                           HorizontalAlignment="Center"/>
+
+                <controls:HorizontalScrollViewer Grid.Row="1" 
+                                                 Margin="40 0 0 0" 
+                                                 VerticalScrollBarVisibility="Disabled" 
+                                                 HorizontalScrollBarVisibility="Hidden">
+
                     <StackPanel Orientation="Horizontal">
-                        <Button Content="Day" Margin="0 0 15 0" Command="{Binding DayTimeStampQuantityChartCommand}" Style="{StaticResource TimeStampChartButton}"/>
-                        <Button Content="Week" Margin="0 0 15 0" Command="{Binding WeekTimeStampQuantityChartCommand}" Style="{StaticResource TimeStampChartButton}"/>
-                        <Button Content="Month" Margin="0 0 15 0" Command="{Binding MonthTimeStampQuantityChartCommand}" Style="{StaticResource TimeStampChartButton}"/>
-                        <Button Content="Year" Margin="0 0 15 0" Command="{Binding YearTimeStampQuantityChartCommand}" Style="{StaticResource TimeStampChartButton}"/>
-                        <Button Content="All" Margin="0 0 15 0" Command="{Binding AllTimeStampQuantityChartCommand}" Style="{StaticResource TimeStampChartButton}"/>
+
+                        <Button Content="Day" 
+                                Margin="0 0 15 0" 
+                                Command="{Binding DayTimeStampQuantityChartCommand}" 
+                                Style="{StaticResource TimeStampChartButton}"/>
+                        <Button Content="Week" 
+                                Margin="0 0 15 0" 
+                                Command="{Binding WeekTimeStampQuantityChartCommand}" 
+                                Style="{StaticResource TimeStampChartButton}"/>
+
+                        <Button Content="Month" 
+                                Margin="0 0 15 0" 
+                                Command="{Binding MonthTimeStampQuantityChartCommand}" 
+                                Style="{StaticResource TimeStampChartButton}"/>
+
+                        <Button Content="Year" 
+                                Margin="0 0 15 0" 
+                                Command="{Binding YearTimeStampQuantityChartCommand}" 
+                                Style="{StaticResource TimeStampChartButton}"/>
+
+                        <Button Content="All" 
+                                Margin="0 0 15 0" 
+                                Command="{Binding AllTimeStampQuantityChartCommand}" 
+                                Style="{StaticResource TimeStampChartButton}"/>
+
                     </StackPanel>
+
                 </controls:HorizontalScrollViewer>
-                <lvc:CartesianChart MinHeight="200" Grid.Row="2" Series="{Binding SeriesQuantity}" YAxes="{Binding YAxesQuantity}" XAxes="{Binding XAxesQuantity}" ZoomMode="X"/>
+
+                <lvc:CartesianChart Grid.Row="2" 
+                                    MinHeight="200" 
+                                    Series="{Binding SeriesQuantity}" 
+                                    YAxes="{Binding YAxesQuantity}" 
+                                    XAxes="{Binding XAxesQuantity}" 
+                                    ZoomMode="X"/>
+
             </Grid>
+
         </Border>
+
     </Grid>
 </UserControl>
