@@ -7,9 +7,21 @@
         xmlns:views="clr-namespace:SteamItemsStatsViewer.Views"
         xmlns:controls="clr-namespace:SteamItemsStatsViewer.Resources.Controls"
         mc:Ignorable="d"
-        Title="SISV" Height="450" Width="800"
-        Background="{StaticResource PrimaryBackground}">
-    
+        Height="450" Width="800"
+        WindowStyle="None"
+        ResizeMode="CanResize"
+        Background="{StaticResource PrimaryBackground}"
+        WindowState="{Binding WindowState}">
+
+    <WindowChrome.WindowChrome>
+        
+        <WindowChrome CaptionHeight="0"
+                      CornerRadius="10"
+                      GlassFrameThickness="0"
+                      ResizeBorderThickness="5"/>
+        
+    </WindowChrome.WindowChrome>
+
     <Window.Resources>
 
         <DataTemplate DataType="{x:Type vms:HomeViewModel}">
@@ -32,7 +44,7 @@
         
     </Window.Resources>
 
-    <Grid>
+    <Grid Margin="{Binding MainGridMargin}">
 
         <Grid.ColumnDefinitions>
 
@@ -42,7 +54,63 @@
 
         </Grid.ColumnDefinitions>
 
-        <Border Background="{StaticResource SecondaryBackground}"
+        <Grid.RowDefinitions>
+
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+
+        </Grid.RowDefinitions>
+
+        <Border Grid.ColumnSpan="2"
+                Background="{StaticResource SecondaryBackground}"
+                HorizontalAlignment="Stretch"
+                BorderThickness="0 0 0 1"
+                BorderBrush="{StaticResource BorderColor}">
+
+            <Border.InputBindings>
+
+                <MouseBinding Gesture="LeftClick" 
+                              Command="{Binding DragWindowCommand}"/>
+
+                <MouseBinding Gesture="LeftDoubleClick"
+                              Command="{Binding ChangeWindowStateCommand}"/>
+
+            </Border.InputBindings>
+            
+            <Grid HorizontalAlignment="Right"
+                  VerticalAlignment="Center"
+                  Margin="5">
+
+                <Grid.ColumnDefinitions>
+
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+
+                </Grid.ColumnDefinitions>
+
+                <Button Style="{StaticResource WindowButton}"
+                        Background="Yellow" 
+                        Margin="0 0 5 0"
+                        Command="{Binding MinimizeWindowCommand}"/>
+
+                <Button Grid.Column="1" 
+                        Style="{StaticResource WindowButton}"
+                        Background="Blue" 
+                        Margin="0 0 5 0"
+                        Command="{Binding ChangeWindowStateCommand}"/>
+
+                <Button Grid.Column="2" 
+                        Style="{StaticResource WindowButton}"
+                        Background="Red"
+                        Command="{Binding CloseWindowCommand}"/>
+
+            </Grid>
+
+        </Border>
+        
+        <Border Grid.Row="1" 
+                Background="{StaticResource SecondaryBackground}"
                 Padding="10 15"
                 BorderThickness="0 0 1 0"
                 BorderBrush="{StaticResource BorderColor}">
@@ -61,7 +129,8 @@
 
         </Border>
 
-        <controls:MainScrollViewer Grid.Column="1" 
+        <controls:MainScrollViewer Grid.Column="1"
+                                   Grid.Row="1"
                                    VerticalScrollBarVisibility="Auto"
                                    ViewModel="{Binding ViewModel}">
 
