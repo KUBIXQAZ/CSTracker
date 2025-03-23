@@ -39,7 +39,7 @@
                 
                 <TextBlock Text="Currency"
                            Foreground="{StaticResource TextPrimary}"
-                           FontSize="16"/>
+                           FontSize="18"/>
                 
                 <ComboBox Grid.Row="1"
                           ItemsSource="{Binding Currencies}"
@@ -51,11 +51,12 @@
             <TextBlock Grid.Row="2" 
                        Text="Reset all user settings"
                        Foreground="{StaticResource TextPrimary}"
-                       FontSize="16"/>
+                       FontSize="18"/>
             
             <Button Grid.Row="3"
                     Content="Reset"
                     HorizontalAlignment="Left"
+                    Background="{StaticResource SecondaryBackground}"
                     Command="{Binding ResetSettingsCommand}"/>
             
         </Grid>

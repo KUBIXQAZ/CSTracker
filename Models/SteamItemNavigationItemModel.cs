@@ -20,8 +20,8 @@ namespace SteamItemsStatsViewer.Models
         public RelayCommand Command { get; set; }
 
         public bool FavState { get; set; }
-        private string favImageSource;
-        public string FavImageSource
+        private Geometry favImageSource;
+        public Geometry FavImageSource
         {
             get => favImageSource;
             set
@@ -101,11 +101,11 @@ namespace SteamItemsStatsViewer.Models
         {
             if (FavState)
             {
-                FavImageSource = "../Resources/Images/star_fill.png";
+                FavImageSource = (Geometry)App.Current.Resources["StarFill"];
             }
             else
             {
-                FavImageSource = "../Resources/Images/star.png";
+                FavImageSource = (Geometry)App.Current.Resources["Star"];
             }
         }
 

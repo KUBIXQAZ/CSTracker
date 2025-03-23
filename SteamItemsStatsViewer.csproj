@@ -11,8 +11,6 @@
   <ItemGroup>
     <None Remove="Resources\Images\sort.png" />
     <None Remove="Resources\Images\sort_hover.png" />
-    <None Remove="Resources\Images\star.png" />
-    <None Remove="Resources\Images\star_fill.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -26,8 +24,6 @@
 
   <ItemGroup>
     <Resource Include="Resources\Images\sort.png" />
-    <Resource Include="Resources\Images\star.png" />
-    <Resource Include="Resources\Images\star_fill.png" />
   </ItemGroup>
 
 </Project>

@@ -11,7 +11,8 @@
         WindowStyle="None"
         ResizeMode="CanResize"
         Background="{StaticResource PrimaryBackground}"
-        WindowState="{Binding WindowState}">
+        WindowState="{Binding WindowState}"
+        WindowStartupLocation="CenterScreen">
 
     <WindowChrome.WindowChrome>
         
@@ -77,30 +78,35 @@
 
             </Border.InputBindings>
             
-            <Grid HorizontalAlignment="Right"
+            <Grid HorizontalAlignment="Stretch"
                   VerticalAlignment="Center"
                   Margin="5">
 
                 <Grid.ColumnDefinitions>
 
+                    <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="auto"/>
 
                 </Grid.ColumnDefinitions>
 
-                <Button Style="{StaticResource WindowButton}"
+                <TextBlock Text="SISV"
+                           Margin="5 0 0 0"
+                           Foreground="{StaticResource TextPrimary}"/>
+
+                <Button Grid.Column="1" Style="{StaticResource WindowButton}"
                         Background="Yellow" 
                         Margin="0 0 5 0"
                         Command="{Binding MinimizeWindowCommand}"/>
 
-                <Button Grid.Column="1" 
+                <Button Grid.Column="2" 
                         Style="{StaticResource WindowButton}"
                         Background="Blue" 
                         Margin="0 0 5 0"
                         Command="{Binding ChangeWindowStateCommand}"/>
 
-                <Button Grid.Column="2" 
+                <Button Grid.Column="3" 
                         Style="{StaticResource WindowButton}"
                         Background="Red"
                         Command="{Binding CloseWindowCommand}"/>
