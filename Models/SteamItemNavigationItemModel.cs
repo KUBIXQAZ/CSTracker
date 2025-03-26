@@ -4,6 +4,7 @@ using SteamItemsStatsViewer.ViewModels;
 using System.ComponentModel;
 using System.IO;
 using System.Windows.Media;
+using SteamItemsStatsViewer.Utilities;
 
 namespace SteamItemsStatsViewer.Models
 {
@@ -67,12 +68,13 @@ namespace SteamItemsStatsViewer.Models
 
             try
             {
-                KeyValuePair<DateTime, decimal> thisWeek = _itemData.PriceHistory.Last(x => x.Key.Date == DateTime.Now.Date);
-                decimal priceThisWeek = thisWeek.Value;
+                decimal[] pricesToday = _itemData.PriceHistory.Where(x => x.Key.Date == DateTime.Now.Date).Select(x => x.Value).Order().ToArray();
+                decimal medianPriceToday = StatisticsHelper.CalculateMedian(pricesToday);
 
-                decimal priceLastWeek = _itemData.PriceHistory.First(x => x.Key.Date == DateTime.Now.AddDays(-7).Date && x.Key.Hour == thisWeek.Key.Hour).Value;
+                decimal[] pricesLastWeek = _itemData.PriceHistory.Where(x => x.Key.Date == DateTime.Now.AddDays(-7).Date).Select(x => x.Value).Order().ToArray();
+                decimal medianPriceLastWeek = StatisticsHelper.CalculateMedian(pricesLastWeek);
 
-                decimal p = (priceThisWeek / priceLastWeek) - 1;
+                decimal p = medianPriceLastWeek > 0 ? (medianPriceToday / medianPriceLastWeek) - 1 : 0;
                 price = p.ToString("P");
 
                 if (p > 0)
