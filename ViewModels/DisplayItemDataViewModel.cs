@@ -14,7 +14,7 @@ namespace SteamItemsStatsViewer.ViewModels
     public class DisplayItemDataViewModel : ViewModelBase
     {
         //ITEM DATA//
-        private ItemDataModel _itemData = new ItemDataModel();
+        private ItemDataModel _itemData;
         public ItemDataModel ItemData
         {
             get => _itemData;
@@ -251,8 +251,8 @@ namespace SteamItemsStatsViewer.ViewModels
                 {
                     string content = await answer.Content.ReadAsStringAsync();
 
-                    ItemData = JsonConvert.DeserializeObject<ItemDataModel>(content);
-                } 
+                    JsonConvert.PopulateObject(content, ItemData);
+                }
                 else
                 {
                     return;

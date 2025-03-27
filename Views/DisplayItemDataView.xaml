@@ -24,16 +24,21 @@
 
             <Grid.ColumnDefinitions>
 
+                <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="auto"/>
 
             </Grid.ColumnDefinitions>
 
-            <TextBlock Text="{Binding ItemData.Name}"
+            <Image Source="{Binding ItemData.IconPath}"
+                   Height="35"/>
+
+            <TextBlock Grid.Column="1"
+                       Text="{Binding ItemData.Name}"
                        Foreground="{StaticResource TextPrimary}"
                        FontSize="22"/>
 
-            <Button Grid.Column="1" 
+            <Button Grid.Column="2" 
                     Command="{Binding RefreshDataCommand}" 
                     HorizontalAlignment="Right" 
                     Content="Refresh"/>
