@@ -2,8 +2,10 @@
 using SteamItemsStatsViewer.Models;
 using SteamItemsStatsViewer.MVVM;
 using SteamItemsStatsViewer.Stores;
+using SteamItemsStatsViewer.Views;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Net;
 using System.Net.Http;
 
 namespace SteamItemsStatsViewer.ViewModels
@@ -40,23 +42,34 @@ namespace SteamItemsStatsViewer.ViewModels
 
             List<ItemDataModel> itemsData = new List<ItemDataModel>();
 
-            using (HttpClient client = new HttpClient())
+            try
             {
-                client.BaseAddress = new Uri(App.BaseApiUrl);
-
-                var answer = await client.GetAsync("GetItemsData");
-
-                if(answer.IsSuccessStatusCode)
+                using (HttpClient client = new HttpClient())
                 {
-                    string content = await answer.Content.ReadAsStringAsync();
-                    if (string.IsNullOrEmpty(content)) return;
+                    client.BaseAddress = new Uri(App.BaseApiUrl);
 
-                    itemsData = JsonConvert.DeserializeObject<List<ItemDataModel>>(content)!;
+                    var answer = await client.GetAsync("GetItemsData");
+
+                    if (answer.IsSuccessStatusCode)
+                    {
+                        string content = await answer.Content.ReadAsStringAsync();
+                        if (string.IsNullOrEmpty(content)) return;
+
+                        itemsData = JsonConvert.DeserializeObject<List<ItemDataModel>>(content)!;
+                    }
+                    else
+                    {
+                        return;
+                    }
                 }
-                else
-                {
-                    return;
-                }
+            } 
+            catch (HttpRequestException)
+            {
+                AlertWindow alertWindow = new AlertWindow();
+                alertWindow.Owner = App.Current.MainWindow;
+                AlertViewModel vm = new AlertViewModel(alertWindow, "Error", "An unexpected issue occurred while loading items. Please try again.", Enums.AlertTypeEnum.Error);
+                alertWindow.DataContext = vm;
+                alertWindow.ShowDialog();
             }
 
             try

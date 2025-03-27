@@ -8,6 +8,7 @@ using LiveChartsCore.SkiaSharpView.Painting;
 using System.Net.Http;
 using Newtonsoft.Json;
 using System.Globalization;
+using SteamItemsStatsViewer.Enums;
 
 namespace SteamItemsStatsViewer.ViewModels
 {
@@ -184,17 +185,8 @@ namespace SteamItemsStatsViewer.ViewModels
             }
         }
 
-        public enum ChartTimeStamp
-        {
-            Day = 0,
-            Week = 7,
-            Month = 30,
-            Year = 365,
-            All = 100000
-        }
-
-        private ChartTimeStamp _priceChartTimeStamp;
-        public ChartTimeStamp PriceChartTimeStamp
+        private ChartTimeStampEnum _priceChartTimeStamp;
+        public ChartTimeStampEnum PriceChartTimeStamp
         {
             get => _priceChartTimeStamp;
             set
@@ -205,8 +197,8 @@ namespace SteamItemsStatsViewer.ViewModels
             }
         }
 
-        private ChartTimeStamp _quantityChartTimeStamp;
-        public ChartTimeStamp QuantityChartTimeStamp
+        private ChartTimeStampEnum _quantityChartTimeStamp;
+        public ChartTimeStampEnum QuantityChartTimeStamp
         {
             get => _quantityChartTimeStamp;
             set
@@ -223,20 +215,20 @@ namespace SteamItemsStatsViewer.ViewModels
 
             RefreshDataCommand = new RelayCommand(execute => RefreshData());
 
-            DayTimeStampPriceChartCommand = new RelayCommand(execute => ChangePriceChartTimeStamp(ChartTimeStamp.Day));
-            WeekTimeStampPriceChartCommand = new RelayCommand(execute => ChangePriceChartTimeStamp(ChartTimeStamp.Week));
-            MonthTimeStampPriceChartCommand = new RelayCommand(execute => ChangePriceChartTimeStamp(ChartTimeStamp.Month));
-            YearTimeStampPriceChartCommand = new RelayCommand(execute => ChangePriceChartTimeStamp(ChartTimeStamp.Year));
-            AllTimeStampPriceChartCommand = new RelayCommand(execute => ChangePriceChartTimeStamp(ChartTimeStamp.All));
+            DayTimeStampPriceChartCommand = new RelayCommand(execute => ChangePriceChartTimeStamp(ChartTimeStampEnum.Day));
+            WeekTimeStampPriceChartCommand = new RelayCommand(execute => ChangePriceChartTimeStamp(ChartTimeStampEnum.Week));
+            MonthTimeStampPriceChartCommand = new RelayCommand(execute => ChangePriceChartTimeStamp(ChartTimeStampEnum.Month));
+            YearTimeStampPriceChartCommand = new RelayCommand(execute => ChangePriceChartTimeStamp(ChartTimeStampEnum.Year));
+            AllTimeStampPriceChartCommand = new RelayCommand(execute => ChangePriceChartTimeStamp(ChartTimeStampEnum.All));
 
-            DayTimeStampQuantityChartCommand = new RelayCommand(execute => ChangeQuantityChartTimeStamp(ChartTimeStamp.Day));
-            WeekTimeStampQuantityChartCommand = new RelayCommand(execute => ChangeQuantityChartTimeStamp(ChartTimeStamp.Week));
-            MonthTimeStampQuantityChartCommand = new RelayCommand(execute => ChangeQuantityChartTimeStamp(ChartTimeStamp.Month));
-            YearTimeStampQuantityChartCommand = new RelayCommand(execute => ChangeQuantityChartTimeStamp(ChartTimeStamp.Year));
-            AllTimeStampQuantityChartCommand = new RelayCommand(execute => ChangeQuantityChartTimeStamp(ChartTimeStamp.All));
+            DayTimeStampQuantityChartCommand = new RelayCommand(execute => ChangeQuantityChartTimeStamp(ChartTimeStampEnum.Day));
+            WeekTimeStampQuantityChartCommand = new RelayCommand(execute => ChangeQuantityChartTimeStamp(ChartTimeStampEnum.Week));
+            MonthTimeStampQuantityChartCommand = new RelayCommand(execute => ChangeQuantityChartTimeStamp(ChartTimeStampEnum.Month));
+            YearTimeStampQuantityChartCommand = new RelayCommand(execute => ChangeQuantityChartTimeStamp(ChartTimeStampEnum.Year));
+            AllTimeStampQuantityChartCommand = new RelayCommand(execute => ChangeQuantityChartTimeStamp(ChartTimeStampEnum.All));
 
-            PriceChartTimeStamp = ChartTimeStamp.Week;
-            QuantityChartTimeStamp = ChartTimeStamp.Week;
+            PriceChartTimeStamp = ChartTimeStampEnum.Week;
+            QuantityChartTimeStamp = ChartTimeStampEnum.Week;
         }
 
         private async void RefreshData()
@@ -345,12 +337,12 @@ namespace SteamItemsStatsViewer.ViewModels
             return secondKeyPair.Value - firstKeyPair.Value;
         }
 
-        public void ChangeQuantityChartTimeStamp(ChartTimeStamp timeStamp)
+        public void ChangeQuantityChartTimeStamp(ChartTimeStampEnum timeStamp)
         {
             QuantityChartTimeStamp = timeStamp;
         }
 
-        public void ChangePriceChartTimeStamp(ChartTimeStamp timeStamp)
+        public void ChangePriceChartTimeStamp(ChartTimeStampEnum timeStamp)
         {
             PriceChartTimeStamp = timeStamp;
         }
