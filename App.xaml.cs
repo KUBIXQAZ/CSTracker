@@ -1,10 +1,8 @@
 ﻿using SteamItemsStatsViewer.Models;
-using SteamItemsStatsViewer.Services;
 using SteamItemsStatsViewer.Stores;
 using SteamItemsStatsViewer.ViewModels;
 using SteamItemsStatsViewer.Views;
 using System.IO;
-using System.IO.Packaging;
 using System.Windows;
 
 namespace SteamItemsStatsViewer
