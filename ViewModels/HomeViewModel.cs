@@ -1,11 +1,11 @@
 ﻿using Newtonsoft.Json;
 using SteamItemsStatsViewer.Models;
 using SteamItemsStatsViewer.MVVM;
+using SteamItemsStatsViewer.Services;
 using SteamItemsStatsViewer.Stores;
 using SteamItemsStatsViewer.Views;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Net;
 using System.Net.Http;
 
 namespace SteamItemsStatsViewer.ViewModels
@@ -44,7 +44,7 @@ namespace SteamItemsStatsViewer.ViewModels
 
             try
             {
-                using (HttpClient client = new HttpClient())
+                using (HttpClient client = new HttpClientService().CreateHttpClient(App.BaseApiUrl, App.ApiKey))
                 {
                     client.BaseAddress = new Uri(App.BaseApiUrl);
 

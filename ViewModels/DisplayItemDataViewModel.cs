@@ -9,6 +9,7 @@ using System.Net.Http;
 using Newtonsoft.Json;
 using System.Globalization;
 using SteamItemsStatsViewer.Enums;
+using SteamItemsStatsViewer.Services;
 
 namespace SteamItemsStatsViewer.ViewModels
 {
@@ -233,7 +234,7 @@ namespace SteamItemsStatsViewer.ViewModels
 
         private async void RefreshData()
         {
-            using (HttpClient client = new HttpClient())
+            using (HttpClient client = new HttpClientService().CreateHttpClient(App.BaseApiUrl, App.ApiKey))
             {
                 client.BaseAddress = new Uri(App.BaseApiUrl);
 

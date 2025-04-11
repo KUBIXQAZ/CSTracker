@@ -1,4 +1,4 @@
-﻿<Window x:Class="SteamItemsStatsViewer.Views.AlertWindow"
+﻿<Window x:Class="SteamItemsStatsViewer.Views.InputPromptWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,14 +6,14 @@
         xmlns:local="clr-namespace:SteamItemsStatsViewer.Views"
         mc:Ignorable="d"
         WindowStyle="None"
-        Height="100" 
         Width="300"
+        Height="150"
         WindowStartupLocation="CenterOwner"
         ResizeMode="NoResize"
         Background="{StaticResource PrimaryBackground}"
-        BorderBrush="{Binding BorderColor}"
+        BorderBrush="{StaticResource AccentColor}"
         BorderThickness="1">
-    
+
     <WindowChrome.WindowChrome>
 
         <WindowChrome CaptionHeight="0"
@@ -67,18 +67,37 @@
             </Grid>
 
         </Border>
-        
-        <ScrollViewer Grid.Row="1"
-                      Padding="5">
+
+        <Grid Grid.Row="1"
+              Margin="5"
+              VerticalAlignment="Center">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
 
             <TextBlock Text="{Binding Text}"
                        Foreground="{StaticResource TextPrimary}"
                        HorizontalAlignment="Stretch"
-                       VerticalAlignment="Stretch"
                        TextWrapping="Wrap"/>
 
-        </ScrollViewer>
+            <TextBox Grid.Row="1"
+                     Background="Transparent"
+                     Foreground="{StaticResource TextPrimary}"
+                     BorderThickness="1"
+                     BorderBrush="{StaticResource AccentColor}"
+                     Text="{Binding InputText}"
+                     Margin="0 10"/>
+
+            <Button Grid.Row="2"
+                    Content="Ok"
+                    HorizontalAlignment="Right"
+                    Command="{Binding OkCommand}"/>
+
+        </Grid>
 
     </Grid>
-    
+
 </Window>
