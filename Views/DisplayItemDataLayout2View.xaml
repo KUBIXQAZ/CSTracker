@@ -246,143 +246,150 @@
                     </Border>
 
                 </Grid>
+                
             </controls:HorizontalScrollViewer>
-            <Grid Grid.Row="2"
-                  Margin="0 30 0 0">
 
-                <Grid.ColumnDefinitions>
+            <Border Grid.Row="2"
+                    Background="{StaticResource SecondaryBackground}"
+                    CornerRadius="15"  
+                    Padding="40 20 0 20"
+                    Margin="0 30 0 0">
 
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
+                <Grid>
 
-                </Grid.ColumnDefinitions>
+                    <Grid.ColumnDefinitions>
 
-                <Grid Grid.Column="0">
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
 
-                    <Grid.RowDefinitions>
+                    </Grid.ColumnDefinitions>
 
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="*"/>
+                    <Grid Grid.Column="0">
 
-                    </Grid.RowDefinitions>
+                        <Grid.RowDefinitions>
 
-                    <TextBlock Text="Price" 
-                               Foreground="{StaticResource TextPrimary}"
-                               FontSize="33"
-                               HorizontalAlignment="Center"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="*"/>
 
-                    <Border Grid.Row="1"
-                            BorderBrush="{StaticResource BorderColor}"
-                            BorderThickness="1"
-                            CornerRadius="10"
-                            HorizontalAlignment="Left"
-                            Padding="10 5"
-                            Margin="0 25 0 0">
+                        </Grid.RowDefinitions>
 
-                        <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Price" 
+                                   Foreground="{StaticResource TextPrimary}"
+                                   FontSize="33"/>
 
-                            <Button Content="Day" 
-                                    Margin="0 0 15 0" 
-                                    Command="{Binding DayTimeStampPriceChartCommand}" 
-                                    Style="{StaticResource TimeStampChartButton}"/>
+                        <Border Grid.Row="1"
+                                BorderBrush="{StaticResource BorderColor}"
+                                BorderThickness="1"
+                                CornerRadius="10"
+                                HorizontalAlignment="Left"
+                                Padding="10 5"
+                                Margin="0 5 0 20">
 
-                            <Button Content="Week" 
-                                    Margin="0 0 15 0" 
-                                    Command="{Binding WeekTimeStampPriceChartCommand}" 
-                                    Style="{StaticResource TimeStampChartButton}"/>
+                            <StackPanel Orientation="Horizontal">
 
-                            <Button Content="Month" 
-                                    Margin="0 0 15 0" 
-                                    Command="{Binding MonthTimeStampPriceChartCommand}" 
-                                    Style="{StaticResource TimeStampChartButton}"/>
+                                <Button Content="Day" 
+                                        Margin="0 0 15 0" 
+                                        Command="{Binding DayTimeStampPriceChartCommand}" 
+                                        Style="{StaticResource TimeStampChartButton}"/>
 
-                            <Button Content="Year" 
-                                    Margin="0 0 15 0" 
-                                    Command="{Binding YearTimeStampPriceChartCommand}" 
-                                    Style="{StaticResource TimeStampChartButton}"/>
+                                <Button Content="Week" 
+                                        Margin="0 0 15 0" 
+                                        Command="{Binding WeekTimeStampPriceChartCommand}" 
+                                        Style="{StaticResource TimeStampChartButton}"/>
 
-                            <Button Content="All" 
-                                    Command="{Binding AllTimeStampPriceChartCommand}" 
-                                    Style="{StaticResource TimeStampChartButton}"/>
+                                <Button Content="Month" 
+                                        Margin="0 0 15 0" 
+                                        Command="{Binding MonthTimeStampPriceChartCommand}" 
+                                        Style="{StaticResource TimeStampChartButton}"/>
 
-                        </StackPanel>
+                                <Button Content="Year" 
+                                        Margin="0 0 15 0" 
+                                        Command="{Binding YearTimeStampPriceChartCommand}" 
+                                        Style="{StaticResource TimeStampChartButton}"/>
 
-                    </Border>
+                                <Button Content="All" 
+                                        Command="{Binding AllTimeStampPriceChartCommand}" 
+                                        Style="{StaticResource TimeStampChartButton}"/>
 
-                    <lvc:CartesianChart Grid.Row="2" 
-                                        Series="{Binding SeriesPrice}" 
-                                        YAxes="{Binding YAxesPrice}"
-                                        XAxes="{Binding XAxesPrice}" 
-                                        ZoomMode="X"
-                                        MinHeight="100"/>
+                            </StackPanel>
+
+                        </Border>
+
+                        <lvc:CartesianChart Grid.Row="2" 
+                                            Series="{Binding SeriesPrice}" 
+                                            YAxes="{Binding YAxesPrice}"
+                                            XAxes="{Binding XAxesPrice}" 
+                                            ZoomMode="X"
+                                            MinHeight="100"/>
+
+                    </Grid>
+
+                    <Grid Grid.Column="1">
+
+                        <Grid.RowDefinitions>
+
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="*"/>
+
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Text="Quantity" 
+                                   Foreground="{StaticResource TextPrimary}"
+                                   FontSize="33"/>
+
+                        <Border Grid.Row="1" 
+                                BorderBrush="{StaticResource BorderColor}"
+                                BorderThickness="1"
+                                CornerRadius="10"
+                                HorizontalAlignment="Left"
+                                Padding="10 5"
+                                Margin="0 5 0 20">
+
+                            <StackPanel Orientation="Horizontal">
+
+                                <Button Content="Day" 
+                                        Margin="0 0 15 0" 
+                                        Command="{Binding DayTimeStampQuantityChartCommand}" 
+                                        Style="{StaticResource TimeStampChartButton}"/>
+
+                                <Button Content="Week" 
+                                        Margin="0 0 15 0" 
+                                        Command="{Binding WeekTimeStampQuantityChartCommand}" 
+                                        Style="{StaticResource TimeStampChartButton}"/>
+
+                                <Button Content="Month" 
+                                        Margin="0 0 15 0" 
+                                        Command="{Binding MonthTimeStampQuantityChartCommand}" 
+                                        Style="{StaticResource TimeStampChartButton}"/>
+
+                                <Button Content="Year" 
+                                        Margin="0 0 15 0" 
+                                        Command="{Binding YearTimeStampQuantityChartCommand}" 
+                                        Style="{StaticResource TimeStampChartButton}"/>
+
+                                <Button Content="All" 
+                                        Command="{Binding AllTimeStampQuantityChartCommand}" 
+                                        Style="{StaticResource TimeStampChartButton}"/>
+
+                            </StackPanel>
+
+                        </Border>
+
+                        <lvc:CartesianChart Grid.Row="2" 
+                                            Series="{Binding SeriesQuantity}" 
+                                            YAxes="{Binding YAxesQuantity}" 
+                                            XAxes="{Binding XAxesQuantity}" 
+                                            ZoomMode="X"
+                                            MinHeight="300"/>
+
+                    </Grid>
 
                 </Grid>
-
-                <Grid Grid.Column="1">
-
-                    <Grid.RowDefinitions>
-
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="*"/>
-
-                    </Grid.RowDefinitions>
-
-                    <TextBlock Text="Quantity" 
-                               Foreground="{StaticResource TextPrimary}"
-                               FontSize="33"
-                               HorizontalAlignment="Center"/>
-
-                    <Border Grid.Row="1" 
-                            BorderBrush="{StaticResource BorderColor}"
-                            BorderThickness="1"
-                            CornerRadius="10"
-                            HorizontalAlignment="Left"
-                            Padding="10 5"
-                            Margin="0 25 0 0">
-
-                        <StackPanel Orientation="Horizontal">
-
-                            <Button Content="Day" 
-                                    Margin="0 0 15 0" 
-                                    Command="{Binding DayTimeStampQuantityChartCommand}" 
-                                    Style="{StaticResource TimeStampChartButton}"/>
-
-                            <Button Content="Week" 
-                                    Margin="0 0 15 0" 
-                                    Command="{Binding WeekTimeStampQuantityChartCommand}" 
-                                    Style="{StaticResource TimeStampChartButton}"/>
-
-                            <Button Content="Month" 
-                                    Margin="0 0 15 0" 
-                                    Command="{Binding MonthTimeStampQuantityChartCommand}" 
-                                    Style="{StaticResource TimeStampChartButton}"/>
-
-                            <Button Content="Year" 
-                                    Margin="0 0 15 0" 
-                                    Command="{Binding YearTimeStampQuantityChartCommand}" 
-                                    Style="{StaticResource TimeStampChartButton}"/>
-
-                            <Button Content="All" 
-                                    Command="{Binding AllTimeStampQuantityChartCommand}" 
-                                    Style="{StaticResource TimeStampChartButton}"/>
-
-                        </StackPanel>
-
-                    </Border>
-
-                    <lvc:CartesianChart Grid.Row="2" 
-                                        Series="{Binding SeriesQuantity}" 
-                                        YAxes="{Binding YAxesQuantity}" 
-                                        XAxes="{Binding XAxesQuantity}" 
-                                        ZoomMode="X"
-                                        MinHeight="300"/>
-
-                </Grid>
-
-            </Grid>
-
+                
+            </Border>
+            
         </Grid>
         
     </ScrollViewer>
