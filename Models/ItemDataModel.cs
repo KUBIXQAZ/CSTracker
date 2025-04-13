@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace SteamItemsStatsViewer.Models
+namespace CSTracker.Models
 {
     public class ItemDataModel
     {

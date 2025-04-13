@@ -1,9 +1,9 @@
-﻿using SteamItemsStatsViewer.Enums;
-using SteamItemsStatsViewer.MVVM;
+﻿using CSTracker.Enums;
+using CSTracker.MVVM;
 using System.Windows;
 using System.Windows.Media;
 
-namespace SteamItemsStatsViewer.ViewModels
+namespace CSTracker.ViewModels
 {
     class AlertViewModel : ViewModelBase
     {

@@ -4,7 +4,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace SteamItemsStatsViewer.Resources.Controls
+namespace CSTracker.Resources.Controls
 {
     public class ImageToggle : Button
     {

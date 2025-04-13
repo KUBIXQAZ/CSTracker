@@ -1,9 +1,9 @@
-﻿using SteamItemsStatsViewer.MVVM;
-using SteamItemsStatsViewer.Stores;
+﻿using CSTracker.MVVM;
+using CSTracker.Stores;
 using System.Runtime.InteropServices;
 using System.Windows;
 
-namespace SteamItemsStatsViewer.ViewModels
+namespace CSTracker.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {

@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.IO;
 
-namespace SteamItemsStatsViewer.Models
+namespace CSTracker.Models
 {
     public class SettingsModel
     {

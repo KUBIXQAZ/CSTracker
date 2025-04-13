@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace SteamItemsStatsViewer.DTOs
+namespace CSTracker.DTOs
 {
     public class ExchangeRatesModel
     {

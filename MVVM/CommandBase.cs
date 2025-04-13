@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace SteamItemsStatsViewer.MVVM
+namespace CSTracker.MVVM
 {
     public abstract class CommandBase : ICommand
     {

@@ -1,4 +1,4 @@
-﻿namespace SteamItemsStatsViewer.Utilities
+﻿namespace CSTracker.Utilities
 {
     public static class StatisticsHelper
     {

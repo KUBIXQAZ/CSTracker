@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SteamItemsStatsViewer.Views
+namespace CSTracker.Views
 {
     /// <summary>
     /// Interaction logic for DisplayItemDataLayout2View.xaml

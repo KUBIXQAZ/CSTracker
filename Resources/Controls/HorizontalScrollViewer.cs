@@ -7,7 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace SteamItemsStatsViewer.Resources.Controls
+namespace CSTracker.Resources.Controls
 {
     public class HorizontalScrollViewer : ScrollViewer
     {

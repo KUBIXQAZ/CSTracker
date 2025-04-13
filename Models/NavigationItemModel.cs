@@ -1,6 +1,6 @@
-﻿using SteamItemsStatsViewer.MVVM;
+﻿using CSTracker.MVVM;
 
-namespace SteamItemsStatsViewer.Models
+namespace CSTracker.Models
 {
     public class NavigationItemModel
     {

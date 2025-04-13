@@ -1,6 +1,6 @@
-﻿using SteamItemsStatsViewer.ViewModels;
+﻿using CSTracker.ViewModels;
 
-namespace SteamItemsStatsViewer.Stores
+namespace CSTracker.Stores
 {
     public class NavigationStore
     {

@@ -1,6 +1,6 @@
 ﻿using System.Net.Http;
 
-namespace SteamItemsStatsViewer.Services
+namespace CSTracker.Services
 {
     internal class HttpClientService
     {

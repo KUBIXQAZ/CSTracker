@@ -1,12 +1,12 @@
 ﻿using Newtonsoft.Json;
-using SteamItemsStatsViewer.MVVM;
-using SteamItemsStatsViewer.ViewModels;
+using CSTracker.MVVM;
+using CSTracker.ViewModels;
 using System.ComponentModel;
 using System.IO;
 using System.Windows.Media;
-using SteamItemsStatsViewer.Utilities;
+using CSTracker.Utilities;
 
-namespace SteamItemsStatsViewer.Models
+namespace CSTracker.Models
 {
     public class SteamItemNavigationItemModel : INotifyPropertyChanged
     {

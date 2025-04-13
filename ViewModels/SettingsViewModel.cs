@@ -1,13 +1,13 @@
-﻿using SteamItemsStatsViewer.Commands;
-using SteamItemsStatsViewer.Models;
+﻿using CSTracker.Commands;
+using CSTracker.Models;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Input;
-using SteamItemsStatsViewer.MVVM;
+using CSTracker.MVVM;
 
-namespace SteamItemsStatsViewer.ViewModels
+namespace CSTracker.ViewModels
 {
     public class SettingsViewModel : ViewModelBase
     {

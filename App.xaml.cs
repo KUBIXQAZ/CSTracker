@@ -1,11 +1,11 @@
-﻿using SteamItemsStatsViewer.Models;
-using SteamItemsStatsViewer.Stores;
-using SteamItemsStatsViewer.ViewModels;
-using SteamItemsStatsViewer.Views;
+﻿using CSTracker.Models;
+using CSTracker.Stores;
+using CSTracker.ViewModels;
+using CSTracker.Views;
 using System.IO;
 using System.Windows;
 
-namespace SteamItemsStatsViewer
+namespace CSTracker
 {
     public partial class App : Application
     {

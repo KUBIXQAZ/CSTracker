@@ -1,4 +1,4 @@
-﻿namespace SteamItemsStatsViewer.Enums
+﻿namespace CSTracker.Enums
 {
     public enum ChartTimeStampEnum
     {

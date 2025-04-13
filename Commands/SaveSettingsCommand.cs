@@ -1,7 +1,7 @@
-﻿using SteamItemsStatsViewer.MVVM;
-using SteamItemsStatsViewer.ViewModels;
+﻿using CSTracker.MVVM;
+using CSTracker.ViewModels;
 
-namespace SteamItemsStatsViewer.Commands
+namespace CSTracker.Commands
 {
     public class SaveSettingsCommand : CommandBase
     {

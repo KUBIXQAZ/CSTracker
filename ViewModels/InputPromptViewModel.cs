@@ -1,8 +1,8 @@
-﻿using SteamItemsStatsViewer.MVVM;
+﻿using CSTracker.MVVM;
 using System.Windows.Media;
 using System.Windows;
 
-namespace SteamItemsStatsViewer.ViewModels
+namespace CSTracker.ViewModels
 {
     class InputPromptViewModel : ViewModelBase
     {

@@ -1,9 +1,9 @@
 ﻿using Newtonsoft.Json;
-using SteamItemsStatsViewer.DTOs;
+using CSTracker.DTOs;
 using System.IO;
 using System.Net.Http;
 
-namespace SteamItemsStatsViewer.Models
+namespace CSTracker.Models
 {
     public class CurrencyModel
     {

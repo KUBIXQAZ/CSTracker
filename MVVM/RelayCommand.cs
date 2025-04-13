@@ -1,6 +1,6 @@
 ﻿using System.Windows.Input;
 
-namespace SteamItemsStatsViewer.MVVM
+namespace CSTracker.MVVM
 {
     public class RelayCommand : ICommand
     {

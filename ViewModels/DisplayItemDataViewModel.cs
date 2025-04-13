@@ -1,6 +1,6 @@
-﻿using SteamItemsStatsViewer.Models;
+﻿using CSTracker.Models;
 using System.Windows.Input;
-using SteamItemsStatsViewer.MVVM;
+using CSTracker.MVVM;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore;
 using SkiaSharp;
@@ -8,10 +8,10 @@ using LiveChartsCore.SkiaSharpView.Painting;
 using System.Net.Http;
 using Newtonsoft.Json;
 using System.Globalization;
-using SteamItemsStatsViewer.Enums;
-using SteamItemsStatsViewer.Services;
+using CSTracker.Enums;
+using CSTracker.Services;
 
-namespace SteamItemsStatsViewer.ViewModels
+namespace CSTracker.ViewModels
 {
     public class DisplayItemDataViewModel : ViewModelBase
     {
