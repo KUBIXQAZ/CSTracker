@@ -1,5 +1,4 @@
 ﻿using CSTracker.Commands;
-using CSTracker.Models;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;

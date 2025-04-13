@@ -16,12 +16,12 @@
         WindowStartupLocation="CenterScreen">
 
     <WindowChrome.WindowChrome>
-        
+
         <WindowChrome CaptionHeight="0"
                       CornerRadius="10"
                       GlassFrameThickness="0"
                       ResizeBorderThickness="5"/>
-        
+
     </WindowChrome.WindowChrome>
 
     <Window.Resources>
@@ -39,11 +39,11 @@
         </DataTemplate>
 
         <DataTemplate DataType="{x:Type vms:SettingsViewModel}">
-            
+
             <views:SettingsView/>
-            
+
         </DataTemplate>
-        
+
     </Window.Resources>
 
     <Grid Margin="{Binding MainGridMargin}">
@@ -78,7 +78,7 @@
                               Command="{Binding ChangeWindowStateCommand}"/>
 
             </Border.InputBindings>
-            
+
             <Grid HorizontalAlignment="Stretch"
                   VerticalAlignment="Center"
                   Margin="5">
@@ -115,7 +115,7 @@
             </Grid>
 
         </Border>
-        
+
         <Border Grid.Row="1" 
                 Background="{StaticResource SecondaryBackground}"
                 Padding="10 15"
@@ -147,4 +147,5 @@
         </controls:MainScrollViewer>
 
     </Grid>
+
 </Window>
