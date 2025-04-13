@@ -43,18 +43,19 @@ namespace SteamItemsStatsViewer.ViewModels
         public ICommand AllTimeStampQuantityChartCommand { get; set; }
 
         //PRICE CHART//
-        public ISeries[] SeriesPrice { get; set; } = new ISeries[]
+        public ISeries[] SeriesPrice { get; set; } = 
         {
             new LineSeries<double>
             {
-                Fill = new LinearGradientPaint(new [] { new SKColor(33, 150, 243, 100), new SKColor(43, 43, 43, 0) },new SKPoint(0, 0),new SKPoint(0, 1)),
+                Fill = new LinearGradientPaint(new[] { new SKColor(33, 150, 243, 100), new SKColor(43, 43, 43, 0) }, new SKPoint(0, 0), new SKPoint(0, 1)),
                 Stroke = new SolidColorPaint(new SKColor(85, 177, 250,100)),
                 LineSmoothness = 0,
                 GeometrySize = 0,
                 DataPadding = new LiveChartsCore.Drawing.LvcPoint(0,0)
             }
         };
-        public Axis[] YAxesPrice { get; set; } = new[]
+
+        public Axis[] YAxesPrice { get; set; } =
         {
             new Axis
             {
@@ -63,7 +64,8 @@ namespace SteamItemsStatsViewer.ViewModels
                 Labeler = (value) => value.ToString("N") + App.Settings.Currency
             }
         };
-        public Axis[] XAxesPrice { get; set; } = new[]
+
+        public Axis[] XAxesPrice { get; set; } =
         {
             new Axis
             {
@@ -74,7 +76,7 @@ namespace SteamItemsStatsViewer.ViewModels
             }
         };
 
-        public ISeries[] SeriesQuantity { get; set; } = new ISeries[]
+        public ISeries[] SeriesQuantity { get; set; } =
         {
             new LineSeries<int>
             {
@@ -82,25 +84,28 @@ namespace SteamItemsStatsViewer.ViewModels
                 Stroke = new SolidColorPaint(new SKColor(85, 177, 250,100)),
                 LineSmoothness = 0,
                 GeometrySize = 0,
-                DataPadding = new LiveChartsCore.Drawing.LvcPoint(0,0),
+                DataPadding = new LiveChartsCore.Drawing.LvcPoint(0,0)
             }
         };
-        public Axis[] YAxesQuantity { get; set; } = new[]
+
+        public Axis[] YAxesQuantity { get; set; } =
         {
             new Axis
             {
                 LabelsPaint = new SolidColorPaint(new SKColor(255,255,255)),
                 TextSize = 15,
+                Labeler = (value) => value.ToString("N0")
             }
         };
-        public Axis[] XAxesQuantity { get; set; } = new[]
+
+        public Axis[] XAxesQuantity { get; set; } =
         {
             new Axis
             {
                LabelsRotation = 0,
                LabelsPaint = new SolidColorPaint(new SKColor(255,255,255)),
                IsVisible = true,
-               TextSize = 10,
+               TextSize = 10
             }
         };
 

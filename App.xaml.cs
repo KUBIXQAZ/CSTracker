@@ -31,7 +31,7 @@ namespace SteamItemsStatsViewer
 
             NavigationStore navigationStore = new NavigationStore();
 
-            await Task.Run(LoadUserdata);
+            await LoadUserdata();
 
             MainWindow mainWindow = new MainWindow();
             mainWindow.Show();
@@ -51,7 +51,7 @@ namespace SteamItemsStatsViewer
             if (!Directory.Exists(UserdataFolder)) Directory.CreateDirectory(UserdataFolder);
         }
 
-        private void LoadUserdata()
+        private async Task LoadUserdata()
         {
             string userdataPath = $"{UserdataFolder}\\Userdata.txt";
 

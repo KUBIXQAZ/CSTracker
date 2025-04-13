@@ -1,0 +1,390 @@
+﻿<UserControl x:Class="SteamItemsStatsViewer.Views.DisplayItemDataLayout2View"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SteamItemsStatsViewer.Views"
+             xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
+             xmlns:controls="clr-namespace:SteamItemsStatsViewer.Resources.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="900" d:DesignWidth="1200">
+    
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled"
+                  VerticalScrollBarVisibility="Visible">
+
+        <Grid>
+
+            <Grid.RowDefinitions>
+
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="6*"/>
+
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0" 
+                  Margin="0 0 0 20">
+
+                <Grid.ColumnDefinitions>
+
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+
+                </Grid.ColumnDefinitions>
+
+                <Image Source="{Binding ItemData.IconPath}"
+                       Height="35"/>
+
+                <TextBlock Grid.Column="1"
+                           Text="{Binding ItemData.Name}"
+                           Foreground="{StaticResource TextPrimary}"
+                           FontSize="22"/>
+
+                <Button Grid.Column="2" 
+                        Command="{Binding RefreshDataCommand}" 
+                        HorizontalAlignment="Right" 
+                        Content="Refresh"/>
+
+            </Grid>
+
+            <controls:HorizontalScrollViewer Grid.Row="1"
+                                             HorizontalScrollBarVisibility="Hidden"
+                                             VerticalScrollBarVisibility="Disabled">
+                <Grid>
+
+                    <Grid.ColumnDefinitions>
+
+                        <ColumnDefinition Width="10*"/>
+                        <ColumnDefinition Width="7*"/>
+                        <ColumnDefinition Width="7*"/>
+                        <ColumnDefinition Width="7*"/>
+
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+
+                    </Grid.RowDefinitions>
+
+                    <Border Grid.Column="0"
+                            Grid.Row="0" 
+                            Style="{StaticResource InfoBubble}" 
+                            Margin="0 0 15 15"
+                            Height="100">
+
+                        <StackPanel VerticalAlignment="Center">
+
+                            <TextBlock Text="Price" 
+                                       Foreground="{StaticResource TextPrimary}"
+                                       FontSize="20"
+                                       Margin="0 0 0 10"/>
+
+                            <TextBlock Text="{Binding CurrentPrice}" 
+                                       Foreground="{StaticResource TextPrimary}"
+                                       FontSize="18"
+                                       FontWeight="Bold"/>
+
+                        </StackPanel>
+
+                    </Border>
+
+                    <Border Grid.Column="0" 
+                            Grid.Row="1"
+                            Style="{StaticResource InfoBubble}" 
+                            Margin="0 0 15 0"
+                            Height="100">
+
+                        <StackPanel VerticalAlignment="Center">
+
+                            <TextBlock Text="Quantity"
+                                       Foreground="{StaticResource TextPrimary}"
+                                       FontSize="20"
+                                       Margin="0 0 0 10"/>
+
+                            <TextBlock Text="{Binding CurrentQuantity}" 
+                                       Foreground="{StaticResource TextPrimary}"
+                                       FontSize="18"
+                                       FontWeight="Bold"/>
+
+                        </StackPanel>
+
+                    </Border>
+
+                    <Border Grid.Column="1"
+                            Grid.Row="0" 
+                            Style="{StaticResource InfoBubble}"
+                            Margin="0 0 15 15"
+                            Height="100">
+
+                        <StackPanel VerticalAlignment="Center">
+
+                            <TextBlock Text="Price (7d)" 
+                                       Foreground="{StaticResource TextPrimary}"
+                                       FontSize="20"
+                                       Margin="0 0 0 10"/>
+
+                            <TextBlock Text="{Binding Price7Days}" 
+                                       Foreground="{StaticResource TextSecondary}"
+                                       FontSize="18"
+                                       FontWeight="Bold"/>
+
+                        </StackPanel>
+
+                    </Border>
+
+                    <Border Grid.Column="1"
+                            Grid.Row="1" 
+                            Style="{StaticResource InfoBubble}"
+                            Margin="0 0 15 0"
+                            Height="100">
+
+                        <StackPanel VerticalAlignment="Center">
+
+                            <TextBlock Text="Quantity (7d)" 
+                                       Foreground="{StaticResource TextPrimary}"
+                                       FontSize="20"
+                                       Margin="0 0 0 10"/>
+
+                            <TextBlock Text="{Binding Quantity7Days}" 
+                                       Foreground="{StaticResource TextSecondary}"
+                                       FontSize="18"
+                                       FontWeight="Bold"/>
+
+                        </StackPanel>
+
+                    </Border>
+
+                    <Border Grid.Column="2"
+                            Grid.Row="0" 
+                            Style="{StaticResource InfoBubble}"
+                            Margin="0 0 15 15"
+                            Height="100">
+
+                        <StackPanel VerticalAlignment="Center">
+
+                            <TextBlock Text="Price (14d)" 
+                                       Foreground="{StaticResource TextPrimary}"
+                                       FontSize="20"
+                                       Margin="0 0 0 10"/>
+
+                            <TextBlock Text="{Binding Price14Days}" 
+                                       Foreground="{StaticResource TextSecondary}"
+                                       FontSize="18"
+                                       FontWeight="Bold"/>
+
+                        </StackPanel>
+
+                    </Border>
+
+                    <Border Grid.Column="2"
+                            Grid.Row="1" 
+                            Style="{StaticResource InfoBubble}"
+                            Margin="0 0 15 0"
+                            Height="100">
+
+                        <StackPanel VerticalAlignment="Center">
+
+                            <TextBlock Text="Quantity (14d)" 
+                                       Foreground="{StaticResource TextPrimary}"
+                                       FontSize="20"
+                                       Margin="0 0 0 10"/>
+
+                            <TextBlock Text="{Binding Quantity14Days}" 
+                                       Foreground="{StaticResource TextSecondary}"
+                                       FontSize="18"
+                                       FontWeight="Bold"/>
+
+                        </StackPanel>
+
+                    </Border>
+
+                    <Border Grid.Column="3"
+                            Grid.Row="0" 
+                            Style="{StaticResource InfoBubble}"
+                            Margin="0 0 0 15"
+                            Height="100">
+
+                        <StackPanel VerticalAlignment="Center">
+
+                            <TextBlock Text="Price (30d)" 
+                                       Foreground="{StaticResource TextPrimary}"
+                                       FontSize="20"
+                                       Margin="0 0 0 10"/>
+
+                            <TextBlock Text="{Binding Price30Days}" 
+                                       Foreground="{StaticResource TextSecondary}"
+                                       FontSize="18"
+                                       FontWeight="Bold"/>
+
+                        </StackPanel>
+
+                    </Border>
+
+                    <Border Grid.Column="3"
+                            Grid.Row="1" 
+                            Style="{StaticResource InfoBubble}"
+                            Margin="0 0 0 0"
+                            Height="100">
+
+                        <StackPanel VerticalAlignment="Center">
+
+                            <TextBlock Text="Quantity (30d)" 
+                                       Foreground="{StaticResource TextPrimary}"
+                                       FontSize="20"
+                                       Margin="0 0 0 10"/>
+
+                            <TextBlock Text="{Binding Quantity30Days}" 
+                                       Foreground="{StaticResource TextSecondary}"
+                                       FontSize="18"
+                                       FontWeight="Bold"/>
+
+                        </StackPanel>
+
+                    </Border>
+
+                </Grid>
+            </controls:HorizontalScrollViewer>
+            <Grid Grid.Row="2"
+                  Margin="0 30 0 0">
+
+                <Grid.ColumnDefinitions>
+
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Column="0">
+
+                    <Grid.RowDefinitions>
+
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Text="Price" 
+                               Foreground="{StaticResource TextPrimary}"
+                               FontSize="33"
+                               HorizontalAlignment="Center"/>
+
+                    <Border Grid.Row="1"
+                            BorderBrush="{StaticResource BorderColor}"
+                            BorderThickness="1"
+                            CornerRadius="10"
+                            HorizontalAlignment="Left"
+                            Padding="10 5"
+                            Margin="0 25 0 0">
+
+                        <StackPanel Orientation="Horizontal">
+
+                            <Button Content="Day" 
+                                    Margin="0 0 15 0" 
+                                    Command="{Binding DayTimeStampPriceChartCommand}" 
+                                    Style="{StaticResource TimeStampChartButton}"/>
+
+                            <Button Content="Week" 
+                                    Margin="0 0 15 0" 
+                                    Command="{Binding WeekTimeStampPriceChartCommand}" 
+                                    Style="{StaticResource TimeStampChartButton}"/>
+
+                            <Button Content="Month" 
+                                    Margin="0 0 15 0" 
+                                    Command="{Binding MonthTimeStampPriceChartCommand}" 
+                                    Style="{StaticResource TimeStampChartButton}"/>
+
+                            <Button Content="Year" 
+                                    Margin="0 0 15 0" 
+                                    Command="{Binding YearTimeStampPriceChartCommand}" 
+                                    Style="{StaticResource TimeStampChartButton}"/>
+
+                            <Button Content="All" 
+                                    Command="{Binding AllTimeStampPriceChartCommand}" 
+                                    Style="{StaticResource TimeStampChartButton}"/>
+
+                        </StackPanel>
+
+                    </Border>
+
+                    <lvc:CartesianChart Grid.Row="2" 
+                                        Series="{Binding SeriesPrice}" 
+                                        YAxes="{Binding YAxesPrice}"
+                                        XAxes="{Binding XAxesPrice}" 
+                                        ZoomMode="X"
+                                        MinHeight="100"/>
+
+                </Grid>
+
+                <Grid Grid.Column="1">
+
+                    <Grid.RowDefinitions>
+
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Text="Quantity" 
+                               Foreground="{StaticResource TextPrimary}"
+                               FontSize="33"
+                               HorizontalAlignment="Center"/>
+
+                    <Border Grid.Row="1" 
+                            BorderBrush="{StaticResource BorderColor}"
+                            BorderThickness="1"
+                            CornerRadius="10"
+                            HorizontalAlignment="Left"
+                            Padding="10 5"
+                            Margin="0 25 0 0">
+
+                        <StackPanel Orientation="Horizontal">
+
+                            <Button Content="Day" 
+                                    Margin="0 0 15 0" 
+                                    Command="{Binding DayTimeStampQuantityChartCommand}" 
+                                    Style="{StaticResource TimeStampChartButton}"/>
+
+                            <Button Content="Week" 
+                                    Margin="0 0 15 0" 
+                                    Command="{Binding WeekTimeStampQuantityChartCommand}" 
+                                    Style="{StaticResource TimeStampChartButton}"/>
+
+                            <Button Content="Month" 
+                                    Margin="0 0 15 0" 
+                                    Command="{Binding MonthTimeStampQuantityChartCommand}" 
+                                    Style="{StaticResource TimeStampChartButton}"/>
+
+                            <Button Content="Year" 
+                                    Margin="0 0 15 0" 
+                                    Command="{Binding YearTimeStampQuantityChartCommand}" 
+                                    Style="{StaticResource TimeStampChartButton}"/>
+
+                            <Button Content="All" 
+                                    Command="{Binding AllTimeStampQuantityChartCommand}" 
+                                    Style="{StaticResource TimeStampChartButton}"/>
+
+                        </StackPanel>
+
+                    </Border>
+
+                    <lvc:CartesianChart Grid.Row="2" 
+                                        Series="{Binding SeriesQuantity}" 
+                                        YAxes="{Binding YAxesQuantity}" 
+                                        XAxes="{Binding XAxesQuantity}" 
+                                        ZoomMode="X"
+                                        MinHeight="300"/>
+
+                </Grid>
+
+            </Grid>
+
+        </Grid>
+        
+    </ScrollViewer>
+    
+</UserControl>

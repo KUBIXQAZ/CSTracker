@@ -8,6 +8,7 @@
         xmlns:controls="clr-namespace:SteamItemsStatsViewer.Resources.Controls"
         mc:Ignorable="d"
         Height="450" Width="800"
+        MinWidth="850"
         WindowStyle="None"
         ResizeMode="CanResize"
         Background="{StaticResource PrimaryBackground}"
@@ -33,7 +34,7 @@
 
         <DataTemplate DataType="{x:Type vms:DisplayItemDataViewModel}">
 
-            <views:DisplayItemDataView/>
+            <views:DisplayItemDataLayout2View/>
 
         </DataTemplate>
 
