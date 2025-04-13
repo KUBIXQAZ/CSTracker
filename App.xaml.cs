@@ -40,10 +40,10 @@ namespace CSTracker
 
         private void CreateAppDataFolders()
         {
-            MainDataFolder = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\KUBIXQAZ\\SteamItemsStatsViewer\\";
-            TempDataFolder = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\KUBIXQAZ\\SteamItemsStatsViewer\\Temp";
-            IconFolder = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\KUBIXQAZ\\SteamItemsStatsViewer\\Icons";
-            UserdataFolder = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\KUBIXQAZ\\SteamItemsStatsViewer\\Userdata";
+            MainDataFolder = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\CSTracker\\";
+            TempDataFolder = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\CSTracker\\Temp";
+            IconFolder = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\CSTracker\\Icons";
+            UserdataFolder = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\CSTracker\\Userdata";
 
             if (!Directory.Exists(MainDataFolder)) Directory.CreateDirectory(MainDataFolder);
             if (!Directory.Exists(TempDataFolder)) Directory.CreateDirectory(TempDataFolder);
