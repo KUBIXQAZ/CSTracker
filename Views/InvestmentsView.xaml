@@ -1,0 +1,291 @@
+﻿<UserControl x:Class="CSTracker.Views.InvestmentsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CSTracker.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    
+    <Grid>
+
+        <Grid.RowDefinitions>
+
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0"
+              Margin="0 0 0 10">
+
+            <Button Content="Add"
+                    HorizontalAlignment="Right"
+                    Command="{Binding ShowAddInvestmentPanelCommand}"/>
+
+        </Grid>
+
+        <Grid Grid.Row="1">
+
+            <Grid.ColumnDefinitions>
+
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0">
+
+                <ItemsControl ItemsSource="{Binding Investments}">
+
+                    <ItemsControl.ItemTemplate>
+
+                        <DataTemplate>
+
+                            <Border>
+
+                                <Border.Style>
+
+                                    <Style TargetType="{x:Type Border}">
+
+                                        <Setter Property="Background" Value="{StaticResource SecondaryBackground}"/>
+                                        <Setter Property="CornerRadius" Value="10"/>
+                                        <Setter Property="Margin" Value="0 0 0 15"/>
+                                        <Setter Property="Padding" Value="20 10 10 10"/>
+
+                                        <Style.Triggers>
+
+                                            <Trigger Property="IsMouseOver"
+                                                     Value="True">
+
+                                                <Setter Property="Background" Value="{StaticResource TertiaryBackground}"/>
+
+                                            </Trigger>
+
+                                        </Style.Triggers>
+
+                                    </Style>
+
+                                </Border.Style>
+
+                                <Grid>
+
+                                    <Grid.ColumnDefinitions>
+
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="auto"/>
+
+                                    </Grid.ColumnDefinitions>
+
+                                    <Image Grid.Column="0"
+                                           Source="{Binding ItemData.IconPath}"
+                                           VerticalAlignment="Top"
+                                           Margin="0 0 10 0"
+                                           MaxHeight="110"/>
+
+                                    <Grid Grid.Column="1" 
+                                          VerticalAlignment="Top"
+                                          Margin="0 20">
+
+                                        <Grid.RowDefinitions>
+
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="auto"/>
+
+                                        </Grid.RowDefinitions>
+
+                                        <TextBlock Text="{Binding Name}"
+                                                   Foreground="{StaticResource TextPrimary}"
+                                                   FontSize="20"
+                                                   Margin="0 0 0 10"
+                                                   FontWeight="Bold"/>
+
+                                        <Grid Grid.Row="1">
+
+                                            <Grid.RowDefinitions>
+
+                                                <RowDefinition Height="auto"/>
+                                                <RowDefinition Height="auto"/>
+
+                                            </Grid.RowDefinitions>
+
+                                            <Grid Grid.Row="0">
+
+                                                <TextBlock Text="{Binding QuantityText}"
+                                                           Foreground="{StaticResource TextPrimary}"
+                                                           FontSize="20"
+                                                           Margin="0 0 0 5"/>
+
+                                            </Grid>
+
+                                            <WrapPanel Grid.Row="1">
+
+                                                <Grid Margin="0 5">
+
+                                                    <Grid.RowDefinitions>
+
+                                                        <RowDefinition/>
+                                                        <RowDefinition/>
+
+                                                    </Grid.RowDefinitions>
+
+                                                    <TextBlock Grid.Row="0"
+                                                               Text="{Binding BoughtAtText}"
+                                                               Foreground="{StaticResource TextPrimary}"
+                                                               FontSize="20"
+                                                               Margin="0 0 30 0"/>
+
+                                                    <TextBlock Grid.Row="1"
+                                                               Text="{Binding CurrentValueText}"
+                                                               Foreground="{StaticResource TextPrimary}"
+                                                               FontSize="20"
+                                                               Margin="0 0 30 0"/>
+
+                                                </Grid>
+
+                                                <Grid Margin="0 5">
+
+                                                    <Grid.RowDefinitions>
+
+                                                        <RowDefinition/>
+                                                        <RowDefinition/>
+
+                                                    </Grid.RowDefinitions>
+
+                                                    <TextBlock Grid.Row="0"
+                                                               Text="{Binding TotalSpentText}"
+                                                               Foreground="{StaticResource TextPrimary}"
+                                                               FontSize="20"/>
+
+                                                    <TextBlock Grid.Row="1"
+                                                               Text="{Binding CurrentWorthText}"
+                                                               Foreground="{StaticResource TextPrimary}"
+                                                               FontSize="20"/>
+
+                                                </Grid>
+
+                                            </WrapPanel>
+
+                                        </Grid>
+
+                                    </Grid>
+
+                                    <Grid Grid.Column="2">
+
+                                        <Button VerticalAlignment="Top"
+                                                Width="30"
+                                                Height="30"
+                                                Padding="5"
+                                                Background="Transparent"
+                                                Command="{Binding DeleteInvestmentCommand}">
+
+                                            <Button.Template>
+                                                
+                                                <ControlTemplate TargetType="Button">
+
+                                                    <Grid Margin="4">
+
+                                                        <Viewbox Stretch="Uniform">
+
+                                                            <Path x:Name="TrashPath"
+                                                                  Data="{StaticResource Trash}"
+                                                                  Fill="{DynamicResource ErrorColor}" />
+
+                                                        </Viewbox>
+
+                                                    </Grid>
+                                                    
+                                                </ControlTemplate>
+                                                
+                                            </Button.Template>
+
+                                        </Button>
+
+                                    </Grid>
+                                    
+                                </Grid>
+
+                            </Border>
+
+                        </DataTemplate>
+
+                    </ItemsControl.ItemTemplate>
+
+                </ItemsControl>
+                
+            </Grid>
+
+            <Border Grid.Column="1"
+                    BorderBrush="{StaticResource BorderColor}"
+                    BorderThickness="1 0 0 0"
+                    Visibility="{Binding ShowInvestmentPanel}"
+                    MinWidth="200"
+                    Margin="10 0 0 0">
+
+                <Grid VerticalAlignment="Top"   
+                      Margin="10 0 0 0">
+
+                    <Grid.RowDefinitions>
+
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0"
+                               Text="Add investment"
+                               FontSize="20"
+                               Foreground="{StaticResource TextPrimary}"
+                               Margin="0 0 0 20"/>
+
+                    <TextBlock Grid.Row="1"
+                               Text="Item"
+                               FontSize="14"
+                               Foreground="{StaticResource TextPrimary}"
+                               Margin="0 0 0 5"/>
+
+                    <ComboBox Grid.Row="2"
+                              Margin="0 0 0 15"
+                              ItemsSource="{Binding ItemNames}"
+                              SelectedValue="{Binding InvestmentName, Mode=TwoWay}"/>
+
+                    <TextBlock Grid.Row="3"
+                               Text="Quantity"
+                               FontSize="14"
+                               Foreground="{StaticResource TextPrimary}"
+                               Margin="0 0 0 5"/>
+
+                    <TextBox Grid.Row="4"
+                             Margin="0 0 0 15"
+                             Text="{Binding InvestmentQuantity, Mode=TwoWay}"/>
+
+                    <TextBlock Grid.Row="5"
+                               Text="Price per item"
+                               FontSize="14"
+                               Foreground="{StaticResource TextPrimary}"
+                               Margin="0 0 0 5"/>
+
+                    <TextBox Grid.Row="6"
+                             Margin="0 0 0 15"
+                             Text="{Binding InvestmentPrice, Mode=TwoWay}"/>
+
+                    <Button Grid.Row="7"
+                            Content="Add"
+                            Command="{Binding AddInvestmentCommand}"/>
+
+                </Grid>
+
+            </Border>
+            
+        </Grid>
+        
+    </Grid>
+    
+</UserControl>

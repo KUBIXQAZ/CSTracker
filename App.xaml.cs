@@ -13,6 +13,7 @@ namespace CSTracker
         public static string TempDataFolder;
         public static string IconFolder;
         public static string UserdataFolder;
+        public static string InvestmentsFolder;
 
         public static SettingsModel Settings;
         public static CurrencyModel Currency;
@@ -44,11 +45,13 @@ namespace CSTracker
             TempDataFolder = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\CSTracker\\Temp";
             IconFolder = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\CSTracker\\Icons";
             UserdataFolder = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\CSTracker\\Userdata";
+            InvestmentsFolder = $"{UserdataFolder}\\Investments";
 
             if (!Directory.Exists(MainDataFolder)) Directory.CreateDirectory(MainDataFolder);
             if (!Directory.Exists(TempDataFolder)) Directory.CreateDirectory(TempDataFolder);
             if (!Directory.Exists(IconFolder)) Directory.CreateDirectory(IconFolder);
             if (!Directory.Exists(UserdataFolder)) Directory.CreateDirectory(UserdataFolder);
+            if (!Directory.Exists(InvestmentsFolder)) Directory.CreateDirectory(InvestmentsFolder);
         }
 
         private async Task LoadUserdata()
