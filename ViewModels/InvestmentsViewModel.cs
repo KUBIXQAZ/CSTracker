@@ -81,6 +81,17 @@ namespace CSTracker.ViewModels
             }
         }
 
+        private string _showAddInvestmentPanelButtonText = "Add";
+        public string ShowAddInvestmentPanelButtonText
+        {
+            get => _showAddInvestmentPanelButtonText;
+            set
+            {
+                _showAddInvestmentPanelButtonText = value;
+                OnPropertyChanged(nameof(ShowAddInvestmentPanelButtonText));
+            }
+        }
+
         public RelayCommand ShowAddInvestmentPanelCommand => new RelayCommand(execute => ShowAddInvestmentPanel());
         public RelayCommand AddInvestmentCommand => new RelayCommand(execute => AddInvestment());
 
@@ -128,8 +139,16 @@ namespace CSTracker.ViewModels
 
         private void ShowAddInvestmentPanel()
         {
-            if (_showInvestmentPanel == Visibility.Visible) ShowInvestmentPanel = Visibility.Collapsed;
-            else ShowInvestmentPanel = Visibility.Visible;
+            if (_showInvestmentPanel == Visibility.Visible)
+            {
+                ShowInvestmentPanel = Visibility.Collapsed;
+                ShowAddInvestmentPanelButtonText = "Add";
+            }
+            else
+            {
+                ShowInvestmentPanel = Visibility.Visible;
+                ShowAddInvestmentPanelButtonText = "Hide";
+            }
         }
 
         private void LoadInvestments()
@@ -164,7 +183,7 @@ namespace CSTracker.ViewModels
             string json = JsonConvert.SerializeObject(Investments);
             File.WriteAllText(path, json);
         }
-
+        
         private void AddInvestment()
         {
             ItemDataModel itemData = ItemsData.First(x => x.Name == InvestmentName);

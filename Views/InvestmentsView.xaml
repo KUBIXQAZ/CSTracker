@@ -19,7 +19,7 @@
         <Grid Grid.Row="0"
               Margin="0 0 0 10">
 
-            <Button Content="Add"
+            <Button Content="{Binding ShowAddInvestmentPanelButtonText, FallbackValue=Add}"
                     HorizontalAlignment="Right"
                     Command="{Binding ShowAddInvestmentPanelCommand}"/>
 
