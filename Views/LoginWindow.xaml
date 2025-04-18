@@ -6,7 +6,20 @@
         xmlns:local="clr-namespace:CSTracker.Views"
         xmlns:controls="clr-namespace:CSTracker.Resources.Controls"
         mc:Ignorable="d"
-        Height="450" Width="800">
+        Height="450" Width="800"
+        WindowStartupLocation="CenterScreen"
+        >
+    
+    <Window.Resources>
+        
+        <Style TargetType="local:LoginWindow">
+
+            <Setter Property="OnClosingCommand" Value="{Binding OnClosingCommand}"/>
+            
+        </Style>
+        
+    </Window.Resources>
+    
     <Grid>
         <controls:WebView Source="{Binding WebViewSource}"
                           NavigationCompletedCommand="{Binding NavigationCompletedCommand}"/>

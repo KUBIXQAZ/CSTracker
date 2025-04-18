@@ -1,8 +1,13 @@
 ﻿using CSTracker.Models;
+using CSTracker.Services;
 using CSTracker.Stores;
 using CSTracker.ViewModels;
 using CSTracker.Views;
+using Newtonsoft.Json.Linq;
+using System.IdentityModel.Tokens.Jwt;
 using System.IO;
+using System.Net.Http;
+using System.Security.Claims;
 using System.Windows;
 
 namespace CSTracker
@@ -18,7 +23,10 @@ namespace CSTracker
         public static SettingsModel Settings;
         public static CurrencyModel Currency;
 
-        public static string BaseApiUrl = "https://api.cstracker.cloud/api/ItemsData/";
+        public static string BaseApiUrl = "https://api.cstracker.cloud/api/";
+
+        public static string UserId = string.Empty;
+        public static string Token = string.Empty;
         public static string ApiKey = string.Empty;
 
         protected async override void OnStartup(StartupEventArgs e)
@@ -32,11 +40,69 @@ namespace CSTracker
 
             NavigationStore navigationStore = new NavigationStore();
 
-            await LoadUserdata();
+            await LoginUser();
 
             MainWindow mainWindow = new MainWindow();
-            mainWindow.Show();
             mainWindow.DataContext = new MainViewModel(navigationStore);
+            mainWindow.Show();
+        }
+
+        private async Task LoginUser()
+        {
+            bool isLoggedIn = await IsUserLoggedIn();
+
+            if (!isLoggedIn)
+            {
+                LoginWindow loginWindow = new LoginWindow();
+                LoginViewModel loginViewModel = new LoginViewModel(loginWindow);
+                loginWindow.DataContext = loginViewModel;
+                loginWindow.ShowDialog();
+            }
+
+            Token = File.ReadAllText($"{UserdataFolder}\\Token.txt").Trim();
+
+            var handler = new JwtSecurityTokenHandler();
+            var jwtToken = handler.ReadJwtToken(Token);
+
+            UserId = jwtToken.Claims.First(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
+            ApiKey = await GetUserKey(UserId);
+        }
+
+        private async Task<string> GetUserKey(string userId)
+        {
+            using (HttpClient client = new HttpClientService().CreateHttpClient(BaseApiUrl, null, Token))
+            {
+                var answer = await client.GetAsync($"User/GetUserApiKey/{userId}");
+
+                if (answer.IsSuccessStatusCode)
+                {
+                    string json = await answer.Content.ReadAsStringAsync();
+                    var keyObj = JObject.Parse(json);
+                    return (string)keyObj["apiKey"];
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+
+        private async Task<bool> IsUserLoggedIn()
+        {
+            if (!File.Exists($"{UserdataFolder}\\Token.txt")) return false;
+            else
+            {
+                string token = File.ReadAllText($"{UserdataFolder}\\Token.txt").Trim();
+
+                using (HttpClient client = new HttpClientService().CreateHttpClient(App.BaseApiUrl, null, token))
+                {
+                    var response = await client.GetAsync($"https://api.cstracker.cloud/api/user/validate-token");
+
+                    if (response.IsSuccessStatusCode) return true;
+                    else return false;
+                }
+            }
         }
 
         private void CreateAppDataFolders()
@@ -52,41 +118,6 @@ namespace CSTracker
             if (!Directory.Exists(IconFolder)) Directory.CreateDirectory(IconFolder);
             if (!Directory.Exists(UserdataFolder)) Directory.CreateDirectory(UserdataFolder);
             if (!Directory.Exists(InvestmentsFolder)) Directory.CreateDirectory(InvestmentsFolder);
-        }
-
-        private async Task LoadUserdata()
-        {
-            string userdataPath = $"{UserdataFolder}\\Userdata.txt";
-
-            if (File.Exists(userdataPath))
-            {
-                string content = File.ReadAllText(userdataPath).Trim();
-
-                if (!string.IsNullOrEmpty(content))
-                {
-                    ApiKey = content;
-                }
-            }
-            else
-            {
-                InputPromptWindow inputPromptWindow = new InputPromptWindow();
-                inputPromptWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-                InputPromptViewModel inputPromptViewModel = new InputPromptViewModel(inputPromptWindow, "License", "Enter your license:");
-                inputPromptWindow.DataContext = inputPromptViewModel;
-                inputPromptWindow.ShowDialog();
-
-                if (inputPromptWindow.DialogResult == true)
-                {
-                    string inputText = (inputPromptViewModel.InputText ?? string.Empty).Trim();
-
-                    if (!string.IsNullOrEmpty(inputText))
-                    {
-                        ApiKey = inputText;
-
-                        File.WriteAllText(userdataPath, ApiKey);
-                    }
-                }
-            }
         }
     }
 }

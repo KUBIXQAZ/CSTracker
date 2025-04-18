@@ -1,6 +1,5 @@
 ﻿using CSTracker.MVVM;
 using CSTracker.Stores;
-using CSTracker.Views;
 using System.Runtime.InteropServices;
 using System.Windows;
 
@@ -62,11 +61,6 @@ namespace CSTracker.ViewModels
             _navigationStore.ViewModelChanged += OnViewModelChanged;
 
             _navigationStore.ViewModel = new HomeViewModel(navigationStore);
-
-            LoginViewModel loginViewModel = new LoginViewModel();
-            LoginWindow loginWindow = new LoginWindow();
-            loginWindow.DataContext = loginViewModel;
-            loginWindow.ShowDialog();
         }
 
         private void OnViewModelChanged()
