@@ -97,7 +97,7 @@ namespace CSTracker
 
                 using (HttpClient client = new HttpClientService().CreateHttpClient(App.BaseApiUrl, null, token))
                 {
-                    var response = await client.GetAsync($"https://api.cstracker.cloud/api/user/validate-token");
+                    var response = await client.GetAsync("user/validate-token");
 
                     if (response.IsSuccessStatusCode) return true;
                     else return false;
