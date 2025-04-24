@@ -52,6 +52,8 @@ namespace CSTracker.ViewModels
 
         public RelayCommand HomeNavigationCommand => new RelayCommand(execute => NavigateHome());
         public RelayCommand InvestmentsNavigationCommand => new RelayCommand(execute => InvestmentsNavigation());
+        public RelayCommand ProfileNavigationCommand => new RelayCommand(execute => ProfileNavigation());
+
         public RelayCommand SettingsNavigationCommand => new RelayCommand(execute => NavigateSettings());
 
         public MainViewModel(NavigationStore navigationStore)
@@ -120,6 +122,11 @@ namespace CSTracker.ViewModels
         private void InvestmentsNavigation()
         {
             _navigationStore.ViewModel = new InvestmentsViewModel();
+        }
+
+        private void ProfileNavigation()
+        {
+            _navigationStore.ViewModel = new ProfileViewModel();
         }
 
         private void NavigateSettings()

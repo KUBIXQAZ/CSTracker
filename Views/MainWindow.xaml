@@ -50,6 +50,12 @@
 
         </DataTemplate>
 
+        <DataTemplate DataType="{x:Type vms:ProfileViewModel}">
+
+            <views:ProfileView/>
+
+        </DataTemplate>
+
     </Window.Resources>
 
     <Grid Margin="{Binding MainGridMargin}">
@@ -137,6 +143,11 @@
 
                 <Button Content="Investments"
                         Command="{Binding InvestmentsNavigationCommand}"
+                        Margin="0 0 0 10"
+                        Height="40"/>
+
+                <Button Content="Profile"
+                        Command="{Binding ProfileNavigationCommand}"
                         Margin="0 0 0 10"
                         Height="40"/>
 

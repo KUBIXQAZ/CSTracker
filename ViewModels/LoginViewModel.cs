@@ -3,7 +3,6 @@ using CSTracker.Resources.Controls;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows;
-using static CSTracker.ViewModels.MainViewModel;
 
 namespace CSTracker.ViewModels
 {
