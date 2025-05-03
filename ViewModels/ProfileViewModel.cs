@@ -7,6 +7,7 @@ using CSTracker.Views;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Net.Http;
 using System.Text;
@@ -93,107 +94,99 @@ namespace CSTracker.ViewModels
 
         private async void UpdateEmail()
         {
-            if (string.IsNullOrEmpty(Email))
+            try
+            {
+                using (HttpClient client = new HttpClientService().CreateHttpClient(App.BaseApiUrl, null, App.Token))
+                {
+                    ChangeEmailRequest request = new ChangeEmailRequest
+                    {
+                        UserId = int.Parse(App.UserId),
+                        Email = Email
+                    };
+                    string json = JsonConvert.SerializeObject(request);
+                    HttpContent content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                    var answer = await client.PutAsync("User/UpdateEmail", content);
+
+                    string r = await answer.Content.ReadAsStringAsync();
+
+                    if (answer.IsSuccessStatusCode)
+                    {
+                        AlertWindow alert = new AlertWindow();
+                        AlertViewModel viewModel = new AlertViewModel(alert, "Success", r, AlertTypeEnum.Info);
+                        alert.DataContext = viewModel;
+                        alert.Owner = App.Current.MainWindow;
+                        alert.ShowDialog();
+
+                        LoadUserData();
+                    }
+                    else
+                    {
+                        AlertWindow alert = new AlertWindow();
+                        AlertViewModel viewModel = new AlertViewModel(alert, "Error", r, AlertTypeEnum.Error);
+                        alert.DataContext = viewModel;
+                        alert.Owner = App.Current.MainWindow;
+                        alert.ShowDialog();
+                    }
+                }
+
+                LoadUserData();
+            }
+            catch (Exception)
             {
                 AlertWindow alert = new AlertWindow();
-                AlertViewModel viewModel = new AlertViewModel(alert, "Error", "Email cannot be empty.", AlertTypeEnum.Error);
+                AlertViewModel viewModel = new AlertViewModel(alert, "Error", "Something went wrong, try again later.", AlertTypeEnum.Error);
                 alert.DataContext = viewModel;
                 alert.Owner = App.Current.MainWindow;
                 alert.ShowDialog();
-
-                LoadUserData();
-                return;
-            }
-
-            if (!new EmailAddressAttribute().IsValid(Email))
-            {
-                AlertWindow alert = new AlertWindow();
-                AlertViewModel viewModel = new AlertViewModel(alert, "Error", "Please enter a valid email address.", AlertTypeEnum.Error);
-                alert.DataContext = viewModel;
-                alert.Owner = App.Current.MainWindow;
-                alert.ShowDialog();
-
-                LoadUserData();
-                return;
-            }
-
-            using (HttpClient client = new HttpClientService().CreateHttpClient(App.BaseApiUrl, null, App.Token))
-            {
-                ChangeEmailRequest request = new ChangeEmailRequest
-                {
-                    UserId = int.Parse(App.UserId),
-                    Email = Email
-                };
-                string json = JsonConvert.SerializeObject(request);
-                HttpContent content = new StringContent(json, Encoding.UTF8, "application/json");
-
-                var answer = await client.PutAsync("User/UpdateEmail", content);
-
-                if (answer.IsSuccessStatusCode)
-                {
-                    AlertWindow alert = new AlertWindow();
-                    AlertViewModel viewModel = new AlertViewModel(alert, "Success", "Email has been changed.", AlertTypeEnum.Info);
-                    alert.DataContext = viewModel;
-                    alert.Owner = App.Current.MainWindow;
-                    alert.ShowDialog();
-
-                    LoadUserData();
-                }
-                else
-                {
-                    AlertWindow alert = new AlertWindow();
-                    AlertViewModel viewModel = new AlertViewModel(alert, "Error", "Something went wrong, try again later.", AlertTypeEnum.Error);
-                    alert.DataContext = viewModel;
-                    alert.Owner = App.Current.MainWindow;
-                    alert.ShowDialog();
-                }
             }
         }
 
         private async void UpdateUsername()
         {
-            if (string.IsNullOrEmpty(Username))
+            try
+            {
+                using (HttpClient client = new HttpClientService().CreateHttpClient(App.BaseApiUrl, null, App.Token))
+                {
+                    ChangeUsernameRequest request = new ChangeUsernameRequest
+                    {
+                        UserId = int.Parse(App.UserId),
+                        Username = Username
+                    };
+                    string json = JsonConvert.SerializeObject(request);
+                    StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                    var answer = await client.PutAsync("User/UpdateUsername", content);
+
+                    string r = await answer.Content.ReadAsStringAsync();
+
+                    if (answer.IsSuccessStatusCode)
+                    {
+                        AlertWindow alert = new AlertWindow();
+                        AlertViewModel viewModel = new AlertViewModel(alert, "Success", r, AlertTypeEnum.Info);
+                        alert.DataContext = viewModel;
+                        alert.Owner = App.Current.MainWindow;
+                        alert.ShowDialog();
+                    }
+                    else
+                    {
+                        AlertWindow alert = new AlertWindow();
+                        AlertViewModel viewModel = new AlertViewModel(alert, "Error", r, AlertTypeEnum.Error);
+                        alert.DataContext = viewModel;
+                        alert.Owner = App.Current.MainWindow;
+                        alert.ShowDialog();
+                    }
+                }
+
+                LoadUserData();
+            }
+            catch (Exception)
             {
                 AlertWindow alert = new AlertWindow();
-                AlertViewModel viewModel = new AlertViewModel(alert, "Error", "Username cannot be empty.", AlertTypeEnum.Error);
+                AlertViewModel viewModel = new AlertViewModel(alert, "Error", "Something went wrong, try again later.", AlertTypeEnum.Error);
                 alert.DataContext = viewModel;
                 alert.Owner = App.Current.MainWindow;
                 alert.ShowDialog();
-
-                LoadUserData();
-                return;
-            }
-
-            using (HttpClient client = new HttpClientService().CreateHttpClient(App.BaseApiUrl, null, App.Token))
-            {
-                ChangeUsernameRequest request = new ChangeUsernameRequest
-                {
-                    UserId = int.Parse(App.UserId),
-                    Username = Username
-                };
-                string json = JsonConvert.SerializeObject(request);
-                StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
-
-                var answer = await client.PutAsync("User/UpdateUsername", content);
-
-                if (answer.IsSuccessStatusCode)
-                {
-                    AlertWindow alert = new AlertWindow();
-                    AlertViewModel viewModel = new AlertViewModel(alert, "Success", "Username has been changed.", AlertTypeEnum.Info);
-                    alert.DataContext = viewModel;
-                    alert.Owner = App.Current.MainWindow;
-                    alert.ShowDialog();
-
-                    LoadUserData();
-                }
-                else
-                {
-                    AlertWindow alert = new AlertWindow();
-                    AlertViewModel viewModel = new AlertViewModel(alert, "Error", "Something went wrong, try again later.", AlertTypeEnum.Error);
-                    alert.DataContext = viewModel;
-                    alert.Owner = App.Current.MainWindow;
-                    alert.ShowDialog();
-                }
             }
         }
     }
