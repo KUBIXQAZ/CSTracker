@@ -208,7 +208,8 @@
 
                 <TextBox Grid.Row="0"
                          Grid.RowSpan="2"
-                         Grid.Column="1"/>
+                         Grid.Column="1"
+                         Text="{Binding CurrentPassword, Mode=TwoWay}"/>
 
             </Grid>
 
@@ -242,7 +243,8 @@
                 <TextBox Grid.Row="0"
                          Grid.RowSpan="2"
                          Grid.Column="1"
-                         Width="250"/>
+                         Width="250"
+                         Text="{Binding NewPassword, Mode=TwoWay}"/>
 
             </Grid>
 
@@ -275,7 +277,8 @@
 
                 <TextBox Grid.Row="0"
                          Grid.RowSpan="2"
-                         Grid.Column="1"/>
+                         Grid.Column="1"
+                         Text="{Binding NewPasswordConfirm, Mode=TwoWay}"/>
 
             </Grid>
 
@@ -285,7 +288,8 @@
 
                 <Button HorizontalAlignment="Right"
                         Content="Update"
-                        Margin="0 10 0 0"/>
+                        Margin="0 10 0 0"
+                        Command="{Binding UpdatePasswordCommand}"/>
 
             </Grid>
 
