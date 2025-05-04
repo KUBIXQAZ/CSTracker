@@ -76,12 +76,12 @@ namespace CSTracker.ViewModels
             {
                 foreach (ItemDataModel item in itemsData)
                 {
-                    string itemIconId = item.Icon.Select(x => (int)x).ToArray().Sum().ToString();
+                    string itemIconId = item.Image.Select(x => (int)x).ToArray().Sum().ToString();
                     item.IconPath = $"{App.IconFolder}\\{itemIconId}.png";
 
                     if (File.Exists(item.IconPath)) continue;
 
-                    File.WriteAllBytes(item.IconPath, item.Icon);
+                    File.WriteAllBytes(item.IconPath, item.Image);
                 }
             }
             catch (Exception) { }

@@ -6,7 +6,7 @@ namespace CSTracker.Models
     {
         public string Name { get; set; }
 
-        public byte[] Icon { get; set; }
+        public byte[] Image { get; set; }
 
         [JsonIgnore]
         public string IconPath { get; set; }
