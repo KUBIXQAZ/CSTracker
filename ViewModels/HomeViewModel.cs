@@ -56,6 +56,25 @@ namespace CSTracker.ViewModels
                         if (string.IsNullOrEmpty(content)) return;
 
                         itemsData = JsonConvert.DeserializeObject<List<ItemDataModel>>(content)!;
+
+                        foreach (var item in itemsData)
+                        {
+                            var updatedPriceHistory = item.PriceHistory
+                                .ToDictionary(
+                                    x => x.Key.ToLocalTime(),
+                                    x => x.Value
+                                );
+
+                            item.PriceHistory = updatedPriceHistory;
+
+                            var updatedQuantityHistory = item.QuantityHistory
+                                .ToDictionary(
+                                    x => x.Key.ToLocalTime(),
+                                    x => x.Value
+                                );
+
+                            item.QuantityHistory = updatedQuantityHistory;
+                        }
                     }
                     else
                     {

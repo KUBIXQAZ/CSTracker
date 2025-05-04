@@ -119,7 +119,28 @@ namespace CSTracker.ViewModels
                         string content = await answer.Content.ReadAsStringAsync();
                         if (string.IsNullOrEmpty(content)) return;
 
-                        ItemsData = JsonConvert.DeserializeObject<List<ItemDataModel>>(content);
+                        var data = JsonConvert.DeserializeObject<List<ItemDataModel>>(content);
+
+                        foreach (var item in data)
+                        {
+                            var updatedPriceHistory = item.PriceHistory
+                                .ToDictionary(
+                                    x => x.Key.ToLocalTime(),
+                                    x => x.Value
+                                );
+
+                            item.PriceHistory = updatedPriceHistory;
+
+                            var updatedQuantityHistory = item.QuantityHistory
+                                .ToDictionary(
+                                    x => x.Key.ToLocalTime(),
+                                    x => x.Value
+                                );
+
+                            item.QuantityHistory = updatedQuantityHistory;
+                        }
+
+                        ItemsData = data;
                     }
                     else
                     {

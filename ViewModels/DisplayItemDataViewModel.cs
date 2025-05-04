@@ -249,7 +249,25 @@ namespace CSTracker.ViewModels
                 {
                     string content = await answer.Content.ReadAsStringAsync();
 
-                    JsonConvert.PopulateObject(content, ItemData);
+                    var data = JsonConvert.DeserializeObject<ItemDataModel>(content);
+
+                    var updatedPriceHistory = data.PriceHistory
+                        .ToDictionary(
+                            x => x.Key.ToLocalTime(),
+                            x => x.Value
+                        );
+
+                    data.PriceHistory = updatedPriceHistory;
+
+                    var updatedQuantityHistory = data.QuantityHistory
+                        .ToDictionary(
+                            x => x.Key.ToLocalTime(),
+                            x => x.Value
+                        );
+
+                    data.QuantityHistory = updatedQuantityHistory;
+
+                    ItemData = data;
                 }
                 else
                 {
