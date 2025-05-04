@@ -112,7 +112,7 @@ namespace CSTracker.ViewModels
                 {
                     client.BaseAddress = new Uri(App.BaseApiUrl);
 
-                    var answer = await client.GetAsync("ItemsData/GetItemsData");
+                    var answer = await client.GetAsync("ItemData/GetItemsData");
 
                     if (answer.IsSuccessStatusCode)
                     {
@@ -164,7 +164,7 @@ namespace CSTracker.ViewModels
                 foreach (var item in Investments)
                 {
                     item.ItemData = ItemsData.First(x => x.Name == item.Name);
-                    item.ItemData.IconPath = $"{App.IconFolder}\\{item.ItemData.Icon.Select(x => (int)x).ToArray().Sum()}.png";
+                    if (item.ItemData.Icon != null) item.ItemData.IconPath = $"{App.IconFolder}\\{item.ItemData.Icon.Select(x => (int)x).ToArray().Sum()}.png";
                     item.RemoveInvestmentAction = RemoveInvestment;
                 }
             }

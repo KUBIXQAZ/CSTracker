@@ -48,7 +48,7 @@ namespace CSTracker.ViewModels
                 {
                     client.BaseAddress = new Uri(App.BaseApiUrl);
 
-                    var answer = await client.GetAsync("ItemsData/GetItemsData");
+                    var answer = await client.GetAsync("ItemData/GetItemsData");
 
                     if (answer.IsSuccessStatusCode)
                     {
