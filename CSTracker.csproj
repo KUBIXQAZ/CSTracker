@@ -6,14 +6,21 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>Resources\Images\favicon.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\Images\favicon.ico" />
     <None Remove="Resources\Images\sort.png" />
     <None Remove="Resources\Images\sort_hover.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Resources\Images\favicon.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Images\favicon.ico" />
     <Resource Include="Resources\Images\sort_hover.png" />
   </ItemGroup>
 
