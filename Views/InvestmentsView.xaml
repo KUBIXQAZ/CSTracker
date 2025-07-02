@@ -79,10 +79,10 @@
                                     </Grid.ColumnDefinitions>
 
                                     <Image Grid.Column="0"
-                                           Source="{Binding ItemData.IconPath}"
+                                           Source="{Binding ItemData.ImageBitmap}"
                                            VerticalAlignment="Top"
-                                           Margin="0 0 10 0"
-                                           MaxHeight="110"/>
+                                           Margin="0 0 20 0"
+                                           MaxHeight="90"/>
 
                                     <Grid Grid.Column="1" 
                                           VerticalAlignment="Top"

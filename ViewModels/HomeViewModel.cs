@@ -1,9 +1,9 @@
-﻿using Newtonsoft.Json;
-using CSTracker.Models;
+﻿using CSTracker.Models;
 using CSTracker.MVVM;
 using CSTracker.Services;
 using CSTracker.Stores;
 using CSTracker.Views;
+using Newtonsoft.Json;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Net.Http;
@@ -90,20 +90,6 @@ namespace CSTracker.ViewModels
                 alertWindow.DataContext = vm;
                 alertWindow.ShowDialog();
             }
-
-            try
-            {
-                foreach (ItemDataModel item in itemsData)
-                {
-                    string itemIconId = item.Image.Select(x => (int)x).ToArray().Sum().ToString();
-                    item.IconPath = $"{App.IconFolder}\\{itemIconId}.png";
-
-                    if (File.Exists(item.IconPath)) continue;
-
-                    File.WriteAllBytes(item.IconPath, item.Image);
-                }
-            }
-            catch (Exception) { }
 
             string favItemsPath = App.MainDataFolder + "/FavouriteItems.json";
 

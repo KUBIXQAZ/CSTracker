@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Windows.Media;
 using CSTracker.Utilities;
+using System.Windows.Media.Imaging;
 
 namespace CSTracker.Models
 {
@@ -14,7 +15,7 @@ namespace CSTracker.Models
         private ItemDataModel _itemData {  get; set; }
 
         public string Title { get; set; }
-        public string Image { get; set; }
+        public BitmapImage ImageBitmap { get; set; }
         public string Price { get; set; }
         public string PriceThisWeek { get; set; }
         public SolidColorBrush PriceThisWeekColor {  get; set; }
@@ -39,9 +40,9 @@ namespace CSTracker.Models
             _itemData = itemData;
 
             Title = itemData.Name;
-            Image = itemData.IconPath;
+            ImageBitmap = itemData.ImageBitmap;
 
-            Price = Math.Round(itemData.PriceHistory.Last().Value * App.Currency.ExchangeRate, 2).ToString("N") + App.Settings.Currency;
+            Price = itemData.PriceHistory.Count == 0 ? "N/A" : Math.Round(itemData.PriceHistory.Last().Value * App.Currency.ExchangeRate, 2).ToString("N") + App.Settings.Currency;
             PriceThisWeek = GetPriceThisWeek().Key;
             PriceThisWeekColor = GetPriceThisWeek().Value;
             FavState = favState;

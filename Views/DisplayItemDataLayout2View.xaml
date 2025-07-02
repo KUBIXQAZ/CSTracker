@@ -30,7 +30,7 @@
 
             </Grid.ColumnDefinitions>
 
-            <Image Source="{Binding ItemData.IconPath}"
+            <Image Source="{Binding ItemData.ImageBitmap}"
                    Height="35"/>
 
             <TextBlock Grid.Column="1"

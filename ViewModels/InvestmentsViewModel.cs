@@ -97,11 +97,13 @@ namespace CSTracker.ViewModels
 
         public InvestmentsViewModel()
         {
-            Task.Run(async () =>
-            {
-                await LoadItemData();
-                LoadInvestments();
-            });      
+            Load();
+        }
+
+        private async void Load()
+        {
+            await LoadItemData();
+            LoadInvestments();
         }
 
         private async Task LoadItemData()
@@ -185,7 +187,6 @@ namespace CSTracker.ViewModels
                 foreach (var item in Investments)
                 {
                     item.ItemData = ItemsData.First(x => x.Name == item.Name);
-                    if (item.ItemData.Image != null) item.ItemData.IconPath = $"{App.IconFolder}\\{item.ItemData.Image.Select(x => (int)x).ToArray().Sum()}.png";
                     item.RemoveInvestmentAction = RemoveInvestment;
                 }
             }
@@ -208,7 +209,6 @@ namespace CSTracker.ViewModels
         private void AddInvestment()
         {
             ItemDataModel itemData = ItemsData.First(x => x.Name == InvestmentName);
-            itemData.IconPath = $"{App.IconFolder}\\{itemData.Image.Select(x => (int)x).ToArray().Sum()}.png";
 
             InvestmentModel investment = new InvestmentModel(InvestmentName, int.Parse(InvestmentQuantity), decimal.Parse(InvestmentPrice), itemData, RemoveInvestment);
 
