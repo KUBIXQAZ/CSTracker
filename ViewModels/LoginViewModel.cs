@@ -52,7 +52,7 @@ namespace CSTracker.ViewModels
         }
         private Window _window;
 
-        public string WebViewSource => "https://cstracker.cloud/login-app";
+        public string WebViewSource => "https://cstracker.cloud/auth/login";
 
         public string Token;
 
@@ -116,7 +116,7 @@ namespace CSTracker.ViewModels
 
             string url = webView.Source.ToString();
 
-            if (url.StartsWith("https://cstracker.cloud/login-app?token="))
+            if (url.StartsWith("https://cstracker.cloud/auth/login?token="))
             {
                 Token = url.Substring(url.IndexOf("token=") + 6);
 
